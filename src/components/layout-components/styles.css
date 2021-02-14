@@ -1,0 +1,15 @@
+.menuNavbar{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.menuNavbar h4{
+    font-weight: 400;
+    margin: 0px 5px 0px 10px;
+    font-size: 14px;
+    color: #818ea3;
+}
+.dividerNav{
+    height: 100%;
+    margin-right: 10px;
+}

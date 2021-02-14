@@ -1,0 +1,24 @@
+.changePwd {
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  margin-bottom: 10px;
+  color: #3d5170;
+}
+.cardChangePwd {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  font-weight: 300;
+  padding: 1rem !important;
+  margin-top: 20px;
+}
+.labelPwd {
+  font-weight: 500;
+  margin: 5px 0px;
+}
+@media (max-width: 780px) {
+  .changePwd {
+    text-align: center;
+  }
+}
