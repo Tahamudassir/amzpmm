@@ -38,6 +38,21 @@ const auth = (state = initState, action) => {
         token: action.token,
       };
     }
+    case types.CHANGE_PASSWORD:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case types.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

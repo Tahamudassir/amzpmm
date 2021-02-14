@@ -6,3 +6,10 @@ export const signInAction = (user) => {
     payload: user,
   };
 };
+
+export const changePasswordAction = (queryData) => {
+  return {
+    type: types.CHANGE_PASSWORD,
+    payload: queryData,
+  };
+};

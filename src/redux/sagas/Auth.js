@@ -21,10 +21,13 @@ function* signin(action) {
 }
 
 function* changePassword(action) {
+  console.log("called changepassword");
+
   try {
     const response = yield changePasswordApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.CHANGE_PASSWORD_SUCCESS });
+      message.success("Password changed");
     } else {
       yield put({ type: types.CHANGE_PASSWORD_FAILURE });
     }
