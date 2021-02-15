@@ -3,7 +3,7 @@ import types from "../constants/Auth";
 const initState = {
   loading: false,
   redirect: "",
-  token: localStorage.getItem("AUTH_TOKEN"),
+  token: null,
   allowRedirect: false,
 };
 

@@ -11,7 +11,7 @@ const themes = {
   dark: `${process.env.PUBLIC_URL}/css/dark-theme.css`,
   light: `${process.env.PUBLIC_URL}/css/light-theme.css`,
 };
-
+console.log("store", store);
 function App() {
   return (
     <div className="App">

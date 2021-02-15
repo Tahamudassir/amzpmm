@@ -21,8 +21,6 @@ function* signin(action) {
 }
 
 function* changePassword(action) {
-  console.log("called changepassword");
-
   try {
     const response = yield changePasswordApi(action.payload);
     if (response.status >= 200 && response.status < 300) {

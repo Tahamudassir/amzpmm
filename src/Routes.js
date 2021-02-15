@@ -1,11 +1,6 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
 import { connect } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Loading from "components/shared-components/Loading";
 import AppLayout from "./layouts/app-layout";
 import AuthLayout from "./layouts/auth-layout";

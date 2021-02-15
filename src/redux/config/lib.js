@@ -1,12 +1,13 @@
 import axios from "axios";
+
 // import { message } from "antd";
 // import history from "../../history";
 const baseURL = process.env.REACT_APP_API_URL;
-
+// const state = store.getState();
+// console.log("state", state);
 const service = axios.create({
   baseURL,
   timeout: 30000,
-  headers: { Authorization: "Bearer " + localStorage.getItem("AUTH_TOKEN") },
 });
 // Config
 // const ENTRY_ROUTE = "/login";
