@@ -53,6 +53,22 @@ const auth = (state = initState, action) => {
         ...state,
         loading: false,
       };
+    case types.EDIT_USER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.EDIT_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case types.EDIT_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

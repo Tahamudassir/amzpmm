@@ -8,6 +8,7 @@ const baseURL = process.env.REACT_APP_API_URL;
 const service = axios.create({
   baseURL,
   timeout: 30000,
+  headers: { Authorization: "Bearer " + localStorage.getItem("AUTH_TOKEN") },
 });
 // Config
 // const ENTRY_ROUTE = "/login";
@@ -20,10 +21,10 @@ const service = axios.create({
 //     if (jwtToken) {
 //       config.headers[TOKEN_PAYLOAD_KEY] = jwtToken;
 //     }
-//     if (!jwtToken && !config.headers[PUBLIC_REQUEST_KEY]) {
-//       history.push(ENTRY_ROUTE);
-//       window.location.reload();
-//     }
+//     // if (!jwtToken && !config.headers[PUBLIC_REQUEST_KEY]) {
+//     //   history.push(ENTRY_ROUTE);
+//     //   window.location.reload();
+//     // }
 
 //     return config;
 //   },

@@ -13,3 +13,9 @@ export const changePasswordAction = (queryData) => {
     payload: queryData,
   };
 };
+export const editUser = (queryData) => {
+  return {
+    type: types.EDIT_USER,
+    payload: queryData,
+  };
+};

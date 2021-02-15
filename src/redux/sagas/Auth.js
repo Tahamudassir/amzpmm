@@ -1,6 +1,6 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { message } from "antd";
-import { signinApi, changePasswordApi } from "../api/Auth";
+import { signinApi, changePasswordApi, updateUserProfile } from "../api/Auth";
 import { getErrorMessage } from "../constants/ErrorMessage";
 import types from "../constants/Auth";
 
@@ -36,7 +36,26 @@ function* changePassword(action) {
   }
 }
 
+function* editUserProfile(action) {
+  try {
+    const response = yield updateUserProfile(action.payload);
+    if (response.status >= 200 && response.status < 300) {
+      yield put({
+        type: types.EDIT_USER_SUCCESS,
+        payload: response.data.result,
+      });
+      message.success("Profile updated");
+    } else {
+      yield put({ type: types.EDIT_USER_FAILURE });
+    }
+  } catch (error) {
+    yield put({ type: types.EDIT_USER_FAILURE });
+    let errorMessage = yield getErrorMessage(error);
+    message.error(errorMessage);
+  }
+}
 export default function* AuthSaga() {
   yield takeLatest(types.SIGNIN, signin);
   yield takeLatest(types.CHANGE_PASSWORD, changePassword);
+  yield takeLatest(types.EDIT_USER, editUserProfile);
 }
