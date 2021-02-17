@@ -1,23 +1,32 @@
 import React from "react";
-import { Col, Row, Button, Progress, Card, Input } from "antd";
+import { connect } from "react-redux";
+import { Col, Row, Button, Progress, Card, Input, Avatar } from "antd";
 import { SyncOutlined } from "@ant-design/icons";
-import Avatar from "../../../components/Avatar";
 import "./styles.css";
 
-const Profile = () => {
+const Profile = (props) => {
+  const { user } = props;
   return (
     <div>
       <div className="headingProfile">
         <p className="small">Overview</p>
-        <h4 className="large">User Name</h4>
+        <h4 className="large">{user && user.username}</h4>
       </div>
       <Row gutter={[0, 16]}>
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
           <div className="profileCard">
             <div className="innerProfileCard">
-              <Avatar width="120px" height="120px" />
-              <h2 className="userName">User Name</h2>
-              <p className="userType">User Type</p>
+              <Avatar
+                src={
+                  user && user.imageUrl
+                    ? user.imageUrl
+                    : "/img/avatars/male.png"
+                }
+                style={{ backgroundColor: "#87d068", objectFit: "cover" }}
+                size={100}
+              />
+              <h2 className="userName">{user && user.username}</h2>
+              <p className="userType">{user && user.userType}</p>
               <Button
                 type="primary"
                 shape="round"
@@ -39,18 +48,24 @@ const Profile = () => {
             <Row gutter={[0, 24]}>
               <Col span={11}>
                 <p className="label">Name</p>
-                <Input disabled={true} value="User Name" />
+                <Input
+                  disabled={true}
+                  value={user && user.username ? user.username : ""}
+                />
               </Col>
               <Col span={2}></Col>
               <Col span={11}>
                 <p className="label">Email</p>
-                <Input disabled={true} value="user@gmail.com" />
+                <Input
+                  disabled={true}
+                  value={user && user.email ? user.email : ""}
+                />
               </Col>
             </Row>
             <Row gutter={[0, 8]} style={{ marginTop: "10px" }}>
               <Col span={24}>
                 <p className="label">Name</p>
-                <Input value="User Name" />
+                <Input value={user && user.username ? user.username : ""} />
               </Col>
             </Row>
             <Row
@@ -59,12 +74,18 @@ const Profile = () => {
             >
               <Col span={11}>
                 <p className="label">Facebook</p>
-                <Input placeholder="FB Link" />
+                <Input
+                  placeholder="FB Link"
+                  value={user && user.fbLink ? user.fbLink : ""}
+                />
               </Col>
               <Col span={2}></Col>
               <Col span={11}>
                 <p className="label">Whatsapp/Weechat</p>
-                <Input placeholder="+92303..." />
+                <Input
+                  placeholder="+92303..."
+                  value={user && user.whatsapp ? user.whatsapp : ""}
+                />
               </Col>
             </Row>
             <Button type="primary">Update Account</Button>
@@ -75,4 +96,11 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = ({ auth }) => {
+  const { user } = auth;
+  return {
+    user,
+  };
+};
+
+export default connect(mapStateToProps)(Profile);
