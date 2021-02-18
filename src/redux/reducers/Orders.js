@@ -1,41 +1,30 @@
-import types from "../constants/Auth";
+import types from "../constants/Orders";
 
 const initState = {
   loading: false,
+  orders: null,
 };
 
 const orders = (state = initState, action) => {
   switch (action.type) {
-    case types.SIGNIN:
+    case types.GET_ORDERS:
       return {
         ...state,
         loading: true,
       };
-    case types.AUTHENTICATED:
+    case types.GET_ORDERS_SUCCESS:
       return {
         ...state,
         loading: false,
-        redirect: "/",
-        allowRedirect: true,
-        token: action.payload.token,
-        user: action.payload.payload,
-        authenticated: true,
+        orders: action.payload,
       };
-    case types.SIGNIN_FAILED:
+    case types.GET_ORDERS_FAILURE: {
       return {
         ...state,
+        orders: action.payload,
         loading: false,
-        allowRedirect: false,
-        authenticated: false,
-      };
-    case types.SIGNUP_SUCCESS: {
-      return {
-        ...state,
-        loading: false,
-        token: action.token,
       };
     }
-
     default:
       return state;
   }
