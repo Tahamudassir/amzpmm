@@ -31,11 +31,31 @@ const auth = (state = initState, action) => {
         allowRedirect: false,
         authenticated: false,
       };
-    case types.SIGNUP_SUCCESS: {
+    case types.SIGNUP:
+      return {
+        ...state,
+        loading: true,
+        allowRedirect: false,
+      };
+    case types.SIGNUP_SUCCESS:
       return {
         ...state,
         loading: false,
-        token: action.token,
+        allowRedirect: true,
+        redirectPath: "/login",
+      };
+    case types.SIGNUP_FAILED: {
+      return {
+        ...state,
+        loading: false,
+        allowRedirect: false,
+      };
+    }
+    case types.SET_INITIAL_VALUES: {
+      return {
+        ...state,
+        allowRedirect: null,
+        redirectPath: "",
       };
     }
     case types.CHANGE_PASSWORD:

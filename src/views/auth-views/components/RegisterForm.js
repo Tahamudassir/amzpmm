@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
 import { useHistory } from "react-router-dom";
-
+import { Button, Form, Input, Select, InputNumber } from "antd";
+import { signUpAction } from "../../../redux/actions/Auth";
+const { Option } = Select;
 const rules = {
   email: [
     {
@@ -12,13 +12,40 @@ const rules = {
     },
     {
       type: "email",
-      message: "Please enter a validate email!",
+      message: "Please enter a valid email!",
     },
   ],
   password: [
     {
       required: true,
       message: "Please input your password",
+    },
+  ],
+  cnic: [
+    {
+      required: true,
+      message: "Please input your cnic",
+    },
+    {
+      pattern: /^[0-9]+$/,
+      message: "Cnic should not contain any characters other then numbers",
+    },
+  ],
+  required: [
+    {
+      required: true,
+      message: "This field is required",
+    },
+  ],
+  phone: [
+    {
+      required: true,
+      message: "This field is required",
+    },
+    {
+      pattern: /^[0-9]+$/,
+      message:
+        "Phone number should not contain any characters other then numbers",
     },
   ],
   confirm: [
@@ -38,35 +65,24 @@ const rules = {
 };
 
 export const RegisterForm = (props) => {
-  const {
-    showLoading,
-    token,
-    loading,
-    redirect,
-    message,
-    showMessage,
-    allowRedirect,
-  } = props;
+  const { loading, dispatch, redirectPath, allowRedirect } = props;
   const [form] = Form.useForm();
-  let history = useHistory();
-
+  const history = useHistory();
+  useEffect(() => {
+    if (allowRedirect) {
+      history.push(redirectPath);
+    }
+  }, [allowRedirect, redirectPath]);
   const onSignUp = () => {
     form
       .validateFields()
-      .then((values) => {})
+      .then((values) => {
+        dispatch(signUpAction(values));
+      })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
-
-  useEffect(() => {
-    if (token !== null && allowRedirect) {
-      history.push(redirect);
-    }
-    if (showMessage) {
-      setTimeout(() => {}, 3000);
-    }
-  });
 
   return (
     <>
@@ -76,8 +92,43 @@ export const RegisterForm = (props) => {
         name="register-form"
         onFinish={onSignUp}
       >
+        <Form.Item
+          name="firstname"
+          label="First Name"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="lastname"
+          label="Last Name"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
         <Form.Item name="email" label="Email" rules={rules.email} hasFeedback>
-          <Input prefix={<MailOutlined className="text-primary" />} />
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="username"
+          label="Login Username"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="cnic" label="CNIC" rules={rules.cnic} hasFeedback>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="phone"
+          label="Phone (Whatsapp)"
+          rules={rules.phone}
+          hasFeedback
+        >
+          <Input />
         </Form.Item>
         <Form.Item
           name="password"
@@ -85,19 +136,87 @@ export const RegisterForm = (props) => {
           rules={rules.password}
           hasFeedback
         >
-          <Input.Password prefix={<LockOutlined className="text-primary" />} />
+          <Input.Password />
+        </Form.Item>
+        <Form.Item name="gender" label="Gender" rules={rules.required}>
+          <Select
+            placeholder="Select a option and change input text above"
+            allowClear
+          >
+            <Option value="male">male</Option>
+            <Option value="female">female</Option>
+          </Select>
         </Form.Item>
         <Form.Item
-          name="confirm"
-          label="ConfirmPassword"
-          rules={rules.confirm}
+          name="experience"
+          label="Proxy Marketing Experience"
+          width="100%"
+          rules={rules.required}
+        >
+          <InputNumber min={0} />
+        </Form.Item>
+        <Form.Item
+          name="address"
+          label="Address"
+          rules={rules.required}
           hasFeedback
         >
-          <Input.Password prefix={<LockOutlined className="text-primary" />} />
+          <Input />
+        </Form.Item>
+        <Form.Item name="city" label="City" rules={rules.required} hasFeedback>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="referralName"
+          label="Referral Name"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="referralContact"
+          label="Referral Contact Number"
+          rules={rules.phone}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="paymentType"
+          label="Bank Account /Jazz Cash /Easy paisa Title"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="bankName"
+          label="Bank Name"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="payNumber"
+          label="Bank Account /Jazz Cash /Easy paisa Number"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="branchCity"
+          label="Bank Branch City"
+          rules={rules.required}
+          hasFeedback
+        >
+          <Input />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" block loading={loading}>
-            Sign Up
+            Register
           </Button>
         </Form.Item>
       </Form>
@@ -106,15 +225,8 @@ export const RegisterForm = (props) => {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { loading } = auth;
-  return { loading };
+  const { loading, allowRedirect, redirectPath } = auth;
+  return { loading, allowRedirect, redirectPath };
 };
 
-const mapDispatchToProps = {
-  // showAuthMessage,
-  // hideAuthMessage,
-  // showLoading,
-  // authenticated
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+export default connect(mapStateToProps)(RegisterForm);

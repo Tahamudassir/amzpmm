@@ -19,3 +19,10 @@ export const editUser = (queryData) => {
     payload: queryData,
   };
 };
+
+export const signUpAction = (queryData) => {
+  return {
+    type: types.SIGNUP,
+    payload: queryData,
+  };
+};

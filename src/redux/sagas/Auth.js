@@ -1,6 +1,11 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { message } from "antd";
-import { signinApi, changePasswordApi, updateUserProfile } from "../api/Auth";
+import {
+  signinApi,
+  changePasswordApi,
+  updateUserProfile,
+  registerApi,
+} from "../api/Auth";
 import { getErrorMessage } from "../constants/ErrorMessage";
 import types from "../constants/Auth";
 
@@ -54,8 +59,28 @@ function* editUserProfile(action) {
     message.error(errorMessage);
   }
 }
+
+function* registerUser(action) {
+  try {
+    const response = yield registerApi(action.payload);
+    if (response.status >= 200 && response.status < 300) {
+      yield put({ type: types.SIGNUP_SUCCESS });
+      yield put({ type: types.SET_INITIAL_VALUES });
+      message.success(
+        "Registration request has been sent you will recieve an email notification soon"
+      );
+    } else {
+      yield put({ type: types.SIGNUP_FAILED });
+    }
+  } catch (error) {
+    yield put({ type: types.SIGNUP_FAILED });
+    let errorMessage = yield getErrorMessage(error);
+    message.error(errorMessage);
+  }
+}
 export default function* AuthSaga() {
   yield takeLatest(types.SIGNIN, signin);
   yield takeLatest(types.CHANGE_PASSWORD, changePassword);
   yield takeLatest(types.EDIT_USER, editUserProfile);
+  yield takeLatest(types.SIGNUP, registerUser);
 }

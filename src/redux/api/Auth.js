@@ -9,3 +9,7 @@ export async function changePasswordApi(queryObj) {
 export async function updateUserProfile(queryObj) {
   return API.post("/user/edit", queryObj);
 }
+
+export async function registerApi(queryObj) {
+  return API.post("/signup", queryObj);
+}
