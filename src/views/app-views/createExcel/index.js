@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Space, Button, DatePicker, Select } from "antd";
 import "./styles.css";
 
-const Home = () => {
+const CreateExcel = () => {
   const { Option } = Select;
   return (
     <>
@@ -55,4 +55,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CreateExcel;

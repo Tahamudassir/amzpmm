@@ -12,6 +12,10 @@ export const AppViews = () => {
           component={lazy(() => import("./reservations"))}
         />
         <Route
+          path={`/create-order`}
+          component={lazy(() => import("./reservations/createOrder"))}
+        />
+        <Route
           path={`/products`}
           component={lazy(() => import(`./products`))}
         />

@@ -14,6 +14,7 @@
   margin: 0;
   color: #3d5170;
 }
+
 .reserveProducts p {
   margin: 5px 0px;
   font-weight: 500;
@@ -23,8 +24,32 @@
   background: #57b846;
   border-color: #57b846;
 }
+/* add new order */
+.createOrderTitle {
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  color: #3d5170;
+}
+.cardCreateOrder {
+  background-color: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 2px 0 rgb(90 97 105 / 11%), 0 4px 8px rgb(90 97 105 / 12%),
+    0 10px 10px rgb(90 97 105 / 6%), 0 7px 70px rgb(90 97 105 / 10%);
+  font-weight: 300;
+  padding: 1rem !important;
+  margin-top: 20px;
+}
+.labelAddNewOrder {
+  font-weight: 500;
+  color: #3d5170;
+}
 @media (max-width: 780px) {
   .reserveTitle {
+    text-align: center;
+  }
+  .createOrderTitle {
     text-align: center;
   }
 }
