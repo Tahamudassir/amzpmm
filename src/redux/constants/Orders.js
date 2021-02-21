@@ -6,7 +6,7 @@ const NEW_ORDER = "NEW_ORDER";
 const NEW_ORDER_SUCCESS = "NEW_ORDER_SUCCESS";
 const NEW_ORDER_FAILURE = "NEW_ORDER_FAILURE";
 
-export default {
+const types = {
   GET_ORDERS,
   GET_ORDERS_FAILURE,
   GET_ORDERS_SUCCESS,
@@ -14,3 +14,5 @@ export default {
   NEW_ORDER_SUCCESS,
   NEW_ORDER_FAILURE,
 };
+
+export default types;

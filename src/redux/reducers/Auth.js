@@ -8,6 +8,7 @@ const initState = {
 };
 
 const auth = (state = initState, action) => {
+  console.log("called", action);
   switch (action.type) {
     case types.SIGNIN:
       return {
@@ -79,6 +80,7 @@ const auth = (state = initState, action) => {
         loading: true,
       };
     case types.EDIT_USER_SUCCESS:
+      console.log("action payload", action.payload);
       return {
         ...state,
         loading: false,

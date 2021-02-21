@@ -1,11 +1,55 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Col, Row, Button, Progress, Card, Input, Avatar } from "antd";
+import {
+  Col,
+  Row,
+  Button,
+  Progress,
+  Card,
+  Input,
+  Avatar,
+  Form,
+  message,
+} from "antd";
 import { SyncOutlined } from "@ant-design/icons";
+import { editUserAction } from "../../../redux/actions/Auth";
 import "./styles.css";
 
+const rules = {
+  username: [
+    {
+      required: true,
+      message: "Name can't be empty",
+    },
+  ],
+  fbLink: [
+    {
+      type: "url",
+      message: "This is not a valid url",
+    },
+  ],
+  phone: [
+    {
+      pattern: /^[0-9]+$/,
+      message:
+        "Phone number should not contain any characters other then numbers",
+    },
+  ],
+};
 const Profile = (props) => {
-  const { user } = props;
+  const { user, dispatch, loading } = props;
+  const [form] = Form.useForm();
+  const updateProfile = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        console.log("values", values);
+        dispatch(editUserAction(values));
+      })
+      .catch((info) => {
+        message.error("Validate Failed:", info);
+      });
+  };
   return (
     <div>
       <div className="headingProfile">
@@ -62,33 +106,58 @@ const Profile = (props) => {
                 />
               </Col>
             </Row>
-            <Row gutter={[0, 8]} style={{ marginTop: "10px" }}>
-              <Col span={24}>
-                <p className="label">Name</p>
-                <Input value={user && user.username ? user.username : ""} />
-              </Col>
-            </Row>
-            <Row
-              gutter={[0, 8]}
-              style={{ marginTop: "10px", marginBottom: "20px" }}
+            <Form
+              form={form}
+              layout="vertical"
+              name="register-form"
+              onFinish={updateProfile}
             >
-              <Col span={11}>
-                <p className="label">Facebook</p>
-                <Input
-                  placeholder="FB Link"
-                  value={user && user.fbLink ? user.fbLink : ""}
-                />
-              </Col>
-              <Col span={2}></Col>
-              <Col span={11}>
-                <p className="label">Whatsapp/Weechat</p>
-                <Input
-                  placeholder="+92303..."
-                  value={user && user.whatsapp ? user.whatsapp : ""}
-                />
-              </Col>
-            </Row>
-            <Button type="primary">Update Account</Button>
+              <Row gutter={[0, 8]} style={{ marginTop: "20px" }}>
+                <Col span={24}>
+                  <Form.Item
+                    name="username"
+                    label="Name"
+                    rules={rules.username}
+                    hasFeedback
+                    initialValue={user ? user.username : ""}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row
+                gutter={[0, 8]}
+                style={{ marginTop: "10px", marginBottom: "20px" }}
+              >
+                <Col span={11}>
+                  <Form.Item
+                    name="fbLink"
+                    label="Facebook"
+                    rules={rules.fbLink}
+                    hasFeedback
+                    initialValue={user && user.fbLink ? user.fbLink : ""}
+                  >
+                    <Input placeholder="FB Link" />
+                  </Form.Item>
+                </Col>
+                <Col span={2}></Col>
+                <Col span={11}>
+                  <Form.Item
+                    name="phone"
+                    label="Whatsapp/Weechat"
+                    rules={rules.phone}
+                    hasFeedback
+                    initialValue={user && user.phone ? user.phone : ""}
+                  >
+                    <Input placeholder="+92303..." />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Button type="primary" htmlType="submit" loading={loading}>
+                Update Account
+              </Button>
+            </Form>
           </Card>
         </Col>
       </Row>
@@ -97,9 +166,10 @@ const Profile = (props) => {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { user } = auth;
+  const { user, loading } = auth;
   return {
     user,
+    loading,
   };
 };
 

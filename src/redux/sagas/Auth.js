@@ -45,6 +45,7 @@ function* editUserProfile(action) {
   try {
     const response = yield updateUserProfile(action.payload);
     if (response.status >= 200 && response.status < 300) {
+      console.log("resposne", response.data);
       yield put({
         type: types.EDIT_USER_SUCCESS,
         payload: response.data.result,

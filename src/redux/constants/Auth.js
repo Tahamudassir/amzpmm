@@ -16,7 +16,7 @@ const EDIT_USER_FAILURE = "EDIT_USER_FAILURE";
 
 const SET_INITIAL_VALUES = "SET_INITIAL_VALUES";
 
-export default {
+const types = {
   SIGNIN,
   AUTHENTICATED,
   SIGNIN_FAILED,
@@ -33,3 +33,4 @@ export default {
   SIGNUP_FAILED,
   SET_INITIAL_VALUES,
 };
+export default types;

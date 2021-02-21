@@ -3,6 +3,10 @@ import types from "../constants/Orders";
 const initState = {
   loading: false,
   orders: null,
+  orderStatus: "",
+  orderNumber: "",
+  customer_email: "",
+  product_id: "",
 };
 
 const orders = (state = initState, action) => {
