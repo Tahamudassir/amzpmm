@@ -10,6 +10,7 @@ const service = axios.create({
   timeout: 30000,
   headers: { Authorization: "Bearer " + localStorage.getItem("AUTH_TOKEN") },
 });
+console.log("localstorage", localStorage.getItem("AUTH_TOKEN"));
 // Config
 // const ENTRY_ROUTE = "/login";
 // const TOKEN_PAYLOAD_KEY = "authorization";

@@ -1,6 +1,8 @@
 import React from "react";
-import { Row, Col, Input, Button, Form, Upload } from "antd";
+import { connect } from "react-redux";
+import { Row, Col, Input, Button, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { addNewOrderAction } from "../../../redux/actions/Orders";
 import "./styles.css";
 
 const rules = {
@@ -32,18 +34,32 @@ const rules = {
     },
   ],
 };
-const CreateOrder = () => {
+const CreateOrder = (props) => {
+  const { loading, dispatch } = props;
+  const [orderPic, setOrderPic] = React.useState(null);
+  const setPic = (file) => {
+    setOrderPic(file);
+  };
   const [form] = Form.useForm();
   const onAddOrder = () => {
     form
       .validateFields()
       .then((values) => {
-        console.log("values", values);
+        if (orderPic === null) {
+          message.error("Order Picture is required");
+        }
+        let bodyFormData = new FormData();
+        bodyFormData.append("orderNumber", values.orderNumber);
+        bodyFormData.append("customer_email", values.customer_email);
+        bodyFormData.append("market", values.market);
+        bodyFormData.append("orderPic", orderPic.file);
+        dispatch(addNewOrderAction(bodyFormData));
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
+  console.log("order pic", orderPic);
   return (
     <>
       <h4 className="createOrderTitle">Orders</h4>
@@ -89,15 +105,19 @@ const CreateOrder = () => {
         >
           <Input />
         </Form.Item> */}
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture"
-              >
-                <Button icon={<UploadOutlined />}>Choose File</Button>
-              </Upload>
+              <div style={{ margin: "20px 0px" }}>
+                <Upload
+                  onChange={(file) => setPic(file)}
+                  listType="picture"
+                  accept="image/png, image/jpeg"
+                  beforeUpload={() => false}
+                >
+                  <Button icon={<UploadOutlined />}>Choose File</Button>
+                </Upload>
+              </div>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={loading}>
                   Add Now
                 </Button>
               </Form.Item>
@@ -116,5 +136,8 @@ const CreateOrder = () => {
     </>
   );
 };
-
-export default CreateOrder;
+const mapStateToProps = ({ orders }) => {
+  const { loading } = orders;
+  return { loading };
+};
+export default connect(mapStateToProps)(CreateOrder);

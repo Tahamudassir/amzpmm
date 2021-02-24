@@ -1,9 +1,3 @@
-export function returnOrders(state) {
-  const {
-    orders,
-    customer_email,
-    orderStatus,
-    product_id,
-    orderNumber,
-  } = state.orders;
-}
+export const selectUser = (state) => {
+  return state.auth && state.auth.user ? state.auth.user : null;
+};

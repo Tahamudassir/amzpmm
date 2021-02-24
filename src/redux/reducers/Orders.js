@@ -22,13 +22,28 @@ const orders = (state = initState, action) => {
         loading: false,
         orders: action.payload,
       };
-    case types.GET_ORDERS_FAILURE: {
+    case types.GET_ORDERS_FAILURE:
       return {
         ...state,
         orders: action.payload,
         loading: false,
       };
-    }
+
+    case types.NEW_ORDER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.NEW_ORDER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+    case types.NEW_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }
