@@ -36,11 +36,11 @@ const rules = {
 };
 const CreateOrder = (props) => {
   const { loading, dispatch } = props;
+  const [form] = Form.useForm();
   const [orderPic, setOrderPic] = React.useState(null);
   const setPic = (file) => {
     setOrderPic(file);
   };
-  const [form] = Form.useForm();
   const onAddOrder = () => {
     form
       .validateFields()
@@ -59,7 +59,6 @@ const CreateOrder = (props) => {
         console.log("Validate Failed:", info);
       });
   };
-  console.log("order pic", orderPic);
   return (
     <>
       <h4 className="createOrderTitle">Orders</h4>

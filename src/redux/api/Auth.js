@@ -1,7 +1,9 @@
+import axios from "axios";
 import API from "../config/lib";
+const baseURL = process.env.REACT_APP_API_URL;
 
-export async function signinApi(queryObj) {
-  return API.post(`/signin`, queryObj);
+export function signinApi(queryObj) {
+  return axios.post(`${baseURL}/signin`, queryObj);
 }
 export async function changePasswordApi(queryObj) {
   return API.post("/user/editpass", queryObj);

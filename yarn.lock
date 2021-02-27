@@ -12101,6 +12101,11 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
+redux-persist-transform-expire-in@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/redux-persist-transform-expire-in/-/redux-persist-transform-expire-in-1.1.0.tgz#69f9d746726348d8d29c99961571f6643846e9b9"
+  integrity sha512-Sf2upkmdl+w+1EBYyMYb4Th2GrbdN2xYSRQx7I04O/vY8dpF0jtnBd5iuIWWy8sXHj6VtvXZ63CS7owqHW7m9A==
+
 redux-persist@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"

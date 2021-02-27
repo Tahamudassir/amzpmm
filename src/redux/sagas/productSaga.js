@@ -39,7 +39,7 @@ function* addNewOrder(action) {
   }
 }
 
-export default function* orderSaga() {
+export default function* productSaga() {
   yield takeLatest(types.GET_ORDERS, getOrders);
   yield takeLatest(types.NEW_ORDER, addNewOrder);
 }

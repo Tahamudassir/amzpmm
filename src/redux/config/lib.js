@@ -1,40 +1,28 @@
 import axios from "axios";
+import { message } from "antd";
 
-// import { message } from "antd";
-// import history from "../../history";
 const baseURL = process.env.REACT_APP_API_URL;
-// const state = store.getState();
-// console.log("state", state);
 const service = axios.create({
   baseURL,
   timeout: 30000,
-  headers: { Authorization: "Bearer " + localStorage.getItem("AUTH_TOKEN") },
 });
-console.log("localstorage", localStorage.getItem("AUTH_TOKEN"));
-// Config
-// const ENTRY_ROUTE = "/login";
-// const TOKEN_PAYLOAD_KEY = "authorization";
-// const PUBLIC_REQUEST_KEY = "public-request";
 // // API Request interceptor
-// service.interceptors.request.use(
-//   (config) => {
-//     const jwtToken = localStorage.getItem("AUTH_TOKEN");
-//     if (jwtToken) {
-//       config.headers[TOKEN_PAYLOAD_KEY] = jwtToken;
-//     }
-//     // if (!jwtToken && !config.headers[PUBLIC_REQUEST_KEY]) {
-//     //   history.push(ENTRY_ROUTE);
-//     //   window.location.reload();
-//     // }
-
-//     return config;
-//   },
-//   (error) => {
-//     // Do something with request error here
-//     message.error(error.message);
-//     Promise.reject(error);
-//   }
-// );
+service.interceptors.request.use(
+  (config) => {
+    const jwtToken = localStorage.getItem("AUTH_TOKEN");
+    config.headers = {
+      Authorization: `Bearer ${jwtToken}`,
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    };
+    return config;
+  },
+  (error) => {
+    message.error(error.message);
+    Promise.reject(error);
+  }
+);
+export default service;
 
 // // API respone interceptor
 // service.interceptors.response.use(
@@ -71,5 +59,3 @@ console.log("localstorage", localStorage.getItem("AUTH_TOKEN"));
 //     return Promise.reject(error);
 //   }
 // );
-
-export default service;

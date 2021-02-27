@@ -5,6 +5,7 @@ const initState = {
   redirect: "",
   token: null,
   allowRedirect: false,
+  authenticated: null,
 };
 
 const auth = (state = initState, action) => {
