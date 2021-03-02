@@ -19,9 +19,6 @@ const Products = (props) => {
     dispatch(getProductsAction({ status: e }));
   };
 
-  const navigateToAddProduct = () => {
-    history.push("/add-product");
-  };
   const navigateToDetails = (id) => {
     history.push(`/product-details/${id}`);
   };
@@ -89,16 +86,6 @@ const Products = (props) => {
         </Button>
       ),
     },
-    {
-      title: "",
-      dataIndex: "",
-      key: "id",
-      render: () => (
-        <Button type="primary" size="small">
-          Enabled
-        </Button>
-      ),
-    },
   ];
   const { Search } = Input;
   const { Option } = Select;
@@ -106,15 +93,6 @@ const Products = (props) => {
     <>
       <div className="headerProducts">
         <h4 className="productsTitle">Products</h4>
-        <Button
-          type="primary"
-          size="small"
-          className="btnAddProduct"
-          onClick={navigateToAddProduct}
-          icon={<PlusCircleOutlined />}
-        >
-          Add Product
-        </Button>
       </div>
       <Row
         gutter={[0, { xs: 16, sm: 16, md: 16, lg: 0 }]}

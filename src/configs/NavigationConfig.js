@@ -6,6 +6,7 @@ import {
   KeyOutlined,
   UserOutlined,
   FileExcelOutlined,
+  InfoOutlined,
 } from "@ant-design/icons";
 
 const dashBoardNavTree = [
@@ -62,6 +63,14 @@ const dashBoardNavTree = [
     path: "/create-excel",
     title: "Create Excel",
     icon: FileExcelOutlined,
+    breadcrumb: false,
+    submenu: [],
+  },
+  {
+    key: "tutorial",
+    path: "/tutorial",
+    title: "Tutorials",
+    icon: InfoOutlined,
     breadcrumb: false,
     submenu: [],
   },

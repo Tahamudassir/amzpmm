@@ -22,6 +22,12 @@ const rules = {
       message: "Name can't be empty",
     },
   ],
+  fbLink: [
+    {
+      type: "url",
+      message: "This is not a valid url",
+    },
+  ],
   phone: [
     {
       pattern: /^[0-9]+$/,
@@ -92,41 +98,22 @@ const Profile = (props) => {
               </Col>
               <Col span={2}></Col>
               <Col span={11}>
-                <p className="label">User Name</p>
-                <Input
-                  disabled={true}
-                  value={user && user.username ? user.username : ""}
-                />
-              </Col>
-              <Col span={11}>
                 <p className="label">Email</p>
                 <Input
                   disabled={true}
                   value={user && user.email ? user.email : ""}
                 />
               </Col>
-              <Col span={2}></Col>
-              <Col span={11}>
-                <p className="label">Gender</p>
-                <Input
-                  disabled={true}
-                  value={user && user.gender ? user.gender : ""}
-                />
-              </Col>
             </Row>
-            <Form
-              form={form}
-              layout="vertical"
-              name="register-form"
-              onFinish={updateProfile}
-            >
+            <Form form={form} layout="vertical" onFinish={updateProfile}>
               <Row gutter={[0, 8]} style={{ marginTop: "20px" }}>
                 <Col span={24}>
                   <Form.Item
-                    name="address"
-                    label="Address"
+                    name="username"
+                    label="Name"
+                    rules={rules.username}
                     hasFeedback
-                    initialValue={user && user.address ? user.address : ""}
+                    initialValue={user ? user.username : ""}
                   >
                     <Input />
                   </Form.Item>
@@ -136,63 +123,25 @@ const Profile = (props) => {
                 gutter={[0, 8]}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
               >
-                <Col span={7}>
+                <Col span={11}>
                   <Form.Item
-                    name="city"
-                    label="City"
+                    name="fbLink"
+                    label="Facebook"
+                    rules={rules.fbLink}
                     hasFeedback
-                    initialValue={user && user.city ? user.city : ""}
-                  >
-                    <Input placeholder="City" />
-                  </Form.Item>
-                </Col>
-                <Col span={1}></Col>
-                <Col span={7}>
-                  <Form.Item
-                    name="country"
-                    label="Country"
-                    hasFeedback
-                    initialValue={user && user.country ? user.country : ""}
-                  >
-                    <Input placeholder="Pakistan" />
-                  </Form.Item>
-                </Col>
-                <Col span={1}></Col>
-                <Col span={7}>
-                  <Form.Item
-                    name="phone"
-                    label="Phone"
-                    rules={rules.phone}
-                    hasFeedback
-                    initialValue={user && user.phone ? user.phone : ""}
-                  >
-                    <Input placeholder="+92303..." />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row
-                gutter={[0, 8]}
-                style={{ marginTop: "10px", marginBottom: "20px" }}
-              >
-                <Col span={8}>
-                  <Form.Item
-                    name="bankName"
-                    label="Bank Name"
-                    hasFeedback
-                    initialValue={user && user.bankName ? user.bankName : ""}
+                    initialValue={user && user.fbLink ? user.fbLink : ""}
                   >
                     <Input placeholder="FB Link" />
                   </Form.Item>
                 </Col>
                 <Col span={2}></Col>
-                <Col span={14}>
+                <Col span={11}>
                   <Form.Item
-                    name="accountNumber"
-                    label="Account Number"
+                    name="phone"
+                    label="Whatsapp/Weechat"
+                    rules={rules.phone}
                     hasFeedback
-                    initialValue={
-                      user && user.accountNumber ? user.accountNumber : ""
-                    }
+                    initialValue={user && user.phone ? user.phone : ""}
                   >
                     <Input placeholder="+92303..." />
                   </Form.Item>

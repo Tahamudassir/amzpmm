@@ -10,6 +10,7 @@ import PageHeader from "components/layout-components/PageHeader";
 import Footer from "components/layout-components/Footer";
 import { Layout, Grid } from "antd";
 import Views from "../../views/app-views";
+import ViewPm from "../../views/app-views/viewPm";
 import navigationConfig from "configs/NavigationConfig";
 import {
   SIDE_NAV_WIDTH,
@@ -22,7 +23,7 @@ import { useThemeSwitcher } from "react-css-theme-switcher";
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
 
-export const AppLayout = ({ navCollapsed, navType, children }) => {
+export const AppLayout = ({ navCollapsed, navType, user }) => {
   const location = useLocation();
   const currentRouteInfo = utils.getRouteInfo(
     navigationConfig,
@@ -40,7 +41,6 @@ export const AppLayout = ({ navCollapsed, navType, children }) => {
   };
 
   const { status } = useThemeSwitcher();
-
   if (status === "loading") {
     return <Loading cover="page" />;
   }
@@ -63,7 +63,7 @@ export const AppLayout = ({ navCollapsed, navType, children }) => {
               title={currentRouteInfo?.title}
             />
             <Content>
-              <Views />
+              {user.userType === "PMM" ? <Views /> : <ViewPm />}
             </Content>
           </div>
           <Footer />
@@ -74,9 +74,10 @@ export const AppLayout = ({ navCollapsed, navType, children }) => {
   );
 };
 
-const mapStateToProps = ({ theme }) => {
+const mapStateToProps = ({ theme, auth }) => {
   const { navCollapsed, navType, locale } = theme;
-  return { navCollapsed, navType, locale };
+  const { user } = auth;
+  return { navCollapsed, navType, locale, user };
 };
 
 export default connect(mapStateToProps)(React.memo(AppLayout));

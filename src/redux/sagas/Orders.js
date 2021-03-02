@@ -24,7 +24,6 @@ function* addNewOrder(action) {
     const user = yield select(selectUser);
     const order = action.payload;
     order.append("user", user.username);
-    console.log("user", order);
     const response = yield addOrdersApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.NEW_ORDER_SUCCESS });

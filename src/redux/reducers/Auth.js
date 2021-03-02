@@ -90,6 +90,22 @@ const auth = (state = initState, action) => {
         ...state,
         loading: false,
       };
+    case types.EDIT_USER_AVATAR:
+      return {
+        ...state,
+        uploading: true,
+      };
+    case types.EDIT_USER_AVATAR_SUCCESS:
+      return {
+        ...state,
+        uploading: false,
+        user: action.payload,
+      };
+    case types.EDIT_USER_AVATAR_FAILURE:
+      return {
+        ...state,
+        uploading: false,
+      };
     default:
       return state;
   }

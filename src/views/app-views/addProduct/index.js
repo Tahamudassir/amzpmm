@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Row, Col, Input, Upload, Button, Form, Select } from "antd";
+import { connect } from "react-redux";
+import { Row, Col, Input, Upload, Button, Form, Select, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import constants from "../../../constants/addProduct";
+import { addProductAction } from "../../../redux/actions/Product";
 import "./styles.css";
 
 const rules = {
@@ -11,18 +13,31 @@ const rules = {
       message: "This field is required",
     },
   ],
+  number: [
+    {
+      required: true,
+      message: "This field is required",
+    },
+    {
+      type: "number",
+      message: "This field should be a number",
+    },
+  ],
 };
-const AddProduct = () => {
+const dummyRequest = ({ file, onSuccess }) => {
+  setTimeout(() => {
+    onSuccess("ok");
+  }, 0);
+};
+
+const AddProduct = (props) => {
   const [form] = Form.useForm();
+  const { dispatch, loading } = props;
+  const [amazonImage, setAmazonImage] = useState(null);
+  const [image, setImage] = useState(null);
+
   const { TextArea } = Input;
   const { Option } = Select;
-
-  const props = {
-    name: "file",
-    accept: "image/png, image/jpeg",
-    customRequest: () => {},
-    onChange(info) {},
-  };
 
   const changeCommissionCondition = (value) => {
     let result = form.getFieldValue("commissionCondition") + value;
@@ -30,34 +45,65 @@ const AddProduct = () => {
       commissionCondition: result,
     });
   };
-  const changeRefundCondition = (value) => {};
-  const changeInstructions = (value) => {};
+  const changeRefundCondition = (value) => {
+    let result = form.getFieldValue("refundCondition") + value;
+    form.setFieldsValue({
+      refundCondition: result,
+    });
+  };
+  const changeInstructions = (value) => {
+    let result = form.getFieldValue("instructions") + value;
+    form.setFieldsValue({
+      instructions: result,
+    });
+  };
 
   const onAddProduct = () => {
     form
       .validateFields()
       .then((values) => {
-        // if (orderPic === null) {
-        //   message.error("Order Picture is required");
-        // }
-        // let bodyFormData = new FormData();
-        // bodyFormData.append("orderNumber", values.orderNumber);
-        // bodyFormData.append("customer_email", values.customer_email);
-        // bodyFormData.append("market", values.market);
-        // bodyFormData.append("orderPic", orderPic.file);
-        // dispatch(addNewOrderAction(bodyFormData));
+        if (amazonImage === null || image === null) {
+          message.error("Product images are required");
+        }
+        let bodyFormData = new FormData();
+        bodyFormData.append("brandName", values.brandName);
+        bodyFormData.append("chineseSeller", values.chineseSeller);
+        bodyFormData.append("commission", values.commission);
+        bodyFormData.append("commissionCondition", values.commissionCondition);
+        bodyFormData.append("instructions", values.instructions);
+        bodyFormData.append("keyword", values.keyword);
+        bodyFormData.append("market", values.market);
+        bodyFormData.append("refundCondition", values.refundCondition);
+        bodyFormData.append("saleLimitDay", values.saleLimitDay);
+        bodyFormData.append("saleLimitOverall", values.saleLimitOverall);
+        bodyFormData.append("systemCommission", values.systemCommission);
+        bodyFormData.append("files", image.originFileObj);
+        bodyFormData.append("files", amazonImage.originFileObj);
+        dispatch(addProductAction(bodyFormData));
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
+  const onChangeAmazonImage = (info) => {
+    setAmazonImage(info.file);
+  };
+  const onChangeImage = (info) => {
+    setImage(info.file);
+  };
+  const removeImage = () => {
+    setImage(null);
+    return true;
+  };
+  const removeAmazonImage = () => {
+    setAmazonImage(null);
+    return true;
+  };
   return (
     <>
       <h4 className="createProduct">Add Product</h4>
       <div className="cardAddProduct">
-        <p className="labelAddProduct">
-          Add New Product <span>(Seller ID is 71)</span>
-        </p>
+        <p className="labelAddProduct">Add New Product</p>
         <Form
           form={form}
           layout="vertical"
@@ -85,13 +131,13 @@ const AddProduct = () => {
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
                 <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                  <Form.Item
+                  {/* <Form.Item
                     name="AMZSeller"
                     rules={rules.required}
                     hasFeedback
                   >
                     <Input placeholder="AMZ Seller" />
-                  </Form.Item>
+                  </Form.Item> */}
                 </Col>
               </Row>
               <Row gutter={[0, { xs: 8, sm: 16, md: 0, lg: 0 }]}>
@@ -117,13 +163,25 @@ const AddProduct = () => {
               >
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <p className="labelPicture">Amazon Picture</p>
-                  <Upload {...props}>
+                  <Upload
+                    customRequest={dummyRequest}
+                    onChange={onChangeAmazonImage}
+                    listType="picture"
+                    onRemove={removeAmazonImage}
+                    accept="image/x-png,image/gif,image/jpeg"
+                  >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   </Upload>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <p className="labelPicture">Picture</p>
-                  <Upload {...props}>
+                  <Upload
+                    customRequest={dummyRequest}
+                    onChange={onChangeImage}
+                    listType="picture"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    onRemove={removeImage}
+                  >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   </Upload>
                 </Col>
@@ -244,7 +302,7 @@ const AddProduct = () => {
                     rules={rules.required}
                     hasFeedback
                   >
-                    <Input placeholder="Sale limit per day" />
+                    <Input placeholder="Sale limit per day" type="number" />
                   </Form.Item>
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
@@ -254,7 +312,7 @@ const AddProduct = () => {
                     rules={rules.required}
                     hasFeedback
                   >
-                    <Input placeholder="Overall sale limit " />
+                    <Input type="number" placeholder="Overall sale limit " />
                   </Form.Item>
                 </Col>
               </Row>
@@ -262,6 +320,7 @@ const AddProduct = () => {
                 style={{ marginTop: "30px" }}
                 type="primary"
                 htmlType="submit"
+                loading={loading}
               >
                 Add Now
               </Button>
@@ -273,4 +332,12 @@ const AddProduct = () => {
   );
 };
 const rowStyle = { marginBottom: "20px" };
-export default AddProduct;
+
+const mapStateToProps = (state) => {
+  const { loading } = state.products;
+  return {
+    loading,
+  };
+};
+
+export default connect(mapStateToProps)(AddProduct);

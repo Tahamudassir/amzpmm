@@ -17,8 +17,9 @@ export const AppViews = () => {
         />
         <Route
           path={`/products`}
-          component={lazy(() => import(`./products`))}
+          component={lazy(() => import(`./products/productsPm`))}
         />
+
         <Route path="/orders" component={lazy(() => import(`./orders`))} />
         <Route
           path="/create-excel"
@@ -31,14 +32,16 @@ export const AppViews = () => {
         />
         <Route
           path="/product-details/:id"
-          component={lazy(() => import(`./products/productDetails`))}
+          component={lazy(() => import(`./products/productDetailPm`))}
         />
         <Route
           path={`/add-product`}
           component={lazy(() => import(`./addProduct`))}
         />
-        <Route path="/profile" component={lazy(() => import(`./profile`))} />
-
+        <Route
+          path="/profile"
+          component={lazy(() => import(`./profile/profilePm`))}
+        />
         <Redirect from={`*`} to={`/home`} />
       </Switch>
     </Suspense>

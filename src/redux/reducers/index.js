@@ -4,6 +4,8 @@ import storage from "redux-persist/lib/storage";
 import expireIn from "redux-persist-transform-expire-in";
 import Auth from "./Auth";
 import Orders from "./Orders";
+import Products from "./Products";
+import Reservations from "./Reservations";
 import Theme from "./Theme";
 const expireTime = 24 * 60 * 60 * 1000;
 const expirationKey = "expirationKey";
@@ -26,6 +28,8 @@ const appReducer = combineReducers({
   // auth: persistReducer(authPersistConfig, Auth),
   auth: Auth,
   orders: Orders,
+  products: Products,
+  reservations: Reservations,
 });
 
 const rootReducer = (state, action) => {

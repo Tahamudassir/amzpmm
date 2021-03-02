@@ -2,7 +2,7 @@ import types from "../constants/Products";
 
 export const getProductsAction = (queryData) => {
   return {
-    type: types.GET_PRODUCT,
+    type: types.GET_PRODUCTS,
     payload: queryData,
   };
 };
@@ -21,16 +21,23 @@ export const viewProductAction = (queryData) => {
   };
 };
 
+export const addProductAction = (queryData) => {
+  return {
+    type: types.ADD_PRODUCT,
+    payload: queryData,
+  };
+};
+
 export const editProductAction = (queryData) => {
   return {
-    type: types.FILTER_PRODUCTS,
+    type: types.EDIT_PRODUCT,
     payload: queryData,
   };
 };
 
 export const editProductImageAction = (queryData) => {
   return {
-    type: types.FILTER_PRODUCTS,
+    type: types.EDIT_PRODUCT_IMAGE,
     payload: queryData,
   };
 };

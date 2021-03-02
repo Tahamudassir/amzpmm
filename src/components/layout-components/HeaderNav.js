@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu, Dropdown, Avatar } from "antd";
 import {
   MenuFoldOutlined,
@@ -62,7 +62,9 @@ export const HeaderNav = (props) => {
       return `${SIDE_NAV_WIDTH}px`;
     }
   };
-
+  const itemClick = () => {
+    alert("clicked");
+  };
   return (
     <Header
       className={`app-header ${navMode}`}
@@ -92,7 +94,6 @@ export const HeaderNav = (props) => {
           <div className="nav-right">
             <Dropdown overlay={menu} trigger={["click"]}>
               <div className="menuNavbar">
-                {/* <Divider type="vertical" className="dividerNav" /> */}
                 <Avatar
                   src={
                     user && user.imageUrl
@@ -114,7 +115,7 @@ export const HeaderNav = (props) => {
 const menu = (
   <Menu>
     <Menu.Item key="0" icon={<UserOutlined />}>
-      <Link to="/app/profile">Profile</Link>
+      <Link to="/profile">Profile</Link>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="1" icon={<LogoutOutlined />} style={{ color: "#97122e" }}>

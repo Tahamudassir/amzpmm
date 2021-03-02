@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
-import { Button, Input, Row, Col, Spin, Form, message, Upload } from "antd";
+import { Button, Input, Row, Col, Spin, Form, message } from "antd";
 import { SyncOutlined, EditOutlined } from "@ant-design/icons";
 import {
   viewProductAction,
   editProductAction,
-  editProductImageAction,
 } from "../../../redux/actions/Product";
 import "./styles.css";
 
@@ -28,13 +27,9 @@ const rules = {
     },
   ],
 };
-const dummyRequest = ({ file, onSuccess }) => {
-  setTimeout(() => {
-    onSuccess("ok");
-  }, 0);
-};
+
 const ProductDetails = (props) => {
-  const { productDetail, loading, dispatch, uploading } = props;
+  const { productDetail, loading, dispatch } = props;
   const [form] = Form.useForm();
   const [editProduct, setEditProduct] = useState(false);
   const { id } = useParams();
@@ -57,26 +52,7 @@ const ProductDetails = (props) => {
       });
   };
 
-  const onChangeAmazonImage = (info) => {
-    let formData = new FormData();
-    formData.append("amazonImage", info.file.originFileObj);
-    const queryObj = {
-      id: productDetail.productId,
-      amazonImage: true,
-      formData,
-    };
-    dispatch(editProductImageAction(queryObj));
-  };
-  const onChangeImage = (info) => {
-    let formData = new FormData();
-    formData.append("image", info.file.originFileObj);
-    const queryObj = {
-      id: productDetail.productId,
-      amazonImage: false,
-      formData,
-    };
-    dispatch(editProductImageAction(queryObj));
-  };
+  const { TextArea } = Input;
   console.log("product detail", productDetail);
   return (
     <>
@@ -95,25 +71,15 @@ const ProductDetails = (props) => {
                   alt="product"
                   className="productDetailImg"
                 />
-
-                <Upload
-                  customRequest={dummyRequest}
-                  onChange={onChangeImage}
-                  accept="image/x-png,image/gif,image/jpeg"
-                  showUploadList={false}
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={<SyncOutlined />}
+                  size="small"
+                  className="changePic"
                 >
-                  <Button
-                    type="primary"
-                    shape="round"
-                    icon={<SyncOutlined />}
-                    size="small"
-                    className="changePic"
-                    loading={uploading}
-                    progress={false}
-                  >
-                    Change Pic
-                  </Button>
-                </Upload>
+                  Change Pic
+                </Button>
               </div>
               <div className="divider"></div>
               <div className="productImgWrapper">
@@ -123,25 +89,15 @@ const ProductDetails = (props) => {
                   alt="product"
                   className="productDetailImg"
                 />
-
-                <Upload
-                  customRequest={dummyRequest}
-                  onChange={onChangeAmazonImage}
-                  accept="image/x-png,image/gif,image/jpeg"
-                  showUploadList={false}
-                  progress={false}
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={<SyncOutlined />}
+                  size="small"
+                  className="changePic"
                 >
-                  <Button
-                    type="primary"
-                    shape="round"
-                    icon={<SyncOutlined />}
-                    size="small"
-                    className="changePic"
-                    loading={uploading}
-                  >
-                    Change Pic
-                  </Button>
-                </Upload>
+                  Change Pic
+                </Button>
               </div>
             </div>
           </Col>
@@ -420,11 +376,10 @@ const ProductDetails = (props) => {
 };
 
 const mapStateToProps = ({ products }) => {
-  const { productDetail, loading, uploading } = products;
+  const { productDetail, loading } = products;
   return {
     productDetail,
     loading,
-    uploading,
   };
 };
 

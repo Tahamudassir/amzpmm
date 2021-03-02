@@ -4,7 +4,7 @@ import { message } from "antd";
 const baseURL = process.env.REACT_APP_API_URL;
 const service = axios.create({
   baseURL,
-  timeout: 30000,
+  timeout: 100000,
 });
 // // API Request interceptor
 service.interceptors.request.use(
@@ -12,8 +12,6 @@ service.interceptors.request.use(
     const jwtToken = localStorage.getItem("AUTH_TOKEN");
     config.headers = {
       Authorization: `Bearer ${jwtToken}`,
-      Accept: "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
     };
     return config;
   },

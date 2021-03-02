@@ -14,7 +14,7 @@ const refundConditionTwo = "Product+PP fee is covered";
 const commssionConditionOne = "Commission after review .";
 const commsionCondtionTwo = "No commission on deleted reviews .";
 
-export default {
+const data = {
   instructionOne,
   instructionTwo,
   instructionThree,
@@ -27,3 +27,4 @@ export default {
   commssionConditionOne,
   commsionCondtionTwo,
 };
+export default data;
