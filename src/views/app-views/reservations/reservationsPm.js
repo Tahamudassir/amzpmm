@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getReservationsPmmAction } from "../../../redux/actions/Reservations";
+import { getReservationsPmAction } from "../../../redux/actions/Reservations";
 import { Table, Button } from "antd";
 import moment from "moment-timezone";
 import "./styles.css";
 
 const Reservations = (props) => {
-  const { loading, reserveProductsPmm, dispatch } = props;
+  const { loading, reservedOrdersPm, dispatch } = props;
 
   useEffect(() => {
-    dispatch(getReservationsPmmAction());
+    dispatch(getReservationsPmAction());
   }, []);
 
   const history = useHistory();
@@ -73,7 +73,7 @@ const Reservations = (props) => {
       <div className="reserveProducts">
         <p>Active Reservations</p>
         <Table
-          dataSource={reserveProductsPmm}
+          dataSource={reservedOrdersPm}
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
@@ -84,9 +84,9 @@ const Reservations = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { reserveOrdersPmm, loading } = state.reservations;
+  const { reservedOrdersPm, loading } = state.reservations;
   return {
-    reserveOrdersPmm,
+    reservedOrdersPm,
     loading,
   };
 };

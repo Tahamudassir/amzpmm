@@ -10,35 +10,21 @@ import {
   Avatar,
   Form,
   message,
+  Upload,
 } from "antd";
 import { SyncOutlined } from "@ant-design/icons";
-import { editUserAction } from "../../../redux/actions/Auth";
+import {
+  editUserAction,
+  editUserAvatarAction,
+} from "../../../redux/actions/Auth";
+import rules from "../../../constants/validationRules";
+import { dummyRequest } from "../../../constants/DummyData";
 import "./styles.css";
 
-const rules = {
-  username: [
-    {
-      required: true,
-      message: "Name can't be empty",
-    },
-  ],
-  fbLink: [
-    {
-      type: "url",
-      message: "This is not a valid url",
-    },
-  ],
-  phone: [
-    {
-      pattern: /^[0-9]+$/,
-      message:
-        "Phone number should not contain any characters other then numbers",
-    },
-  ],
-};
 const Profile = (props) => {
-  const { user, dispatch, loading } = props;
+  const { user, dispatch, loading, uploading } = props;
   const [form] = Form.useForm();
+
   const updateProfile = () => {
     form
       .validateFields()
@@ -49,6 +35,13 @@ const Profile = (props) => {
         message.error("Validate Failed:", info);
       });
   };
+
+  const onChangeProfileImage = (info) => {
+    let formData = new FormData();
+    formData.append("imageUrl", info.file.originFileObj);
+    dispatch(editUserAvatarAction(formData));
+  };
+
   return (
     <div>
       <div className="headingProfile">
@@ -70,14 +63,24 @@ const Profile = (props) => {
               />
               <h2 className="userName">{user && user.username}</h2>
               <p className="userType">{user && user.userType}</p>
-              <Button
-                type="primary"
-                shape="round"
-                icon={<SyncOutlined />}
-                size={32}
+              <Upload
+                customRequest={dummyRequest}
+                onChange={onChangeProfileImage}
+                accept="image/x-png,image/gif,image/jpeg"
+                showUploadList={false}
+                progress={false}
               >
-                Change Pic
-              </Button>
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={<SyncOutlined />}
+                  size="small"
+                  className="changePic"
+                  loading={uploading}
+                >
+                  Change Pic
+                </Button>
+              </Upload>
             </div>
             <div className="profileWorkload">
               <p>Workload</p>
@@ -160,10 +163,11 @@ const Profile = (props) => {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { user, loading } = auth;
+  const { user, loading, uploading } = auth;
   return {
     user,
     loading,
+    uploading,
   };
 };
 

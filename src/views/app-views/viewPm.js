@@ -9,7 +9,7 @@ export const AppViews = () => {
         <Route path="/home" component={lazy(() => import(`./home`))} />
         <Route
           path={`/reservations`}
-          component={lazy(() => import("./reservations"))}
+          component={lazy(() => import("./reservations/reservationsPm"))}
         />
         <Route
           path={`/create-order`}

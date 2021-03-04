@@ -1,38 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
-import { Button, Input, Row, Col, Spin, Form, message, Upload } from "antd";
+import {
+  Button,
+  Input,
+  Row,
+  Col,
+  Spin,
+  Form,
+  message,
+  Upload,
+  InputNumber,
+} from "antd";
 import { SyncOutlined, EditOutlined } from "@ant-design/icons";
 import {
   viewProductAction,
   editProductAction,
   editProductImageAction,
 } from "../../../redux/actions/Product";
+import rules from "../../../constants/validationRules";
+import { dummyRequest } from "../../../constants/DummyData";
 import "./styles.css";
 
-const rules = {
-  required: [
-    {
-      required: true,
-      message: "This field is required",
-    },
-  ],
-  number: [
-    {
-      required: true,
-      message: "This field is required",
-    },
-    {
-      type: "number",
-      message: "This field must be a number",
-    },
-  ],
-};
-const dummyRequest = ({ file, onSuccess }) => {
-  setTimeout(() => {
-    onSuccess("ok");
-  }, 0);
-};
 const ProductDetails = (props) => {
   const { productDetail, loading, dispatch, uploading } = props;
   const [form] = Form.useForm();
@@ -77,7 +66,6 @@ const ProductDetails = (props) => {
     };
     dispatch(editProductImageAction(queryObj));
   };
-  console.log("product detail", productDetail);
   return (
     <>
       <div className="headingDetails">
@@ -318,10 +306,10 @@ const ProductDetails = (props) => {
                           rules={rules.number}
                           hasFeedback
                           initialValue={
-                            productDetail ? productDetail.saleLimitOverall : ""
+                            productDetail ? productDetail.saleLimitOverall : 0
                           }
                         >
-                          <Input />
+                          <InputNumber />
                         </Form.Item>
                       </Col>
                       <Col span={1} />
@@ -332,10 +320,10 @@ const ProductDetails = (props) => {
                           rules={rules.number}
                           hasFeedback
                           initialValue={
-                            productDetail ? productDetail.saleLimitDay : ""
+                            productDetail ? productDetail.saleLimitDay : 0
                           }
                         >
-                          <Input />
+                          <InputNumber width="100%" />
                         </Form.Item>
                       </Col>
                     </Row>

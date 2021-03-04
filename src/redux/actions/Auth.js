@@ -26,3 +26,10 @@ export const signUpAction = (queryData) => {
     payload: queryData,
   };
 };
+
+export const editUserAvatarAction = (queryData) => {
+  return {
+    type: types.EDIT_USER_AVATAR,
+    payload: queryData,
+  };
+};

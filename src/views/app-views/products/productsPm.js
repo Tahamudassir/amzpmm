@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { Table, Button, Row, Col, Select, Input } from "antd";
-import { EyeOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { Table, Button, Row, Col, Select, Input, Spin } from "antd";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { getProductsAction } from "../../../redux/actions/Product";
+import { reserveProductAction } from "../../../redux/actions/Reservations";
 import UserInfo from "../../../components/UserInfo";
 import "./styles.css";
 
 const Products = (props) => {
-  const { dispatch, products, loading } = props;
+  const { dispatch, products, loading, reserving } = props;
+  const [productStatus, setProductStatus] = useState("Enabled");
+  const history = useHistory();
+
   useEffect(() => {
     dispatch(getProductsAction({ status: "Enabled" }));
   }, []);
-  const [productStatus, setProductStatus] = useState("Enabled");
-  const history = useHistory();
+
   const changeProductStatus = (e) => {
     setProductStatus(e);
     dispatch(getProductsAction({ status: e }));
+  };
+
+  const onReserveProduct = (id) => {
+    dispatch(reserveProductAction({ productId: id }));
   };
 
   const navigateToDetails = (id) => {
@@ -72,7 +79,7 @@ const Products = (props) => {
       title: "",
       dataIndex: "",
       key: "id",
-      render: (cell, row, index) => (
+      render: (cell) => (
         <Button
           type="primary"
           className="btnAddProduct"
@@ -83,6 +90,23 @@ const Products = (props) => {
           icon={<EyeOutlined />}
         >
           View
+        </Button>
+      ),
+    },
+    {
+      title: "",
+      dataIndex: "",
+      key: "id",
+      render: (cell) => (
+        <Button
+          type="primary"
+          size="small"
+          onClick={() => {
+            onReserveProduct(cell.productId);
+          }}
+          icon={<EditOutlined />}
+        >
+          Reserve
         </Button>
       ),
     },
@@ -138,15 +162,22 @@ const Products = (props) => {
           loading={loading}
         />
       </div>
+      {reserving && (
+        <div className="loadingSpin">
+          <Spin />
+        </div>
+      )}
     </>
   );
 };
 
 const mapStateToProps = (state) => {
   const { products, loading } = state.products;
+  const { reserving } = state.reservations;
   return {
     products,
     loading,
+    reserving,
   };
 };
 
