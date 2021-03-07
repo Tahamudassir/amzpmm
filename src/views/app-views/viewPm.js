@@ -22,6 +22,10 @@ export const AppViews = () => {
 
         <Route path="/orders" component={lazy(() => import(`./orders`))} />
         <Route
+          path="/order-detail/:id"
+          component={lazy(() => import(`./orders/orderDetailPm`))}
+        />
+        <Route
           path="/create-excel"
           component={lazy(() => import(`./createExcel`))}
         />

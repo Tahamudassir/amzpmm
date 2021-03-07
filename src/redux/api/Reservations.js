@@ -1,7 +1,7 @@
 import API from "../config/lib";
 
 export async function getReservationsPmmApi() {
-  return API.get("/reservation/getreservedproducts");
+  return API.get("/reservation/getuserreservations");
 }
 
 export async function getReservationsPmApi() {

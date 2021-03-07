@@ -7,6 +7,13 @@ export const getProductsAction = (queryData) => {
   };
 };
 
+export const getProductsPmAction = (queryData) => {
+  return {
+    type: types.GET_PRODUCTS_PM,
+    payload: queryData,
+  };
+};
+
 export const filterProductsAction = (queryData) => {
   return {
     type: types.FILTER_PRODUCTS,
@@ -39,5 +46,31 @@ export const editProductImageAction = (queryData) => {
   return {
     type: types.EDIT_PRODUCT_IMAGE,
     payload: queryData,
+  };
+};
+
+export const searchByKeyword = (keyword) => {
+  return {
+    type: types.SEARCH_BY_KEYWORD,
+    payload: keyword,
+  };
+};
+export const searchById = (id) => {
+  return {
+    type: types.SEARCH_BY_ID,
+    payload: id,
+  };
+};
+export const searchByMarket = (market) => {
+  return {
+    type: types.SEARCH_BY_MARKET,
+    payload: market,
+  };
+};
+
+export const changeProductStatusAction = (queryOb) => {
+  return {
+    type: types.CHANGE_PRODUCT_STATUS,
+    payload: queryOb,
   };
 };

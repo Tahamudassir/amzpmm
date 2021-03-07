@@ -20,6 +20,12 @@
   margin-left: 5px;
   font-weight: 500;
 }
+.loadingSpin {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0);
+}
 @media (max-width: 780px) {
   .createExcel {
     text-align: center;

@@ -1,21 +1,25 @@
 import API from "../config/lib";
 
-export async function getProductsApi(queryData) {
+export function getProductsApi(queryData) {
+  return API.post("/product/getbyuserid", queryData);
+}
+
+export function getProductsPmApi(queryData) {
   return API.post("/product/sort", queryData);
 }
-export async function addProductApi(queryData) {
+export function addProductApi(queryData) {
   return API.post("/product/add", queryData);
 }
-export async function filterProductsApi(queryData) {
+export function filterProductsApi(queryData) {
   return API.post("/order/add", queryData);
 }
-export async function viewProductApi(queryData) {
+export function viewProductApi(queryData) {
   return API.post("/product/getbyid", queryData);
 }
-export async function editProductApi(queryData) {
+export function editProductApi(queryData) {
   return API.post("/product/edit", queryData);
 }
-export async function editProductImageApi(queryData) {
+export function editProductImageApi(queryData) {
   if (queryData.amazonImage) {
     return API.post(
       `/product/editamazonimage/${queryData.id}`,

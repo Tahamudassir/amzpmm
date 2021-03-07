@@ -1,4 +1,4 @@
-import { put, takeLatest } from "redux-saga/effects";
+import { put, takeLatest, select } from "redux-saga/effects";
 import { message } from "antd";
 import {
   getProductsApi,
@@ -6,14 +6,30 @@ import {
   editProductApi,
   addProductApi,
   editProductImageApi,
+  getProductsPmApi,
 } from "../api/Products";
 import { getErrorMessage } from "../constants/ErrorMessage";
-// import { selectUser } from "../selectors";
+import { selectProducts } from "../selectors";
 import types from "../constants/Products";
 
 function* getProducts(action) {
   try {
     const response = yield getProductsApi(action.payload);
+    if (response.status >= 200 && response.status < 300) {
+      yield put({ type: types.GET_PRODUCTS_SUCCESS, payload: response.data });
+    } else {
+      yield put({ type: types.GET_PRODUCTS_FAILURE });
+    }
+  } catch (error) {
+    yield put({ type: types.GET_PRODUCTS_FAILURE });
+    let errorMessage = yield getErrorMessage(error);
+    message.error(errorMessage);
+  }
+}
+
+function* getProductsPm(action) {
+  try {
+    const response = yield getProductsPmApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.GET_PRODUCTS_SUCCESS, payload: response.data });
     } else {
@@ -38,7 +54,7 @@ function* viewProduct(action) {
       yield put({ type: types.VIEW_PRODUCT_FAILURE });
     }
   } catch (error) {
-    yield put({ type: types.VIEW_PRODUCT_SUCCESS });
+    yield put({ type: types.VIEW_PRODUCT_FAILURE });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
   }
@@ -98,10 +114,35 @@ function* editProductImage(action) {
   }
 }
 
+function* changeProductStatus({ payload }) {
+  try {
+    const products = yield select(selectProducts);
+    const response = yield editProductApi(payload);
+    if (response.status >= 200 && response.status < 300) {
+      const newProducts = products.filter(
+        (product) => product.productId !== payload.productId
+      );
+      yield put({
+        type: types.CHANGE_PRODUCT_STATUS_SUCCESS,
+        payload: newProducts,
+      });
+      message.success("changed product status");
+    } else {
+      yield put({ type: types.CHANGE_PRODUCT_STATUS_FAILURE });
+    }
+  } catch (error) {
+    yield put({ type: types.CHANGE_PRODUCT_STATUS_FAILURE });
+    let errorMessage = yield getErrorMessage(error);
+    message.error(errorMessage);
+  }
+}
+
 export default function* productSaga() {
   yield takeLatest(types.GET_PRODUCTS, getProducts);
+  yield takeLatest(types.GET_PRODUCTS_PM, getProductsPm);
   yield takeLatest(types.VIEW_PRODUCT, viewProduct);
   yield takeLatest(types.EDIT_PRODUCT, editProduct);
   yield takeLatest(types.ADD_PRODUCT, addProduct);
   yield takeLatest(types.EDIT_PRODUCT_IMAGE, editProductImage);
+  yield takeLatest(types.CHANGE_PRODUCT_STATUS, changeProductStatus);
 }

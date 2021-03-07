@@ -65,11 +65,9 @@ function* editUserProfile(action) {
 
 function* editUserAvatar(action) {
   try {
-    let user = yield select(selectUser);
     const response = yield editUserAvatarApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
-      let imageUrl = response.data.imageUrl;
-      user.imageUrl = imageUrl;
+      let user = response.data.result;
       yield put({
         type: types.EDIT_USER_AVATAR_SUCCESS,
         payload: user,

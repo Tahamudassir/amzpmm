@@ -3,17 +3,26 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Button, Row, Col, Select, Input } from "antd";
 import { EyeOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { getProductsAction } from "../../../redux/actions/Product";
-import UserInfo from "../../../components/UserInfo";
+import {
+  getProductsAction,
+  searchById,
+  searchByMarket,
+  searchByKeyword,
+  changeProductStatusAction,
+} from "../../../redux/actions/Product";
+import { filterProducts } from "../../../redux/selectors";
+// import UserInfo from "../../../components/UserInfo";
 import "./styles.css";
 
 const Products = (props) => {
   const { dispatch, products, loading } = props;
+  const [productStatus, setProductStatus] = useState("Enabled");
+  const history = useHistory();
+
   useEffect(() => {
     dispatch(getProductsAction({ status: "Enabled" }));
   }, []);
-  const [productStatus, setProductStatus] = useState("Enabled");
-  const history = useHistory();
+
   const changeProductStatus = (e) => {
     setProductStatus(e);
     dispatch(getProductsAction({ status: e }));
@@ -27,11 +36,16 @@ const Products = (props) => {
   };
 
   const columns = [
+    // {
+    //   title: "Seller Name",
+    //   dataIndex: "User",
+    //   key: "id",
+    //   render: (user) => <UserInfo user={user} />,
+    // },
     {
       title: "Seller Name",
-      dataIndex: "User",
+      dataIndex: "sellerName",
       key: "id",
-      render: (user) => <UserInfo user={user} />,
     },
     {
       title: "Market",
@@ -75,7 +89,7 @@ const Products = (props) => {
       title: "",
       dataIndex: "",
       key: "id",
-      render: (cell, row, index) => (
+      render: (cell) => (
         <Button
           type="primary"
           className="btnAddProduct"
@@ -93,13 +107,38 @@ const Products = (props) => {
       title: "",
       dataIndex: "",
       key: "id",
-      render: () => (
-        <Button type="primary" size="small">
-          Enabled
-        </Button>
-      ),
+      render: (cell) => {
+        return (
+          <Button
+            type="primary"
+            size="small"
+            onClick={() => editProductStatus(cell.status, cell.productId)}
+          >
+            {cell.status}
+          </Button>
+        );
+      },
     },
   ];
+
+  const editProductStatus = (oldStatus, productId) => {
+    if (oldStatus === "Enabled") {
+      dispatch(changeProductStatusAction({ productId, status: "Disabled" }));
+    } else {
+      dispatch(changeProductStatusAction({ productId, status: "Enabled" }));
+    }
+  };
+
+  const onSearchById = (e) => {
+    dispatch(searchById(parseInt(e)));
+  };
+  const onSearchByMarket = (e) => {
+    dispatch(searchByMarket(e));
+  };
+  const onSearchByKeyword = (e) => {
+    dispatch(searchByKeyword(e));
+  };
+
   const { Search } = Input;
   const { Option } = Select;
   return (
@@ -121,11 +160,21 @@ const Products = (props) => {
         style={{ marginBottom: "20px" }}
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <Search placeholder="Search by product code" enterButton />
+          <Search
+            placeholder="Search by product code"
+            enterButton
+            allowClear
+            onSearch={onSearchById}
+          />
         </Col>
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-          <Search placeholder="Search by keyword" enterButton />
+          <Search
+            placeholder="Search by keyword"
+            enterButton
+            allowClear
+            onSearch={onSearchByKeyword}
+          />
         </Col>
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
@@ -133,10 +182,13 @@ const Products = (props) => {
             showSearch
             style={{ width: "100%" }}
             placeholder="Select Market"
+            onSelect={onSearchByMarket}
+            allowClear
+            onClear={() => dispatch(searchByMarket(""))}
           >
-            <Option value="jack">DE</Option>
-            <Option value="lucy">UK</Option>
-            <Option value="tom">USA</Option>
+            <Option value="DE">DE</Option>
+            <Option value="UK">UK</Option>
+            <Option value="USA">USA</Option>
           </Select>
         </Col>
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
@@ -165,9 +217,9 @@ const Products = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { products, loading } = state.products;
+  const { loading } = state.products;
   return {
-    products,
+    products: filterProducts(state.products),
     loading,
   };
 };
