@@ -45,6 +45,11 @@ const orders = (state = initState, action) => {
         ...state,
         loading: false,
       };
+    case types.EDIT_ORDER_PIC:
+      return {
+        ...state,
+        editing: true,
+      };
     case types.EDIT_ORDER:
       return {
         ...state,
@@ -53,14 +58,14 @@ const orders = (state = initState, action) => {
     case types.EDIT_ORDER_SUCCESS:
       return {
         ...state,
-        loading: false,
-        editing: action.payload,
+        editing: false,
       };
     case types.EDIT_ORDER_FAILURE:
       return {
         ...state,
         editing: false,
       };
+
     case types.NEW_ORDER:
       return {
         ...state,

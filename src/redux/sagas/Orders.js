@@ -8,6 +8,9 @@ import {
   viewOrderApi,
   editOrderApi,
   getOrdersByStatusApi,
+  editOrderPicApi,
+  editRefundPicApi,
+  editReviewPicApi,
 } from "../api/Orders";
 import { getErrorMessage } from "../constants/ErrorMessage";
 import { selectUser } from "../selectors";
@@ -120,8 +123,36 @@ function* exportOrdersToExcel({ payload }) {
       message.error("failed to generate excel file");
     }
   } catch (error) {
-    console.log("error", error);
     yield put({ type: types.EXPORT_TO_EXCEL_FAILURE });
+    let errorMessage = yield getErrorMessage(error);
+    message.error(errorMessage);
+  }
+}
+
+function* editOrderPicture(action) {
+  try {
+    let orderPicType = action.orderPicType;
+    let response = null;
+
+    if (orderPicType === "Order") {
+      response = yield editOrderPicApi(action.payload);
+    } else if (orderPicType === "Review") {
+      response = yield editRefundPicApi(action.payload);
+    } else {
+      response = yield editReviewPicApi(action.payload);
+    }
+
+    if (response.status >= 200 && response.status < 300) {
+      yield put({
+        type: types.EDIT_ORDER_SUCCESS,
+        payload: response.data.result,
+      });
+      message.success("updated successfully");
+    } else {
+      yield put({ type: types.EDIT_ORDER_FAILURE });
+    }
+  } catch (error) {
+    yield put({ type: types.EDIT_ORDER_FAILURE });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
   }
@@ -133,4 +164,5 @@ export default function* orderSaga() {
   yield takeLatest(types.NEW_ORDER, addNewOrder);
   yield takeLatest(types.VIEW_ORDER, viewOrder);
   yield takeLatest(types.EDIT_ORDER, editOrder);
+  yield takeLatest(types.EDIT_ORDER_PIC, editOrderPicture);
 }

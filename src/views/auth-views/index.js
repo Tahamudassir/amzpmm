@@ -14,6 +14,10 @@ export const AppViews = () => {
           path="/register"
           component={lazy(() => import(`./authentication/register-2`))}
         />
+        <Route
+          path="/products/public"
+          component={lazy(() => import(`./products`))}
+        />
         <Redirect from="*" to="/login" />
       </Switch>
     </Suspense>

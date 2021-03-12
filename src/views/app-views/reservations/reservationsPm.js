@@ -7,7 +7,7 @@ import moment from "moment-timezone";
 import "./styles.css";
 
 const Reservations = (props) => {
-  const { loading, reservedOrdersPm, dispatch } = props;
+  const { loading, reservations, dispatch } = props;
 
   useEffect(() => {
     dispatch(getReservationsPmAction());
@@ -73,7 +73,7 @@ const Reservations = (props) => {
       <div className="reserveProducts">
         <p>Active Reservations</p>
         <Table
-          dataSource={reservedOrdersPm}
+          dataSource={reservations}
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
@@ -84,9 +84,9 @@ const Reservations = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { reservedOrdersPm, loading } = state.reservations;
+  const { reservations, loading } = state.reservations;
   return {
-    reservedOrdersPm,
+    reservations,
     loading,
   };
 };

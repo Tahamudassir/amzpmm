@@ -67,9 +67,9 @@ const dashBoardNavTree = [
     submenu: [],
   },
   {
-    key: "tutorial",
-    path: "/tutorial",
-    title: "Tutorials",
+    key: "rules",
+    path: "/rules",
+    title: "Rules / Regulations",
     icon: InfoOutlined,
     breadcrumb: false,
     submenu: [],

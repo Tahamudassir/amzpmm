@@ -28,6 +28,13 @@ export const editOrderAction = (queryData) => {
   };
 };
 
+export const editOrderPicAction = (queryData) => {
+  return {
+    type: types.EDIT_ORDER_PIC,
+    payload: queryData,
+  };
+};
+
 export const searchOrderByCustomerEmail = (email) => {
   return {
     type: types.SEARCH_ORDER_BY_CUSTOMER_EMAIL,

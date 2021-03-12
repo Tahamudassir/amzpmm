@@ -2,40 +2,24 @@ import types from "../constants/Reservations";
 
 const initState = {
   loading: false,
-  reserveOrdersPmm: null,
-  reserveOrdersPm: null,
+  reservations: null,
+  // reserveOrdersPm: null,
 };
 
 const reservations = (state = initState, action) => {
   switch (action.type) {
-    case types.GET_RESERVED_PRODUCTS_PM:
+    case types.GET_RESERVED_PRODUCTS:
       return {
         ...state,
         loading: true,
       };
-    case types.GET_RESERVED_PRODUCTS_SUCCESS_PM:
+    case types.GET_RESERVED_PRODUCTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        reservedOrdersPm: action.payload,
+        reservations: action.payload,
       };
-    case types.GET_RESERVED_PRODUCTS_FAILURE_PM:
-      return {
-        ...state,
-        loading: false,
-      };
-    case types.GET_RESERVED_PRODUCTS_PMM:
-      return {
-        ...state,
-        loading: true,
-      };
-    case types.GET_RESERVED_PRODUCTS_SUCCESS_PMM:
-      return {
-        ...state,
-        loading: false,
-        reserveOrdersPmm: action.payload,
-      };
-    case types.GET_RESERVED_PRODUCTS_FAILURE_PMM:
+    case types.GET_RESERVED_PRODUCTS_FAILURE:
       return {
         ...state,
         loading: false,
@@ -54,6 +38,22 @@ const reservations = (state = initState, action) => {
       return {
         ...state,
         reserving: false,
+      };
+    case types.RELEASE_PRODUCT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.RELEASE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        reservations: action.payload,
+      };
+    case types.RELEASE_PRODUCT_FAILURE:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

@@ -23,7 +23,7 @@ const ChangePassword = (props) => {
       <h4 className="changePwd">Change Password</h4>
       <div className="cardChangePwd">
         <Row>
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+          <Col xs={24} sm={24} md={11} lg={11} xl={11}>
             <p className="labelPwd">Update Password</p>
             <p>{staticData.updatePasswordDesc}</p>
             <Form onFinish={onChangePassword}>
@@ -72,7 +72,14 @@ const ChangePassword = (props) => {
               </Form.Item>
             </Form>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}></Col>
+          <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <img
+              src="https://p2.piqsels.com/preview/705/161/167/adult-business-businesswoman-choices-thumbnail.jpg"
+              alt="person discussing"
+              style={{ borderRadius: "4px" }}
+            />
+          </Col>
         </Row>
       </div>
     </>

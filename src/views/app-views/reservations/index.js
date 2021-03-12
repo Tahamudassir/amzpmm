@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getReservationsPmmAction } from "../../../redux/actions/Reservations";
+import {
+  getReservationsAction,
+  releaseProductAction,
+} from "../../../redux/actions/Reservations";
 import { Table, Button } from "antd";
 import moment from "moment-timezone";
 import "./styles.css";
 
 const Reservations = (props) => {
-  const { loading, reserveOrdersPmm, dispatch } = props;
+  const { loading, reservations, dispatch } = props;
 
   useEffect(() => {
-    dispatch(getReservationsPmmAction());
+    dispatch(getReservationsAction());
   }, []);
 
   const history = useHistory();
@@ -60,20 +63,29 @@ const Reservations = (props) => {
     },
     {
       key: "id",
-      render: (cell, row, index) => (
-        <Button type="primary" className="btnViewOrder" size="small">
+      render: (cell) => (
+        <Button
+          type="primary"
+          size="small"
+          onClick={() => onReleaseProduct(cell)}
+        >
           Release
         </Button>
       ),
     },
   ];
+
+  const onReleaseProduct = (obj) => {
+    let { productId, _id } = obj;
+    dispatch(releaseProductAction({ productId, reservationId: _id }));
+  };
   return (
     <>
       <h4 className="reserveTitle">Reserved Orders</h4>
       <div className="reserveProducts">
         <p>Active Reservations</p>
         <Table
-          dataSource={reserveOrdersPmm}
+          dataSource={reservations}
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
@@ -84,10 +96,9 @@ const Reservations = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { reserveOrdersPmm, loading } = state.reservations;
-  console.log("reserve", reserveOrdersPmm);
+  const { reservations, loading } = state.reservations;
   return {
-    reserveOrdersPmm,
+    reservations,
     loading,
   };
 };

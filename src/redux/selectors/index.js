@@ -45,3 +45,7 @@ export const filterProducts = (data) => {
 export const selectProducts = (state) => {
   return state.products && state.products.products;
 };
+
+export const selectReservations = (state) => {
+  return state.reservations && state.reservations.reservations;
+};

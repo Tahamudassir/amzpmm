@@ -16,14 +16,15 @@ import { SyncOutlined, EditOutlined } from "@ant-design/icons";
 import {
   viewOrderAction,
   editOrderAction,
-  // editProductImageAction,
+  editOrderPicAction,
 } from "../../../redux/actions/Orders";
+import Loading from "../../../components/Loading";
 import rules from "../../../constants/validationRules";
 import { dummyRequest } from "../../../constants/DummyData";
 import "./styles.css";
 
 const OrderDetailPm = (props) => {
-  const { orderDetail, loading, editing, dispatch, uploading } = props;
+  const { orderDetail, loading, dispatch } = props;
   const [form] = Form.useForm();
   const [editOrder, setEditOrder] = useState(false);
   const { id } = useParams();
@@ -35,6 +36,7 @@ const OrderDetailPm = (props) => {
   const switchEditOrder = () => {
     setEditOrder(!editOrder);
   };
+
   const onEditOrder = () => {
     form
       .validateFields()
@@ -46,26 +48,37 @@ const OrderDetailPm = (props) => {
       });
   };
 
-  // const onChangeAmazonImage = (info) => {
-  //   let formData = new FormData();
-  //   formData.append("amazonImage", info.file.originFileObj);
-  //   const queryObj = {
-  //     id: productDetail.productId,
-  //     amazonImage: true,
-  //     formData,
-  //   };
-  //   dispatch(editProductImageAction(queryObj));
-  // };
-  // const onChangeImage = (info) => {
-  //   let formData = new FormData();
-  //   formData.append("image", info.file.originFileObj);
-  //   const queryObj = {
-  //     id: productDetail.productId,
-  //     amazonImage: false,
-  //     formData,
-  //   };
-  //   dispatch(editProductImageAction(queryObj));
-  // };
+  const onChangeOrderImage = (info) => {
+    let formData = new FormData();
+    formData.append("image", info.file.originFileObj);
+    const queryObj = {
+      id: orderDetail.product_id,
+      image: formData,
+      orderPicType: "Order",
+    };
+    dispatch(editOrderPicAction(queryObj));
+  };
+
+  const onChangeRefundImage = (info) => {
+    let formData = new FormData();
+    formData.append("image", info.file.originFileObj);
+    const queryObj = {
+      id: orderDetail.product_id,
+      image: formData,
+      orderPicType: "Refund",
+    };
+    dispatch(editOrderPicAction(queryObj));
+  };
+  const onChangeReviewImage = (info) => {
+    let formData = new FormData();
+    formData.append("image", info.file.originFileObj);
+    const queryObj = {
+      id: orderDetail.product_id,
+      image: formData,
+      orderPicType: "Review",
+    };
+    dispatch(editOrderPicAction(queryObj));
+  };
 
   const onStatusChanged = (value) => {
     form.setFieldsValue({
@@ -79,6 +92,7 @@ const OrderDetailPm = (props) => {
         <p className="small">Overview</p>
         <h4 className="large">Order Details</h4>
       </div>
+      {loading && <Loading />}
       {orderDetail ? (
         <Row gutter={[0, 16]}>
           <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -93,7 +107,7 @@ const OrderDetailPm = (props) => {
 
                 <Upload
                   customRequest={dummyRequest}
-                  // onChange={onChangeImage}
+                  onChange={onChangeOrderImage}
                   accept="image/x-png,image/gif,image/jpeg"
                   showUploadList={false}
                 >
@@ -103,7 +117,6 @@ const OrderDetailPm = (props) => {
                     icon={<SyncOutlined />}
                     size="small"
                     className="changePic"
-                    loading={uploading}
                     progress={false}
                   >
                     Change Pic
@@ -121,7 +134,7 @@ const OrderDetailPm = (props) => {
 
                 <Upload
                   customRequest={dummyRequest}
-                  // onChange={onChangeAmazonImage}
+                  onChange={onChangeRefundImage}
                   accept="image/x-png,image/gif,image/jpeg"
                   showUploadList={false}
                   progress={false}
@@ -132,7 +145,6 @@ const OrderDetailPm = (props) => {
                     icon={<SyncOutlined />}
                     size="small"
                     className="changePic"
-                    loading={uploading}
                   >
                     Change Pic
                   </Button>
@@ -149,7 +161,7 @@ const OrderDetailPm = (props) => {
 
                 <Upload
                   customRequest={dummyRequest}
-                  // onChange={onChangeAmazonImage}
+                  onChange={onChangeReviewImage}
                   accept="image/x-png,image/gif,image/jpeg"
                   showUploadList={false}
                   progress={false}
@@ -160,7 +172,6 @@ const OrderDetailPm = (props) => {
                     icon={<SyncOutlined />}
                     size="small"
                     className="changePic"
-                    // loading={uploading}
                   >
                     Change Pic
                   </Button>
@@ -346,9 +357,7 @@ const OrderDetailPm = (props) => {
           </Col>
         </Row>
       ) : (
-        <div className="loadingSpin">
-          <Spin />
-        </div>
+        <Loading />
       )}
     </>
   );

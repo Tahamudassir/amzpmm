@@ -9,7 +9,7 @@ export const AppViews = () => {
         <Route path="/home" component={lazy(() => import(`./home`))} />
         <Route
           path={`/reservations`}
-          component={lazy(() => import("./reservations/reservationsPm"))}
+          component={lazy(() => import("./reservations"))}
         />
         <Route
           path={`/create-order`}
@@ -19,7 +19,7 @@ export const AppViews = () => {
           path={`/products`}
           component={lazy(() => import(`./products/productsPm`))}
         />
-
+        <Route path="/rules" component={lazy(() => import(`./tutorial`))} />
         <Route path="/orders" component={lazy(() => import(`./orders`))} />
         <Route
           path="/order-detail/:id"

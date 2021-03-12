@@ -53,7 +53,7 @@ const CreateExcel = (props) => {
       )}
       <div className="cardCreateExcel">
         <Row>
-          <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+          <Col xs={24} sm={24} md={9} lg={9} xl={9}>
             <Form
               form={form}
               layout="vertical"
@@ -103,8 +103,13 @@ const CreateExcel = (props) => {
               </Button>
             </Form>
           </Col>
+          <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
           <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-            {/* <img src="" alt="person discussing" /> */}
+            <img
+              src="https://p2.piqsels.com/preview/705/161/167/adult-business-businesswoman-choices-thumbnail.jpg"
+              alt="person discussing"
+              style={{ borderRadius: "4px" }}
+            />
           </Col>
         </Row>
       </div>
