@@ -17,11 +17,11 @@ export async function editOrderApi(queryData) {
   return API.post("/order/editorder", queryData);
 }
 export async function editReviewPicApi(queryData) {
-  return API.post(`/order/editreviewpic/${queryData.orderId}`, queryData.image);
+  return API.post(`/order/editreviewpic/${queryData.id}`, queryData.image);
 }
 export async function editOrderPicApi(queryData) {
-  return API.post(`/order/editorderpic/${queryData.orderId}`, queryData.image);
+  return API.post(`/order/editorderpic/${queryData.id}`, queryData.image);
 }
 export async function editRefundPicApi(queryData) {
-  return API.post(`/order/editrefundpic/${queryData.orderId}`, queryData.image);
+  return API.post(`/order/editrefundpic/${queryData.id}`, queryData.image);
 }

@@ -48,19 +48,12 @@ const rules = {
         "Phone number should not contain any characters other then numbers",
     },
   ],
-  confirm: [
+  phone_not_required: [
     {
-      required: true,
-      message: "Please confirm your password!",
+      pattern: /^[0-9]+$/,
+      message:
+        "Phone number should not contain any characters other then numbers",
     },
-    ({ getFieldValue }) => ({
-      validator(rule, value) {
-        if (!value || getFieldValue("password") === value) {
-          return Promise.resolve();
-        }
-        return Promise.reject("Passwords do not match!");
-      },
-    }),
   ],
 };
 
@@ -139,12 +132,15 @@ export const RegisterForm = (props) => {
           <Input.Password />
         </Form.Item>
         <Form.Item name="gender" label="Gender" rules={rules.required}>
-          <Select
-            placeholder="Select a option and change input text above"
-            allowClear
-          >
+          <Select placeholder="Select an option " allowClear>
             <Option value="male">male</Option>
             <Option value="female">female</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item name="userType" label="Role" rules={rules.required}>
+          <Select placeholder="Select an option" allowClear>
+            <Option value="PMM">Proxy Marketer Manager</Option>
+            <Option value="PM">Proxy Marketer</Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -166,18 +162,13 @@ export const RegisterForm = (props) => {
         <Form.Item name="city" label="City" rules={rules.required} hasFeedback>
           <Input />
         </Form.Item>
-        <Form.Item
-          name="referralName"
-          label="Referral Name"
-          rules={rules.required}
-          hasFeedback
-        >
+        <Form.Item name="referralName" label="Referral Name" hasFeedback>
           <Input />
         </Form.Item>
         <Form.Item
           name="referralContact"
           label="Referral Contact Number"
-          rules={rules.phone}
+          rules={rules.phone_not_required}
           hasFeedback
         >
           <Input />
@@ -185,33 +176,21 @@ export const RegisterForm = (props) => {
         <Form.Item
           name="paymentType"
           label="Bank Account /Jazz Cash /Easy paisa Title"
-          rules={rules.required}
           hasFeedback
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="bankName"
-          label="Bank Name"
-          rules={rules.required}
-          hasFeedback
-        >
+        <Form.Item name="bankName" label="Bank Name" hasFeedback>
           <Input />
         </Form.Item>
         <Form.Item
           name="payNumber"
           label="Bank Account /Jazz Cash /Easy paisa Number"
-          rules={rules.required}
           hasFeedback
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="branchCity"
-          label="Bank Branch City"
-          rules={rules.required}
-          hasFeedback
-        >
+        <Form.Item name="branchCity" label="Bank Branch City" hasFeedback>
           <Input />
         </Form.Item>
         <Form.Item>

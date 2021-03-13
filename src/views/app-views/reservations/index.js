@@ -50,12 +50,12 @@ const Reservations = (props) => {
     },
     {
       key: "id",
-      render: () => (
+      render: (cell) => (
         <Button
           type="primary"
           className="btnViewOrder"
           size="small"
-          onClick={() => history.push("/create-order")}
+          onClick={() => history.push(`/create-order/${cell.productId}`)}
         >
           Create Order
         </Button>

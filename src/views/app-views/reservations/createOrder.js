@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Row, Col, Input, Button, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { addNewOrderAction } from "../../../redux/actions/Orders";
@@ -28,19 +29,28 @@ const rules = {
       message: "This field is required",
     },
     {
-      pattern: /^[0-9]+$/,
-      message:
-        "Phone number should not contain any characters other then numbers",
+      pattern: /^\w\d{2}-?\d{7}-?\d{7}$/,
+      message: "Order number does not match the pattern xxx-xxxxxxx-xxxxxxx",
     },
   ],
 };
 const CreateOrder = (props) => {
-  const { loading, dispatch } = props;
+  const { loading, dispatch, clearForm } = props;
   const [form] = Form.useForm();
   const [orderPic, setOrderPic] = React.useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (clearForm) {
+      form.resetFields();
+      setOrderPic(null);
+    }
+  }, [clearForm]);
+
   const setPic = (file) => {
     setOrderPic(file);
   };
+
   const onAddOrder = () => {
     form
       .validateFields()
@@ -49,6 +59,7 @@ const CreateOrder = (props) => {
           message.error("Order Picture is required");
         }
         let bodyFormData = new FormData();
+        bodyFormData.append("product_id", id);
         bodyFormData.append("orderNumber", values.orderNumber);
         bodyFormData.append("customer_email", values.customer_email);
         bodyFormData.append("market", values.market);
@@ -96,14 +107,6 @@ const CreateOrder = (props) => {
               >
                 <Input />
               </Form.Item>
-              {/* <Form.Item
-          name="phone"
-          label="AMZ Review Link"
-          rules={rules.phone}
-          hasFeedback
-        >
-          <Input />
-        </Form.Item> */}
               <div style={{ margin: "20px 0px" }}>
                 <Upload
                   onChange={(file) => setPic(file)}
@@ -136,7 +139,7 @@ const CreateOrder = (props) => {
   );
 };
 const mapStateToProps = ({ orders }) => {
-  const { loading } = orders;
-  return { loading };
+  const { loading, clearForm } = orders;
+  return { loading, clearForm };
 };
 export default connect(mapStateToProps)(CreateOrder);

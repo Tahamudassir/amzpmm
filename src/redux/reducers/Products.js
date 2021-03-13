@@ -95,6 +95,7 @@ const products = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+        clearForm: true,
       };
     case types.ADD_PRODUCT_FAILURE:
       return {
@@ -132,6 +133,11 @@ const products = (state = initState, action) => {
       return {
         ...state,
         uploading: false,
+      };
+    case types.SET_NULL:
+      return {
+        ...state,
+        clearForm: false,
       };
     default:
       return state;

@@ -8,17 +8,19 @@ import {
   editUserAvatarApi,
 } from "../api/Auth";
 import { getErrorMessage } from "../constants/ErrorMessage";
-import { selectUser } from "../selectors";
 import types from "../constants/Auth";
 
 function* signin(action) {
   try {
     const response = yield signinApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
-      yield put({ type: types.AUTHENTICATED, payload: response.data });
-      localStorage.setItem("AUTH_TOKEN", response.data.token);
-    } else {
-      yield put({ type: types.SIGNIN_FAILED });
+      if (response.data.token) {
+        yield put({ type: types.AUTHENTICATED, payload: response.data });
+        localStorage.setItem("AUTH_TOKEN", response.data.token);
+      } else {
+        yield put({ type: types.SIGNIN_FAILED });
+        message.error(response.data);
+      }
     }
   } catch (error) {
     yield put({ type: types.SIGNIN_FAILED });

@@ -11,6 +11,7 @@ const loading = {
   left: " 50%",
   top: "50%",
   transform: "translate(-50%, 0)",
+  zIndex: 5000,
 };
 
 export default Loading;

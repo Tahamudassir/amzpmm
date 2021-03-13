@@ -1,7 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Layout, Menu, Dropdown, Avatar } from "antd";
+import { useHistory } from "react-router-dom";
+import { Layout, Avatar } from "antd";
+import {
+  Menu,
+  MenuItem,
+  // MenuButton
+} from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -9,7 +15,11 @@ import {
   LogoutOutlined,
   CaretDownOutlined,
 } from "@ant-design/icons";
-import { toggleCollapsedNav, onMobileNavToggle } from "redux/actions/Theme";
+import {
+  toggleCollapsedNav,
+  onMobileNavToggle,
+  logoutAction,
+} from "redux/actions/Theme";
 import {
   NAV_TYPE_TOP,
   SIDE_NAV_COLLAPSED_WIDTH,
@@ -22,6 +32,7 @@ import "./styles.css";
 const { Header } = Layout;
 
 export const HeaderNav = (props) => {
+  const history = useHistory();
   const {
     navCollapsed,
     mobileNav,
@@ -32,7 +43,10 @@ export const HeaderNav = (props) => {
     isMobile,
     currentTheme,
     user,
+    logoutAction,
   } = props;
+
+  const navigateToProfile = () => history.push("/profile");
 
   const onToggle = () => {
     if (!isMobile) {
@@ -62,8 +76,8 @@ export const HeaderNav = (props) => {
       return `${SIDE_NAV_WIDTH}px`;
     }
   };
-  const itemClick = () => {
-    alert("clicked");
+  const logout = () => {
+    logoutAction();
   };
   return (
     <Header
@@ -92,37 +106,41 @@ export const HeaderNav = (props) => {
             </ul>
           </div>
           <div className="nav-right">
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <div className="menuNavbar">
-                <Avatar
-                  src={
-                    user && user.imageUrl
-                      ? user.imageUrl
-                      : "/img/avatars/male.png"
-                  }
-                  style={{ backgroundColor: "#87d068", objectFit: "cover" }}
-                />
-                <h4>{user && user.username}</h4>
-                <CaretDownOutlined />
-              </div>
-            </Dropdown>
+            <Menu
+              menuButton={
+                <div className="menuNavbar">
+                  <Avatar
+                    src={
+                      user && user.imageUrl
+                        ? user.imageUrl
+                        : "/img/avatars/male.png"
+                    }
+                    style={{ backgroundColor: "#87d068", objectFit: "cover" }}
+                  />
+                  <h4>{user && user.username}</h4>
+                  <CaretDownOutlined />
+                </div>
+              }
+            >
+              <MenuItem className="menuNav" onClick={navigateToProfile}>
+                <span className="iconMenuProfile">
+                  <UserOutlined />
+                </span>
+                Profile
+              </MenuItem>
+              <MenuItem className="menuNav" onClick={logout}>
+                <span className="iconMenuLogout">
+                  <LogoutOutlined />
+                </span>
+                Logout
+              </MenuItem>
+            </Menu>
           </div>
         </div>
       </div>
     </Header>
   );
 };
-const menu = (
-  <Menu>
-    <Menu.Item key="0" icon={<UserOutlined />}>
-      <Link to="/profile">Profile</Link>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1" icon={<LogoutOutlined />} style={{ color: "#97122e" }}>
-      Logout
-    </Menu.Item>
-  </Menu>
-);
 
 const mapStateToProps = ({ theme, auth }) => {
   const {
@@ -146,4 +164,5 @@ const mapStateToProps = ({ theme, auth }) => {
 export default connect(mapStateToProps, {
   toggleCollapsedNav,
   onMobileNavToggle,
+  logoutAction,
 })(HeaderNav);

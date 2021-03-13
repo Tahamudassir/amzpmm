@@ -1,43 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Input, Upload, Button, Form, Select, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import constants from "../../../constants/addProduct";
 import { addProductAction } from "../../../redux/actions/Product";
+import rules from "../../../constants/validationRules";
+import { dummyRequest } from "../../../constants/DummyData";
 import "./styles.css";
 
-const rules = {
-  required: [
-    {
-      required: true,
-      message: "This field is required",
-    },
-  ],
-  number: [
-    {
-      required: true,
-      message: "This field is required",
-    },
-    {
-      type: "number",
-      message: "This field should be a number",
-    },
-  ],
-};
-const dummyRequest = ({ file, onSuccess }) => {
-  setTimeout(() => {
-    onSuccess("ok");
-  }, 0);
-};
-
 const AddProduct = (props) => {
+  const { dispatch, loading, clearForm } = props;
   const [form] = Form.useForm();
-  const { dispatch, loading } = props;
   const [amazonImage, setAmazonImage] = useState(null);
   const [image, setImage] = useState(null);
 
   const { TextArea } = Input;
   const { Option } = Select;
+
+  useEffect(() => {
+    if (clearForm) {
+      form.resetFields();
+      setAmazonImage(null);
+      setImage(null);
+    }
+  }, [clearForm]);
 
   const changeCommissionCondition = (value) => {
     let result = form.getFieldValue("commissionCondition") + value;
@@ -334,9 +320,10 @@ const AddProduct = (props) => {
 const rowStyle = { marginBottom: "20px" };
 
 const mapStateToProps = (state) => {
-  const { loading } = state.products;
+  const { loading, clearForm } = state.products;
   return {
     loading,
+    clearForm,
   };
 };
 

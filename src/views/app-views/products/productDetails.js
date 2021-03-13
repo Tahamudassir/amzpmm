@@ -20,6 +20,7 @@ import {
 } from "../../../redux/actions/Product";
 import rules from "../../../constants/validationRules";
 import { dummyRequest } from "../../../constants/DummyData";
+import Loading from "../../../components/Loading";
 import "./styles.css";
 
 const ProductDetails = (props) => {
@@ -72,6 +73,7 @@ const ProductDetails = (props) => {
         <p className="small">Overview</p>
         <h4 className="large">Product Details</h4>
       </div>
+      {loading && <Loading />}
       {productDetail ? (
         <Row gutter={[0, 16]}>
           <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -96,7 +98,6 @@ const ProductDetails = (props) => {
                     icon={<SyncOutlined />}
                     size="small"
                     className="changePic"
-                    loading={uploading}
                     progress={false}
                   >
                     Change Pic
@@ -125,7 +126,6 @@ const ProductDetails = (props) => {
                     icon={<SyncOutlined />}
                     size="small"
                     className="changePic"
-                    loading={uploading}
                   >
                     Change Pic
                   </Button>
@@ -162,7 +162,7 @@ const ProductDetails = (props) => {
                 <div className="bodyProductDetail">
                   <Form onFinish={onEditProduct} layout="vertical" form={form}>
                     <Row gutter={[0, { xs: 8, sm: 8, md: 16, lg: 16, xl: 16 }]}>
-                      <Col span={15}>
+                      <Col span={14}>
                         <Form.Item
                           name="keyword"
                           label="Keyword"
@@ -176,20 +176,18 @@ const ProductDetails = (props) => {
                         </Form.Item>
                       </Col>
                       <Col span={1} />
-                      <Col span={8}>
+                      <Col span={9}>
                         <Form.Item
                           name="sellerId"
                           label="Seller Id"
-                          rules={rules.required}
-                          hasFeedback
                           initialValue={
                             productDetail ? productDetail.sellerId : ""
                           }
                         >
-                          <Input />
+                          <Input disabled />
                         </Form.Item>
                       </Col>
-                      <Col span={15}>
+                      <Col span={14}>
                         <Form.Item
                           name="brandName"
                           label="Brand Name"
@@ -203,7 +201,7 @@ const ProductDetails = (props) => {
                         </Form.Item>
                       </Col>
                       <Col span={1} />
-                      <Col span={8}></Col>
+                      <Col span={9}></Col>
                       <Col span={8}>
                         <Form.Item
                           name="market"

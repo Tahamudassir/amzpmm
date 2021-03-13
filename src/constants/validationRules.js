@@ -12,4 +12,20 @@ export default {
         "Phone number should not contain any characters other then numbers",
     },
   ],
+  number: [
+    {
+      required: true,
+      message: "This field is required",
+    },
+    {
+      type: "number",
+      message: "This field should be a number",
+    },
+  ],
+  required: [
+    {
+      required: true,
+      message: "This field is required",
+    },
+  ],
 };

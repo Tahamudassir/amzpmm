@@ -15,6 +15,7 @@ import {
 import { getErrorMessage } from "../constants/ErrorMessage";
 import { selectUser } from "../selectors";
 import types from "../constants/Orders";
+import { editOrderPicAction } from "redux/actions/Orders";
 
 function* getOrders({ payload }) {
   try {
@@ -43,6 +44,7 @@ function* addNewOrder(action) {
     const response = yield addOrdersApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.NEW_ORDER_SUCCESS });
+      yield put({ type: types.RESET_VARIABLES });
       message.success("order added successfully");
     } else {
       yield put({ type: types.NEW_ORDER_FAILURE });
@@ -131,28 +133,30 @@ function* exportOrdersToExcel({ payload }) {
 
 function* editOrderPicture(action) {
   try {
-    let orderPicType = action.orderPicType;
+    let orderPicType = action.payload.orderPicType;
     let response = null;
+    console.log("action payload", action.payload);
 
     if (orderPicType === "Order") {
       response = yield editOrderPicApi(action.payload);
-    } else if (orderPicType === "Review") {
+    } else if (orderPicType === "Refund") {
       response = yield editRefundPicApi(action.payload);
-    } else {
+    } else if (orderPicType === "Review") {
       response = yield editReviewPicApi(action.payload);
     }
 
     if (response.status >= 200 && response.status < 300) {
       yield put({
-        type: types.EDIT_ORDER_SUCCESS,
+        type: types.EDIT_ORDER_PIC_SUCCESS,
         payload: response.data.result,
       });
+
       message.success("updated successfully");
     } else {
-      yield put({ type: types.EDIT_ORDER_FAILURE });
+      yield put({ type: types.EDIT_ORDER_PIC_FAILURE });
     }
   } catch (error) {
-    yield put({ type: types.EDIT_ORDER_FAILURE });
+    yield put({ type: types.EDIT_ORDER_PIC_FAILURE });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
   }

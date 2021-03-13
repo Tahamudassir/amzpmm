@@ -48,22 +48,34 @@ const orders = (state = initState, action) => {
     case types.EDIT_ORDER_PIC:
       return {
         ...state,
-        editing: true,
+        loading: true,
+      };
+    case types.EDIT_ORDER_PIC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orderDetail: action.payload,
+      };
+    case types.EDIT_ORDER_PIC_FAILURE:
+      return {
+        ...state,
+        loading: false,
       };
     case types.EDIT_ORDER:
       return {
         ...state,
-        editing: true,
+        loading: true,
       };
     case types.EDIT_ORDER_SUCCESS:
       return {
         ...state,
-        editing: false,
+        loading: false,
+        orderDetail: action.payload,
       };
     case types.EDIT_ORDER_FAILURE:
       return {
         ...state,
-        editing: false,
+        loading: false,
       };
 
     case types.NEW_ORDER:
@@ -80,6 +92,7 @@ const orders = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+        clearForm: true,
       };
     case types.SEARCH_ORDER_BY_CUSTOMER_EMAIL:
       return {
@@ -110,6 +123,11 @@ const orders = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case types.RESET_VARIABLES:
+      return {
+        ...state,
+        clearForm: false,
       };
     default:
       return state;

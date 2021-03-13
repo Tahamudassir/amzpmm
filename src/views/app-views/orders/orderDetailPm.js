@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
-import {
-  Button,
-  Input,
-  Row,
-  Col,
-  Spin,
-  Form,
-  message,
-  Upload,
-  Select,
-} from "antd";
+import { Button, Input, Row, Col, Form, message, Select } from "antd";
 import { SyncOutlined, EditOutlined } from "@ant-design/icons";
 import {
   viewOrderAction,
@@ -20,14 +10,19 @@ import {
 } from "../../../redux/actions/Orders";
 import Loading from "../../../components/Loading";
 import rules from "../../../constants/validationRules";
-import { dummyRequest } from "../../../constants/DummyData";
+import orderStatus from "../../../constants/orderStatus";
 import "./styles.css";
 
 const OrderDetailPm = (props) => {
+  // ref to image inputs
+  let orderImg = null;
+  let reviewImg = null;
+  let refundImg = null;
+
   const { orderDetail, loading, dispatch } = props;
+  const { id } = useParams();
   const [form] = Form.useForm();
   const [editOrder, setEditOrder] = useState(false);
-  const { id } = useParams();
 
   useEffect(() => {
     dispatch(viewOrderAction({ orderid: id }));
@@ -48,36 +43,48 @@ const OrderDetailPm = (props) => {
       });
   };
 
+  //click handlers to trigger file input
+  const onOrderImgBtnClick = () => orderImg.click();
+  const onRefundImgBtnClick = () => refundImg.click();
+  const onReviewImgBtnClick = () => reviewImg.click();
+
   const onChangeOrderImage = (info) => {
     let formData = new FormData();
-    formData.append("image", info.file.originFileObj);
+    formData.append("image", info.target.files[0]);
+
     const queryObj = {
-      id: orderDetail.product_id,
+      id: orderDetail.orderNumber,
       image: formData,
       orderPicType: "Order",
     };
     dispatch(editOrderPicAction(queryObj));
+    orderImg.value = null;
   };
 
   const onChangeRefundImage = (info) => {
     let formData = new FormData();
-    formData.append("image", info.file.originFileObj);
+    formData.append("image", info.target.files[0]);
+
     const queryObj = {
-      id: orderDetail.product_id,
+      id: orderDetail.orderNumber,
       image: formData,
       orderPicType: "Refund",
     };
     dispatch(editOrderPicAction(queryObj));
+    refundImg.value = null;
   };
+
   const onChangeReviewImage = (info) => {
     let formData = new FormData();
-    formData.append("image", info.file.originFileObj);
+    formData.append("image", info.target.files[0]);
+
     const queryObj = {
-      id: orderDetail.product_id,
+      id: orderDetail.orderNumber,
       image: formData,
       orderPicType: "Review",
     };
     dispatch(editOrderPicAction(queryObj));
+    reviewImg.value = null;
   };
 
   const onStatusChanged = (value) => {
@@ -85,7 +92,9 @@ const OrderDetailPm = (props) => {
       orderstatus: value,
     });
   };
+
   const { Option } = Select;
+
   return (
     <>
       <div className="headingDetails">
@@ -99,83 +108,83 @@ const OrderDetailPm = (props) => {
             <div className="productImgCard">
               <div className="productImgWrapper">
                 <h4>Order Picture</h4>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={onChangeOrderImage}
+                  ref={(input) => (orderImg = input)}
+                />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  ref={(input) => (refundImg = input)}
+                  onChange={onChangeRefundImage}
+                />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  ref={(input) => (reviewImg = input)}
+                  onChange={onChangeReviewImage}
+                />
                 <img
                   src={orderDetail.orderPic}
                   alt="product"
                   className="productDetailImg"
                 />
 
-                <Upload
-                  customRequest={dummyRequest}
-                  onChange={onChangeOrderImage}
-                  accept="image/x-png,image/gif,image/jpeg"
-                  showUploadList={false}
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={<SyncOutlined />}
+                  size="small"
+                  className="changePic"
+                  onClick={onOrderImgBtnClick}
                 >
-                  <Button
-                    type="primary"
-                    shape="round"
-                    icon={<SyncOutlined />}
-                    size="small"
-                    className="changePic"
-                    progress={false}
-                  >
-                    Change Pic
-                  </Button>
-                </Upload>
+                  Change Pic
+                </Button>
               </div>
               <div className="divider"></div>
               <div className="productImgWrapper">
                 <h4>Refund Picture</h4>
-                <img
-                  src={orderDetail.orderPic}
-                  alt="product"
-                  className="productDetailImg"
-                />
+                {orderDetail && orderDetail.refundPic && (
+                  <img
+                    src={orderDetail.refundPic}
+                    alt="product"
+                    className="productDetailImg"
+                  />
+                )}
 
-                <Upload
-                  customRequest={dummyRequest}
-                  onChange={onChangeRefundImage}
-                  accept="image/x-png,image/gif,image/jpeg"
-                  showUploadList={false}
-                  progress={false}
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={<SyncOutlined />}
+                  size="small"
+                  className="changePic"
+                  onClick={onRefundImgBtnClick}
                 >
-                  <Button
-                    type="primary"
-                    shape="round"
-                    icon={<SyncOutlined />}
-                    size="small"
-                    className="changePic"
-                  >
-                    Change Pic
-                  </Button>
-                </Upload>
+                  Change Pic
+                </Button>
               </div>
               <div className="divider"></div>
               <div className="productImgWrapper">
                 <h4>Review Picture</h4>
-                <img
-                  src={orderDetail.orderPic}
-                  alt="product"
-                  className="productDetailImg"
-                />
-
-                <Upload
-                  customRequest={dummyRequest}
-                  onChange={onChangeReviewImage}
-                  accept="image/x-png,image/gif,image/jpeg"
-                  showUploadList={false}
-                  progress={false}
+                {orderDetail && orderDetail.reviewPic && (
+                  <img
+                    src={orderDetail.reviewPic}
+                    alt="product"
+                    className="productDetailImg"
+                  />
+                )}
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={<SyncOutlined />}
+                  size="small"
+                  className="changePic"
+                  onClick={onReviewImgBtnClick}
                 >
-                  <Button
-                    type="primary"
-                    shape="round"
-                    icon={<SyncOutlined />}
-                    size="small"
-                    className="changePic"
-                  >
-                    Change Pic
-                  </Button>
-                </Upload>
+                  Change Pic
+                </Button>
               </div>
             </div>
           </Col>
@@ -191,7 +200,7 @@ const OrderDetailPm = (props) => {
                     size="small"
                     onClick={switchEditOrder}
                   >
-                    Cancel{" "}
+                    Cancel
                   </Button>
                 ) : (
                   <Button
@@ -212,13 +221,11 @@ const OrderDetailPm = (props) => {
                         <Form.Item
                           name="customer_email"
                           label="Customer Email"
-                          rules={rules.required}
-                          hasFeedback
                           initialValue={
                             orderDetail ? orderDetail.customer_email : ""
                           }
                         >
-                          <Input />
+                          <Input disabled />
                         </Form.Item>
                       </Col>
                       <Col span={1} />
@@ -226,11 +233,10 @@ const OrderDetailPm = (props) => {
                         <Form.Item
                           name="amzreviewlink"
                           label="AMZ Review Link"
-                          // rules={rules.required}
                           hasFeedback
-                          // initialValue={
-                          //   orderDetail ? orderDetail.amzreviewlink : ""
-                          // }
+                          initialValue={
+                            orderDetail ? orderDetail.reviewLink : ""
+                          }
                         >
                           <Input />
                         </Form.Item>
@@ -258,19 +264,33 @@ const OrderDetailPm = (props) => {
                           }
                         >
                           <Select onChange={onStatusChanged}>
-                            <Option value="male">Completed</Option>
-                            <Option value="female">Reviewed</Option>
-                            <Option value="female">Ordered</Option>
-                            <Option value="female">
-                              Review Submitted Pending Refund
+                            <Option value={orderStatus[1]}>
+                              {orderStatus[1]}
                             </Option>
-                            <Option value="female">Refunded</Option>
-                            <Option value="female">
-                              Refunded Pending Review
+                            <Option value={orderStatus[2]}>
+                              {orderStatus[2]}
                             </Option>
-                            <Option value="female">On Hold</Option>
-                            <Option value="female">Review Deleted</Option>
-                            <Option value="female">Cancelled</Option>
+                            <Option value={orderStatus[3]}>
+                              {orderStatus[3]}
+                            </Option>
+                            <Option value={orderStatus[4]}>
+                              {orderStatus[4]}
+                            </Option>
+                            <Option value={orderStatus[5]}>
+                              {orderStatus[5]}
+                            </Option>
+                            <Option value={orderStatus[6]}>
+                              {orderStatus[6]}
+                            </Option>
+                            <Option value={orderStatus[7]}>
+                              {orderStatus[7]}
+                            </Option>
+                            <Option value={orderStatus[8]}>
+                              {orderStatus[8]}
+                            </Option>
+                            <Option value={orderStatus[9]}>
+                              {orderStatus[9]}
+                            </Option>
                           </Select>
                         </Form.Item>
                       </Col>
@@ -289,7 +309,6 @@ const OrderDetailPm = (props) => {
                       type="primary"
                       style={{ marginTop: "20px" }}
                       htmlType="submit"
-                      loading={loading}
                     >
                       Update
                     </Button>
@@ -303,16 +322,16 @@ const OrderDetailPm = (props) => {
                       <p>{orderDetail.orderNumber}</p>
                     </Col>
                     <Col span={12}>
-                      <h4>Product Id :</h4>
-                      <p>{orderDetail.product_id}</p>
-                    </Col>
-                    <Col span={12}>
                       <h4>Customer Email :</h4>
                       <p>{orderDetail.customer_email}</p>
                     </Col>
                     <Col span={12}>
+                      <h4>Product Id :</h4>
+                      <p>{orderDetail.product_id}</p>
+                    </Col>
+                    <Col span={12}>
                       <h4>AMZ Review Link :</h4>
-                      {/* <p>{productDetail.sellerName}</p> */}
+                      <p>{orderDetail.reviewLink}</p>
                     </Col>
                     <Col span={12}>
                       <h4>Market :</h4>
@@ -340,7 +359,7 @@ const OrderDetailPm = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Seller ID :</h4>
-                      {/* <p>{productDetail.sellerId}</p> */}
+                      {/* <p>{orderDetail.user}</p> */}
                     </Col>
                     <Col span={12}>
                       <h4>Commission :</h4>
@@ -364,11 +383,10 @@ const OrderDetailPm = (props) => {
 };
 
 const mapStateToProps = ({ orders }) => {
-  const { orderDetail, loading, uploading } = orders;
+  const { orderDetail, loading } = orders;
   return {
     orderDetail,
     loading,
-    uploading,
   };
 };
 

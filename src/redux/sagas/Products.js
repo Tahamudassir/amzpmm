@@ -83,7 +83,7 @@ function* addProduct(action) {
     const response = yield addProductApi(action.payload);
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.ADD_PRODUCT_SUCCESS });
-      // yield put({type:types.SET_NULL});
+      yield put({ type: types.SET_NULL });
       message.success("Product added successfully");
     } else {
       yield put({ type: types.ADD_PRODUCT_FAILURE });

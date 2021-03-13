@@ -15,5 +15,5 @@ export function editUserAvatarApi(queryObj) {
   return API.post("/user/image", queryObj);
 }
 export function registerApi(queryObj) {
-  return API.post("/signup", queryObj);
+  return axios.post(`${baseURL}/signup`, queryObj);
 }
