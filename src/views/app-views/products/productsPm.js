@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Button, Row, Col, Select, Input, Spin } from "antd";
@@ -19,7 +19,7 @@ const Products = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getProductsPmAction({ status: "Enabled" }));
+    dispatch(getProductsPmAction({ status: "Enabled", public: false }));
   }, []);
 
   const onReserveProduct = (id) => {

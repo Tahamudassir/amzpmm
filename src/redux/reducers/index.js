@@ -7,6 +7,8 @@ import Orders from "./Orders";
 import Products from "./Products";
 import Reservations from "./Reservations";
 import Theme from "./Theme";
+import AppData from "./AppData";
+
 const expireTime = 24 * 60 * 60 * 1000;
 const expirationKey = "expirationKey";
 const LOGOUT = "LOGOUT";
@@ -14,7 +16,7 @@ const LOGOUT = "LOGOUT";
 const rootPersistConfig = {
   key: "root",
   storage: storage,
-  whitelist: ["auth", "orders"],
+  whitelist: ["auth"],
   transforms: [expireIn(expireTime, expirationKey, {})],
 };
 // const authPersistConfig = {
@@ -30,6 +32,7 @@ const appReducer = combineReducers({
   orders: Orders,
   products: Products,
   reservations: Reservations,
+  appData: AppData,
 });
 
 const rootReducer = (state, action) => {

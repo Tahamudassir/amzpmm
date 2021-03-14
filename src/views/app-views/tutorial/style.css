@@ -1,0 +1,58 @@
+.cardRules {
+  background-color: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 2px 0 rgb(90 97 105 / 11%), 0 4px 8px rgb(90 97 105 / 12%),
+    0 10px 10px rgb(90 97 105 / 6%), 0 7px 70px rgb(90 97 105 / 10%);
+  font-weight: 300;
+  padding: 1rem !important;
+  margin-top: 20px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.ordersTitle {
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  color: #3d5170;
+  margin-bottom: 20px;
+}
+.documentHeading {
+  margin-top: 40px;
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #3d5170;
+  margin-bottom: 40px;
+}
+.rulesFileWrapper {
+  display: flex;
+  justify-content: center;
+}
+.btnUploadFile {
+  width: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-around;
+}
+.uploadIcon {
+  height: 100px;
+  width: 100px;
+}
+
+@media (max-width: 780px) {
+  .btnUploadFile {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .changeFile {
+    margin-top: 10px;
+    /* margin-bottom: 10px; */
+  }
+  .cardRules {
+    width: "70%";
+  }
+}

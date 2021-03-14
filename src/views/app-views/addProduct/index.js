@@ -4,12 +4,16 @@ import { Row, Col, Input, Upload, Button, Form, Select, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import constants from "../../../constants/addProduct";
 import { addProductAction } from "../../../redux/actions/Product";
+import {
+  getCategoryAction,
+  getMarketsAction,
+} from "../../../redux/actions/AppData";
 import rules from "../../../constants/validationRules";
 import { dummyRequest } from "../../../constants/DummyData";
 import "./styles.css";
 
 const AddProduct = (props) => {
-  const { dispatch, loading, clearForm } = props;
+  const { dispatch, loading, clearForm, markets, categories } = props;
   const [form] = Form.useForm();
   const [amazonImage, setAmazonImage] = useState(null);
   const [image, setImage] = useState(null);
@@ -18,31 +22,17 @@ const AddProduct = (props) => {
   const { Option } = Select;
 
   useEffect(() => {
+    dispatch(getCategoryAction());
+    dispatch(getMarketsAction());
+  }, []);
+
+  useEffect(() => {
     if (clearForm) {
       form.resetFields();
       setAmazonImage(null);
       setImage(null);
     }
   }, [clearForm]);
-
-  const changeCommissionCondition = (value) => {
-    let result = form.getFieldValue("commissionCondition") + value;
-    form.setFieldsValue({
-      commissionCondition: result,
-    });
-  };
-  const changeRefundCondition = (value) => {
-    let result = form.getFieldValue("refundCondition") + value;
-    form.setFieldsValue({
-      refundCondition: result,
-    });
-  };
-  const changeInstructions = (value) => {
-    let result = form.getFieldValue("instructions") + value;
-    form.setFieldsValue({
-      instructions: result,
-    });
-  };
 
   const onAddProduct = () => {
     form
@@ -117,19 +107,25 @@ const AddProduct = (props) => {
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
                 <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                  {/* <Form.Item
-                    name="AMZSeller"
-                    rules={rules.required}
-                    hasFeedback
-                  >
-                    <Input placeholder="AMZ Seller" />
-                  </Form.Item> */}
+                  <Form.Item name="category" rules={rules.required} hasFeedback>
+                    <Select placeholder="Select a category">
+                      {categories &&
+                        categories.map((category) => (
+                          <Option value={category.name}>{category.name}</Option>
+                        ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
               </Row>
               <Row gutter={[0, { xs: 8, sm: 16, md: 0, lg: 0 }]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                   <Form.Item name="market" rules={rules.required} hasFeedback>
-                    <Input placeholder="Market" />
+                    <Select placeholder="Select a market">
+                      {markets &&
+                        markets.map((market) => (
+                          <Option value={market.name}>{market.name}</Option>
+                        ))}
+                    </Select>
                   </Form.Item>
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
@@ -196,35 +192,12 @@ const AddProduct = (props) => {
               </Row>
               <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Select
-                    placeholder="Select Instructions"
-                    style={{ width: "100%", marginBottom: "10px" }}
-                    onChange={changeInstructions}
-                  >
-                    <Option value={constants.instructionOne}>
-                      {constants.instructionOne}
-                    </Option>
-                    <Option value={constants.instructionTwo}>
-                      {constants.instructionTwo}
-                    </Option>
-                    <Option value={constants.instructionThree}>
-                      {constants.instructionThree}
-                    </Option>
-                    <Option value={constants.instructionFour}>
-                      {constants.instructionFour}
-                    </Option>
-                    <Option value={constants.instructionFive}>
-                      {constants.instructionFive}
-                    </Option>
-                    <Option value={constants.instructionSix}>
-                      {constants.instructionSix}
-                    </Option>
-                  </Select>
                   <Form.Item
                     name="instructions"
+                    label="Instructions"
                     rules={rules.required}
                     hasFeedback
-                    initialValue=""
+                    initialValue={constants.instructions}
                   >
                     <Input.TextArea rows={4} placeholder="Instructions" />
                   </Form.Item>
@@ -235,23 +208,12 @@ const AddProduct = (props) => {
             <Col xs={24} sm={24} md={11} lg={11} xl={11}>
               <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Select
-                    placeholder="Select Refund Conditions"
-                    style={{ width: "100%", marginBottom: "10px" }}
-                    onChange={changeRefundCondition}
-                  >
-                    <Option value={constants.refundConditionOne}>
-                      {constants.refundConditionOne}
-                    </Option>
-                    <Option value={constants.refundConditionTwo}>
-                      {constants.refundConditionTwo}
-                    </Option>
-                  </Select>
                   <Form.Item
                     name="refundCondition"
+                    label="Refund Condition"
                     rules={rules.required}
                     hasFeedback
-                    initialValue=""
+                    initialValue={constants.refundCondition}
                   >
                     <Input.TextArea rows={4} placeholder="Refund Conditions" />
                   </Form.Item>
@@ -259,22 +221,11 @@ const AddProduct = (props) => {
               </Row>
               <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Select
-                    placeholder="Select Commision Conditions"
-                    style={{ width: "100%", marginBottom: "10px" }}
-                    onChange={changeCommissionCondition}
-                  >
-                    <Option value={constants.commssionConditionOne}>
-                      {constants.commssionConditionOne}
-                    </Option>
-                    <Option value={constants.commsionCondtionTwo}>
-                      {constants.commsionCondtionTwo}
-                    </Option>
-                  </Select>
                   <Form.Item
                     name="commissionCondition"
+                    label="Commission Condition"
                     rules={rules.required}
-                    initialValue=""
+                    initialValue={constants.commisionCondition}
                     hasFeedback
                   >
                     <TextArea rows={4} placeholder="Commision Conditions" />
@@ -321,9 +272,12 @@ const rowStyle = { marginBottom: "20px" };
 
 const mapStateToProps = (state) => {
   const { loading, clearForm } = state.products;
+  const { categories, markets } = state.appData;
   return {
     loading,
     clearForm,
+    categories,
+    markets,
   };
 };
 

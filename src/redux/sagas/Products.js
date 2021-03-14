@@ -7,6 +7,7 @@ import {
   addProductApi,
   editProductImageApi,
   getProductsPmApi,
+  getProductsPublicApi,
 } from "../api/Products";
 import { getErrorMessage } from "../constants/ErrorMessage";
 import { selectProducts } from "../selectors";
@@ -29,13 +30,19 @@ function* getProducts(action) {
 
 function* getProductsPm(action) {
   try {
-    const response = yield getProductsPmApi(action.payload);
+    let response = null;
+    if (action.payload.public) {
+      response = yield getProductsPublicApi();
+    } else {
+      response = yield getProductsPmApi();
+    }
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.GET_PRODUCTS_SUCCESS, payload: response.data });
     } else {
       yield put({ type: types.GET_PRODUCTS_FAILURE });
     }
   } catch (error) {
+    console.log("error", error);
     yield put({ type: types.GET_PRODUCTS_FAILURE });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);

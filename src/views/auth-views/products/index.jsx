@@ -2,32 +2,34 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Table, Row, Col, Select, Input } from "antd";
 import {
-  getProductsAction,
+  getProductsPmAction,
   searchById,
   searchByMarket,
   searchByKeyword,
 } from "../../../redux/actions/Product";
+import { filterProducts } from "../../../redux/selectors";
+import UserInfo from "../../../components/UserInfo";
 import "./style.css";
 
 const Products = (props) => {
   const { dispatch, products, loading } = props;
 
   useEffect(() => {
-    dispatch(getProductsAction({ status: "Enabled" }));
+    dispatch(getProductsPmAction({ status: "Enabled", public: true }));
   }, []);
 
   const columns = [
-    // {
-    //   title: "Seller Name",
-    //   dataIndex: "User",
-    //   key: "id",
-    //   render: (user) => <UserInfo user={user} />,
-    // },
     {
       title: "Seller Name",
-      dataIndex: "sellerName",
+      dataIndex: "User",
       key: "id",
+      render: (user) => <UserInfo user={user} />,
     },
+    // {
+    //   title: "Seller Name",
+    //   dataIndex: "sellerName",
+    //   key: "id",
+    // },
     {
       title: "Market",
       dataIndex: "market",
@@ -136,9 +138,9 @@ const Products = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { loading, products } = state.products;
+  const { loading } = state.products;
   return {
-    products,
+    products: filterProducts(state.products),
     loading,
   };
 };
