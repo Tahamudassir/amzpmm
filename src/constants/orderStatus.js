@@ -1,6 +1,6 @@
 export default [
   "All",
-  "Created",
+  "Ordered",
   "Reviewed",
   "Review Submitted Pending Refund",
   "Review Deleted",

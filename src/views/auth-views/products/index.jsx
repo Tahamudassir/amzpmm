@@ -6,16 +6,23 @@ import {
   searchById,
   searchByMarket,
   searchByKeyword,
+  searchByCategory,
 } from "../../../redux/actions/Product";
+import {
+  getMarketsAction,
+  getCategoryAction,
+} from "../../../redux/actions/AppData";
 import { filterProducts } from "../../../redux/selectors";
 import UserInfo from "../../../components/UserInfo";
 import "./style.css";
 
 const Products = (props) => {
-  const { dispatch, products, loading } = props;
+  const { dispatch, products, loading, categories, markets } = props;
 
   useEffect(() => {
     dispatch(getProductsPmAction({ status: "Enabled", public: true }));
+    dispatch(getMarketsAction());
+    dispatch(getCategoryAction());
   }, []);
 
   const columns = [
@@ -51,6 +58,11 @@ const Products = (props) => {
       key: "id",
     },
     {
+      title: "Category",
+      dataIndex: "category",
+      key: "id",
+    },
+    {
       title: "Keyword",
       dataIndex: "keyword",
       key: "id",
@@ -80,6 +92,9 @@ const Products = (props) => {
     dispatch(searchByKeyword(e));
   };
 
+  const onSearchByCategory = (e) => {
+    dispatch(searchByCategory(e));
+  };
   const { Search } = Input;
   const { Option } = Select;
   return (
@@ -113,17 +128,33 @@ const Products = (props) => {
           <Select
             showSearch
             style={{ width: "100%" }}
-            placeholder="Select Market"
+            placeholder="Filter Market"
             onSelect={onSearchByMarket}
             allowClear
             onClear={() => dispatch(searchByMarket(""))}
           >
-            <Option value="DE">DE</Option>
-            <Option value="UK">UK</Option>
-            <Option value="USA">USA</Option>
+            {markets &&
+              markets.map((market) => (
+                <Option value={market.name}>{market.name}</Option>
+              ))}
           </Select>
         </Col>
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
+        <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+          <Select
+            showSearch
+            style={{ width: "100%" }}
+            placeholder="Filter Category"
+            onSelect={onSearchByCategory}
+            allowClear
+            onClear={() => dispatch(searchByCategory(""))}
+          >
+            {categories &&
+              categories.map((category) => (
+                <Option value={category.name}>{category.name}</Option>
+              ))}
+          </Select>
+        </Col>
       </Row>
       <div className="cardProducts">
         <Table
@@ -139,9 +170,13 @@ const Products = (props) => {
 
 const mapStateToProps = (state) => {
   const { loading } = state.products;
+  const { categories, markets } = state.appData;
+
   return {
     products: filterProducts(state.products),
     loading,
+    categories,
+    markets,
   };
 };
 

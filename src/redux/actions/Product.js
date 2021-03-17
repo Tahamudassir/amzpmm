@@ -67,6 +67,12 @@ export const searchByMarket = (market) => {
     payload: market,
   };
 };
+export const searchByCategory = (payload) => {
+  return {
+    type: types.SEARCH_BY_CATEGORY,
+    payload,
+  };
+};
 
 export const changeProductStatusAction = (queryOb) => {
   return {

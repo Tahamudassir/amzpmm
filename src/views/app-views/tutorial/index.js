@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+import axios from "../../../redux/config/lib";
 import { message } from "antd";
 import Loading from "../../../components/Loading";
 import "./style.css";
@@ -13,14 +13,14 @@ const Tutorials = (props) => {
   const [rules, setRules] = useState(null);
 
   useEffect(() => {
-    // getRules();
+    getRules();
   }, []);
 
   const getRules = async () => {
     try {
       showLoading();
-      let rules = await axios.get(`${baseURL}/admin/addrules`);
-      setRules(rules);
+      let result = await axios.get(`${baseURL}/admin/getrules`);
+      setRules(result.data[0]);
       hideLoading();
     } catch (err) {
       message.error(err.message);
@@ -32,7 +32,7 @@ const Tutorials = (props) => {
   const hideLoading = () => setLoading(false);
   return (
     <>
-      <h4 className="ordersTitle">Rules Regulations</h4>
+      {/* <h4 className="ordersTitle">Rules Regulations</h4> */}
       {loading && <Loading />}
 
       {user && user.userType === "PMM" ? (
@@ -40,14 +40,20 @@ const Tutorials = (props) => {
           <h4 className="documentHeading">
             Rules Regulations Document for PMM
           </h4>
-          <embed src={"https://google.com"} width="100%" height="800px" />
+          <embed
+            src="http://www.pdf995.com/samples/pdf.pdf"
+            width="100%"
+            height="700px"
+          ></embed>
         </>
       ) : (
         <>
-          <h4 className="documentHeading">
-            Rules Regulations Document for PMM
-          </h4>
-          <embed src={"https://google.com"} width="100%" height="800px" />
+          <h4 className="documentHeading">Rules Regulations Document for PM</h4>
+          <embed
+            src="http://www.pdf995.com/samples/pdf.pdf"
+            width="100%"
+            height="700px"
+          ></embed>
         </>
       )}
     </>

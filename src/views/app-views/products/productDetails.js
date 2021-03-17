@@ -11,6 +11,7 @@ import {
   message,
   Upload,
   InputNumber,
+  Select,
 } from "antd";
 import { SyncOutlined, EditOutlined } from "@ant-design/icons";
 import {
@@ -18,19 +19,32 @@ import {
   editProductAction,
   editProductImageAction,
 } from "../../../redux/actions/Product";
+import {
+  getCategoryAction,
+  getMarketsAction,
+} from "../../../redux/actions/AppData";
 import rules from "../../../constants/validationRules";
 import { dummyRequest } from "../../../constants/DummyData";
 import Loading from "../../../components/Loading";
 import "./styles.css";
 
 const ProductDetails = (props) => {
-  const { productDetail, loading, dispatch, uploading } = props;
+  const {
+    productDetail,
+    loading,
+    dispatch,
+    uploading,
+    categories,
+    markets,
+  } = props;
   const [form] = Form.useForm();
   const [editProduct, setEditProduct] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(viewProductAction({ productId: id }));
+    dispatch(getCategoryAction());
+    dispatch(getMarketsAction());
   }, [id]);
 
   const switchEditProduct = () => {
@@ -67,6 +81,7 @@ const ProductDetails = (props) => {
     };
     dispatch(editProductImageAction(queryObj));
   };
+  const { Option } = Select;
   return (
     <>
       <div className="headingDetails">
@@ -201,7 +216,26 @@ const ProductDetails = (props) => {
                         </Form.Item>
                       </Col>
                       <Col span={1} />
-                      <Col span={9}></Col>
+                      <Col span={9}>
+                        <Form.Item
+                          name="productCategory"
+                          label="Category"
+                          rules={rules.required}
+                          hasFeedback
+                          initialValue={
+                            productDetail ? productDetail.productCategory : ""
+                          }
+                        >
+                          <Select placeholder="Select a category">
+                            {categories &&
+                              categories.map((category) => (
+                                <Option value={category.name}>
+                                  {category.name}
+                                </Option>
+                              ))}
+                          </Select>
+                        </Form.Item>
+                      </Col>
                       <Col span={8}>
                         <Form.Item
                           name="market"
@@ -212,7 +246,14 @@ const ProductDetails = (props) => {
                             productDetail ? productDetail.market : ""
                           }
                         >
-                          <Input />
+                          <Select placeholder="Select a market">
+                            {markets &&
+                              markets.map((market) => (
+                                <Option value={market.name}>
+                                  {market.name}
+                                </Option>
+                              ))}
+                          </Select>
                         </Form.Item>
                       </Col>
                       <Col span={1} />
@@ -247,13 +288,12 @@ const ProductDetails = (props) => {
                         <Form.Item
                           name="productId"
                           label="Product Id"
-                          rules={rules.number}
                           hasFeedback
                           initialValue={
                             productDetail ? productDetail.productId : ""
                           }
                         >
-                          <Input />
+                          <Input disabled />
                         </Form.Item>
                       </Col>
                       <Col span={24}>
@@ -366,6 +406,10 @@ const ProductDetails = (props) => {
                       <h4>Chinese Seller :</h4>
                       <p>{productDetail.chineseSeller}</p>
                     </Col>
+                    <Col span={12}>
+                      <h4>Product Category :</h4>
+                      <p>{productDetail.productCategory}</p>
+                    </Col>
                     <Col span={24}>
                       <h4>Instructions :</h4>
                       <p>{productDetail.instructions}</p>
@@ -405,12 +449,15 @@ const ProductDetails = (props) => {
   );
 };
 
-const mapStateToProps = ({ products }) => {
+const mapStateToProps = ({ products, appData }) => {
   const { productDetail, loading, uploading } = products;
+  const { categories, markets } = appData;
   return {
     productDetail,
     loading,
     uploading,
+    categories,
+    markets,
   };
 };
 

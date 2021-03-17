@@ -8,6 +8,7 @@ import {
   editOrderAction,
   editOrderPicAction,
 } from "../../../redux/actions/Orders";
+import moment from "moment-timezone";
 import Loading from "../../../components/Loading";
 import rules from "../../../constants/validationRules";
 import orderStatus from "../../../constants/orderStatus";
@@ -36,7 +37,7 @@ const OrderDetailPm = (props) => {
     form
       .validateFields()
       .then((values) => {
-        dispatch(editOrderAction(values));
+        dispatch(editOrderAction({ id: orderDetail._id, ...values }));
       })
       .catch((info) => {
         message.error("Validate Failed:", info);
@@ -87,14 +88,7 @@ const OrderDetailPm = (props) => {
     reviewImg.value = null;
   };
 
-  const onStatusChanged = (value) => {
-    form.setFieldsValue({
-      orderstatus: value,
-    });
-  };
-
   const { Option } = Select;
-
   return (
     <>
       <div className="headingDetails">
@@ -154,7 +148,7 @@ const OrderDetailPm = (props) => {
                   />
                 )}
 
-                <Button
+                {/* <Button
                   type="primary"
                   shape="round"
                   icon={<SyncOutlined />}
@@ -163,7 +157,7 @@ const OrderDetailPm = (props) => {
                   onClick={onRefundImgBtnClick}
                 >
                   Change Pic
-                </Button>
+                </Button> */}
               </div>
               <div className="divider"></div>
               <div className="productImgWrapper">
@@ -231,29 +225,19 @@ const OrderDetailPm = (props) => {
                       <Col span={1} />
                       <Col span={8}>
                         <Form.Item
-                          name="amzreviewlink"
+                          name="reviewLink"
                           label="AMZ Review Link"
                           hasFeedback
                           initialValue={
-                            orderDetail ? orderDetail.reviewLink : ""
+                            orderDetail && orderDetail.reviewLink
+                              ? orderDetail.reviewLink
+                              : ""
                           }
                         >
                           <Input />
                         </Form.Item>
                       </Col>
                       <Col span={11}>
-                        <Form.Item
-                          name="market"
-                          label="Market"
-                          rules={rules.required}
-                          hasFeedback
-                          initialValue={orderDetail ? orderDetail.market : ""}
-                        >
-                          <Input />
-                        </Form.Item>
-                      </Col>
-                      <Col span={1} />
-                      <Col span={12}>
                         <Form.Item
                           name="orderstatus"
                           label="Order Status"
@@ -263,35 +247,32 @@ const OrderDetailPm = (props) => {
                             orderDetail ? orderDetail.orderstatus : ""
                           }
                         >
-                          <Select onChange={onStatusChanged}>
+                          <Select>
                             <Option value={orderStatus[1]}>
                               {orderStatus[1]}
                             </Option>
                             <Option value={orderStatus[2]}>
                               {orderStatus[2]}
                             </Option>
-                            <Option value={orderStatus[3]}>
-                              {orderStatus[3]}
-                            </Option>
-                            <Option value={orderStatus[4]}>
-                              {orderStatus[4]}
-                            </Option>
-                            <Option value={orderStatus[5]}>
-                              {orderStatus[5]}
-                            </Option>
-                            <Option value={orderStatus[6]}>
-                              {orderStatus[6]}
-                            </Option>
-                            <Option value={orderStatus[7]}>
-                              {orderStatus[7]}
-                            </Option>
                             <Option value={orderStatus[8]}>
                               {orderStatus[8]}
                             </Option>
-                            <Option value={orderStatus[9]}>
-                              {orderStatus[9]}
-                            </Option>
                           </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col span={1} />
+                      <Col span={12}>
+                        <Form.Item
+                          name="orderNumber"
+                          label="Order Number"
+                          hasFeedback
+                          initialValue={
+                            orderDetail && orderDetail.orderNumber
+                              ? orderDetail.orderNumber
+                              : ""
+                          }
+                        >
+                          <Input />
                         </Form.Item>
                       </Col>
                       <Col span={24}>
@@ -299,7 +280,11 @@ const OrderDetailPm = (props) => {
                           name="remarks"
                           label="Remarks"
                           hasFeedback
-                          initialValue={orderDetail ? orderDetail.remarks : ""}
+                          initialValue={
+                            orderDetail && orderDetail.remarks
+                              ? orderDetail.remarks
+                              : ""
+                          }
                         >
                           <Input.TextArea rows={4} />
                         </Form.Item>
@@ -343,19 +328,31 @@ const OrderDetailPm = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Order Date :</h4>
-                      {/* <p>{productDetail.chineseSeller}</p> */}
+                      <p>
+                        {moment(orderDetail.createdAt).format("DD-MM-YYYY")}
+                      </p>
                     </Col>
                     <Col span={12}>
                       <h4>Review Date :</h4>
-                      {/* <p>{orderDetail.reviewDate}</p> */}
+                      {orderDetail.reviewDate && (
+                        <p>
+                          {moment(orderDetail.reviewDate).format("DD-MM-YYYY")}
+                        </p>
+                      )}
                     </Col>
                     <Col span={12}>
                       <h4>Refund Date :</h4>
-                      {/* <p>{orderDetail.refundDate}</p> */}
+                      {orderDetail.reviewDate && (
+                        <p>
+                          {moment(orderDetail.refunddate).format("DD-MM-YYYY")}
+                        </p>
+                      )}
                     </Col>
                     <Col span={12}>
                       <h4>Last Update :</h4>
-                      {/* <p>{productDetail.lastUpdate}</p> */}
+                      <p>
+                        {moment(orderDetail.updatedAt).format("DD-MM-YYYY")}
+                      </p>
                     </Col>
                     <Col span={12}>
                       <h4>Seller ID :</h4>
@@ -363,11 +360,11 @@ const OrderDetailPm = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Commission :</h4>
-                      {/* <p>{orderDetail.commission}</p> */}
+                      <p>{orderDetail.commission}</p>
                     </Col>
                     <Col span={24}>
                       <h4>Remarks :</h4>
-                      {/* <p>{orderDetail.saleLimitDay}</p> */}
+                      <p>{orderDetail.remarks}</p>
                     </Col>
                   </Row>
                 </div>

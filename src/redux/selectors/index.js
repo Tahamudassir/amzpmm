@@ -24,8 +24,8 @@ export const filterOrders = (data) => {
 
 export const filterProducts = (data) => {
   if (data) {
-    const { keyword, productId, market, products } = data;
-    if (keyword === "" && !productId && market === "") {
+    const { keyword, productId, market, products, category } = data;
+    if (keyword === "" && !productId && market === "" && category === "") {
       return products;
     }
     return (
@@ -34,7 +34,8 @@ export const filterProducts = (data) => {
         (product) =>
           product.productId === productId ||
           product.keyword.toLowerCase() === keyword.toLowerCase() ||
-          product.market === market
+          product.market === market ||
+          product.productCategory === category
       )
     );
   } else {

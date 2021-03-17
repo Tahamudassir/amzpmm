@@ -7,6 +7,7 @@ const initState = {
   productId: null,
   keyword: "",
   market: "",
+  category: "",
 };
 
 const products = (state = initState, action) => {
@@ -85,6 +86,11 @@ const products = (state = initState, action) => {
       return {
         ...state,
         productId: action.payload,
+      };
+    case types.SEARCH_BY_CATEGORY:
+      return {
+        ...state,
+        category: action.payload,
       };
     case types.ADD_PRODUCT:
       return {

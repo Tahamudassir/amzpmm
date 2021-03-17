@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Row, Col, Input, Button, Form, Upload, message } from "antd";
+import { Row, Col, Input, Button, Form, Upload, message, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { addNewOrderAction } from "../../../redux/actions/Orders";
+import { getMarketsAction } from "../../../redux/actions/AppData";
 import "./styles.css";
 
 const rules = {
@@ -29,23 +30,28 @@ const rules = {
       message: "This field is required",
     },
     {
-      pattern: /^\w\d{2}-?\d{7}-?\d{7}$/,
+      pattern: /^\w\d{2}-[-|]?\d{7}-[-|]?\d{7}$/,
       message: "Order number does not match the pattern xxx-xxxxxxx-xxxxxxx",
     },
   ],
 };
 const CreateOrder = (props) => {
-  const { loading, dispatch, clearForm } = props;
+  const { loading, dispatch, clearForm, markets } = props;
   const [form] = Form.useForm();
   const [orderPic, setOrderPic] = React.useState(null);
   const { id } = useParams();
 
   useEffect(() => {
+    dispatch(getMarketsAction());
     if (clearForm) {
       form.resetFields();
       setOrderPic(null);
     }
   }, [clearForm]);
+
+  useEffect(() => {
+    dispatch(getMarketsAction());
+  }, []);
 
   const setPic = (file) => {
     setOrderPic(file);
@@ -70,6 +76,7 @@ const CreateOrder = (props) => {
         console.log("Validate Failed:", info);
       });
   };
+  const { Option } = Select;
   return (
     <>
       <h4 className="createOrderTitle">Orders</h4>
@@ -99,13 +106,13 @@ const CreateOrder = (props) => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                name="market"
-                label="Market"
-                rules={rules.required}
-                hasFeedback
-              >
-                <Input />
+              <Form.Item name="market" rules={rules.required} hasFeedback>
+                <Select placeholder="Select a market">
+                  {markets &&
+                    markets.map((market) => (
+                      <Option value={market.name}>{market.name}</Option>
+                    ))}
+                </Select>
               </Form.Item>
               <div style={{ margin: "20px 0px" }}>
                 <Upload
@@ -138,8 +145,9 @@ const CreateOrder = (props) => {
     </>
   );
 };
-const mapStateToProps = ({ orders }) => {
-  const { loading, clearForm } = orders;
-  return { loading, clearForm };
+const mapStateToProps = (state) => {
+  const { loading, clearForm } = state.orders;
+  const { markets } = state.appData;
+  return { loading, clearForm, markets };
 };
 export default connect(mapStateToProps)(CreateOrder);

@@ -97,6 +97,10 @@ const ProductDetails = (props) => {
                     <h4>Chinese Seller :</h4>
                     <p>{productDetail.chineseSeller}</p>
                   </Col>
+                  <Col span={12}>
+                    <h4>Product Category :</h4>
+                    <p>{productDetail.productCategory}</p>
+                  </Col>
                   <Col span={24}>
                     <h4>Instructions :</h4>
                     <p>{productDetail.instructions}</p>
