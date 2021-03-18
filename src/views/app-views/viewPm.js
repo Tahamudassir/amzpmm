@@ -9,7 +9,7 @@ export const AppViews = () => {
         <Route path="/home" component={lazy(() => import(`./home`))} />
         <Route
           path={`/reservations`}
-          component={lazy(() => import("./reservations"))}
+          component={lazy(() => import("./reservations/reservationsPm"))}
         />
         <Route
           path={"/create-order/:id"}
@@ -18,6 +18,10 @@ export const AppViews = () => {
         <Route
           path={`/products`}
           component={lazy(() => import(`./products/productsPm`))}
+        />
+        <Route
+          path={`/public-products-tab`}
+          component={lazy(() => import(`./publicProducts`))}
         />
         <Route path="/rules" component={lazy(() => import(`./tutorial`))} />
         <Route path="/orders" component={lazy(() => import(`./orders`))} />
@@ -42,10 +46,7 @@ export const AppViews = () => {
           path={`/add-product`}
           component={lazy(() => import(`./addProduct`))}
         />
-        <Route
-          path="/profile"
-          component={lazy(() => import(`./profile/profilePm`))}
-        />
+        <Route path="/profile" component={lazy(() => import(`./profile`))} />
         <Redirect from={`*`} to={`/home`} />
       </Switch>
     </Suspense>

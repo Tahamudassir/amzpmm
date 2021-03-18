@@ -19,11 +19,18 @@ const reservations = (state = initState, action) => {
         loading: false,
         reservations: action.payload,
       };
-    case types.GET_RESERVED_PRODUCTS_FAILURE:
+    case types.GET_RESERVED_PRODUCTS_PM:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.GET_RESERVED_PRODUCTS_SUCCESS_PM:
       return {
         ...state,
         loading: false,
+        reservations: action.payload,
       };
+
     case types.RESERVE_PRODUCT:
       return {
         ...state,
@@ -50,9 +57,8 @@ const reservations = (state = initState, action) => {
         loading: false,
         reservations: action.payload,
       };
-    case types.RELEASE_PRODUCT_FAILURE:
+    case types.STOP_LOADING:
       return {
-        ...state,
         loading: false,
       };
     default:

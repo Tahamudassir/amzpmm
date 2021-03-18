@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Button, Row, Col, Select, Input, Spin } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import ProductImage from "../../../components/ProductImage";
 import {
   getProductsPmAction,
   searchById,
@@ -56,7 +57,7 @@ const Products = (props) => {
     },
     {
       title: "Remaining Order",
-      dataIndex: "saleLimitDay",
+      dataIndex: "saleLimitDayLeft",
       key: "id",
     },
     {
@@ -81,11 +82,9 @@ const Products = (props) => {
     },
     {
       title: "Image",
-      dataIndex: "image",
+      dataIndex: "",
       key: "id",
-      render: (imageUrl) => (
-        <img src={imageUrl} style={{ width: "100px" }} alt="prodcut" />
-      ),
+      render: (cell) => <ProductImage image={cell.image} id={cell.productId} />,
     },
     {
       title: "",

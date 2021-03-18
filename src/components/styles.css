@@ -37,3 +37,17 @@
   height: 100%;
   object-fit: contain;
 }
+.productImg {
+  position: relative;
+}
+.productId {
+  position: absolute;
+  left: 10%;
+  bottom: 10%;
+  font-size: 15px;
+  color: #000;
+  background: #fff;
+  font-weight: 800;
+  margin: 0px;
+  padding: 0 2px;
+}

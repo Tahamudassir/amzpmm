@@ -1,5 +1,7 @@
 export const selectUser = (state) => {
-  return state.auth && state.auth.user ? state.auth.user : null;
+  if (state) {
+    return state.auth && state.auth.user ? state.auth.user : null;
+  }
 };
 
 export const filterOrders = (data) => {

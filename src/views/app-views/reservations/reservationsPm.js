@@ -16,11 +16,6 @@ const Reservations = (props) => {
   const history = useHistory();
 
   const columns = [
-    // {
-    //   title: "#",
-    //   dataIndex: "orderNo",
-    //   key: "id",
-    // },
     {
       title: "User",
       dataIndex: "user",

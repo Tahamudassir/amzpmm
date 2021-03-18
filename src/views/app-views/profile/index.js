@@ -183,6 +183,22 @@ const Profile = (props) => {
                 gutter={[0, 8]}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
               >
+                <Col span={24}>
+                  <Form.Item
+                    name="fbLink"
+                    label="Facebook"
+                    rules={rules.fbLink}
+                    hasFeedback
+                    initialValue={user && user.fbLink ? user.fbLink : ""}
+                  >
+                    <Input placeholder="FB Link" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row
+                gutter={[0, 8]}
+                style={{ marginTop: "10px", marginBottom: "20px" }}
+              >
                 <Col span={8}>
                   <Form.Item
                     name="bankName"
@@ -190,20 +206,48 @@ const Profile = (props) => {
                     hasFeedback
                     initialValue={user && user.bankName ? user.bankName : ""}
                   >
-                    <Input placeholder="FB Link" />
+                    <Input />
                   </Form.Item>
                 </Col>
                 <Col span={2}></Col>
                 <Col span={14}>
                   <Form.Item
-                    name="accountNumber"
+                    name="payNumber"
                     label="Account Number"
                     hasFeedback
+                    initialValue={user && user.payNumber ? user.payNumber : ""}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row
+                gutter={[0, 8]}
+                style={{ marginTop: "10px", marginBottom: "20px" }}
+              >
+                <Col span={8}>
+                  <Form.Item
+                    name="paymentType"
+                    label="Payment Type"
+                    hasFeedback
                     initialValue={
-                      user && user.accountNumber ? user.accountNumber : ""
+                      user && user.paymentType ? user.paymentType : ""
                     }
                   >
-                    <Input placeholder="34343..." />
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={2}></Col>
+                <Col span={14}>
+                  <Form.Item
+                    name="branchCity"
+                    label="Bank Branch City"
+                    hasFeedback
+                    initialValue={
+                      user && user.branchCity ? user.branchCity : ""
+                    }
+                  >
+                    <Input />
                   </Form.Item>
                 </Col>
               </Row>

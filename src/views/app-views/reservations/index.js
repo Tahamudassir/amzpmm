@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import {
   getReservationsAction,
   releaseProductAction,
@@ -15,8 +14,6 @@ const Reservations = (props) => {
   useEffect(() => {
     dispatch(getReservationsAction());
   }, []);
-
-  const history = useHistory();
 
   const columns = [
     // {
@@ -46,19 +43,6 @@ const Reservations = (props) => {
       key: "id",
       render: (imageUrl) => (
         <img src={imageUrl} style={{ width: "100px" }} alt="order" />
-      ),
-    },
-    {
-      key: "id",
-      render: (cell) => (
-        <Button
-          type="primary"
-          className="btnViewOrder"
-          size="small"
-          onClick={() => history.push(`/create-order/${cell.productId}`)}
-        >
-          Create Order
-        </Button>
       ),
     },
     {

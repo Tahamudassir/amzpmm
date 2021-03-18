@@ -7,6 +7,7 @@ import {
   UserOutlined,
   FileExcelOutlined,
   InfoOutlined,
+  ReadOutlined,
 } from "@ant-design/icons";
 
 const dashBoardNavTree = [
@@ -71,6 +72,14 @@ const dashBoardNavTree = [
     path: "/rules",
     title: "Rules / Regulations",
     icon: InfoOutlined,
+    breadcrumb: false,
+    submenu: [],
+  },
+  {
+    key: "public_products_tab",
+    path: "/public-products-tab",
+    title: "Public Products",
+    icon: ReadOutlined,
     breadcrumb: false,
     submenu: [],
   },

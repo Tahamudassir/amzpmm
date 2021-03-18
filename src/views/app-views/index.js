@@ -19,6 +19,10 @@ export const AppViews = () => {
           path={`/products`}
           component={lazy(() => import(`./products`))}
         />
+        <Route
+          path={`/public-products-tab`}
+          component={lazy(() => import(`./publicProducts`))}
+        />
         <Route path="/orders" component={lazy(() => import(`./orders`))} />
         <Route
           path="/create-excel"

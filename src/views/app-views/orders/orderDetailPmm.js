@@ -16,8 +16,6 @@ import "./styles.css";
 
 const OrderDetailPm = (props) => {
   // ref to image inputs
-  let orderImg = null;
-  let reviewImg = null;
   let refundImg = null;
 
   const { orderDetail, loading, dispatch } = props;
@@ -45,22 +43,7 @@ const OrderDetailPm = (props) => {
   };
 
   //click handlers to trigger file input
-  const onOrderImgBtnClick = () => orderImg.click();
   const onRefundImgBtnClick = () => refundImg.click();
-  const onReviewImgBtnClick = () => reviewImg.click();
-
-  const onChangeOrderImage = (info) => {
-    let formData = new FormData();
-    formData.append("image", info.target.files[0]);
-
-    const queryObj = {
-      id: orderDetail.orderNumber,
-      image: formData,
-      orderPicType: "Order",
-    };
-    dispatch(editOrderPicAction(queryObj));
-    orderImg.value = null;
-  };
 
   const onChangeRefundImage = (info) => {
     let formData = new FormData();
@@ -73,25 +56,6 @@ const OrderDetailPm = (props) => {
     };
     dispatch(editOrderPicAction(queryObj));
     refundImg.value = null;
-  };
-
-  const onChangeReviewImage = (info) => {
-    let formData = new FormData();
-    formData.append("image", info.target.files[0]);
-
-    const queryObj = {
-      id: orderDetail.orderNumber,
-      image: formData,
-      orderPicType: "Review",
-    };
-    dispatch(editOrderPicAction(queryObj));
-    reviewImg.value = null;
-  };
-
-  const onStatusChanged = (value) => {
-    form.setFieldsValue({
-      orderstatus: value,
-    });
   };
 
   const { Option } = Select;
@@ -112,37 +76,15 @@ const OrderDetailPm = (props) => {
                 <input
                   type="file"
                   style={{ display: "none" }}
-                  onChange={onChangeOrderImage}
-                  ref={(input) => (orderImg = input)}
-                />
-                <input
-                  type="file"
-                  style={{ display: "none" }}
                   ref={(input) => (refundImg = input)}
                   onChange={onChangeRefundImage}
                 />
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                  ref={(input) => (reviewImg = input)}
-                  onChange={onChangeReviewImage}
-                />
+
                 <img
                   src={orderDetail.orderPic}
                   alt="product"
                   className="productDetailImg"
                 />
-
-                <Button
-                  type="primary"
-                  shape="round"
-                  icon={<SyncOutlined />}
-                  size="small"
-                  className="changePic"
-                  onClick={onOrderImgBtnClick}
-                >
-                  Change Pic
-                </Button>
               </div>
               <div className="divider"></div>
               <div className="productImgWrapper">
@@ -176,16 +118,6 @@ const OrderDetailPm = (props) => {
                     className="productDetailImg"
                   />
                 )}
-                <Button
-                  type="primary"
-                  shape="round"
-                  icon={<SyncOutlined />}
-                  size="small"
-                  className="changePic"
-                  onClick={onReviewImgBtnClick}
-                >
-                  Change Pic
-                </Button>
               </div>
             </div>
           </Col>
@@ -286,17 +218,7 @@ const OrderDetailPm = (props) => {
                         </Form.Item>
                       </Col>
                       <Col span={1} />
-                      <Col span={12}>
-                        {/* <Form.Item
-                          name="market"
-                          label="Market"
-                          rules={rules.required}
-                          hasFeedback
-                          initialValue={orderDetail ? orderDetail.market : ""}
-                        >
-                          <Input />
-                        </Form.Item> */}
-                      </Col>
+                      <Col span={12}></Col>
                       <Col span={24}>
                         <Form.Item
                           name="remarks"

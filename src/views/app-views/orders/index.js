@@ -34,8 +34,9 @@ const Orders = (props) => {
   const columns = [
     {
       title: "#",
-      dataIndex: "orderNumber",
+      dataIndex: "",
       key: "id",
+      render: (cell, row, index) => <>{index + 1}</>,
     },
     {
       title: "User",
