@@ -91,7 +91,8 @@ function* registerUser(action) {
       yield put({ type: types.SIGNUP_SUCCESS });
       yield put({ type: types.SET_INITIAL_VALUES });
       message.success(
-        "Registration request has been sent you will recieve an email notification soon"
+        "Registration request has been sent you will recieve an email notification soon",
+        [8]
       );
     } else {
       yield put({ type: types.SIGNUP_FAILED });

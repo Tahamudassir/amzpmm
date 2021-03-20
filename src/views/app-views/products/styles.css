@@ -105,6 +105,10 @@
   top: 50%;
   transform: translate(-50%, 0);
 }
+.copyIcon {
+  margin-left: 20px;
+  cursor: pointer;
+}
 @media (max-width: 780px) {
   .headingDetails {
     text-align: center;

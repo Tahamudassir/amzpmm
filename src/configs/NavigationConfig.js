@@ -8,6 +8,7 @@ import {
   FileExcelOutlined,
   InfoOutlined,
   ReadOutlined,
+  VideoCameraOutlined,
 } from "@ant-design/icons";
 
 const dashBoardNavTree = [
@@ -72,6 +73,14 @@ const dashBoardNavTree = [
     path: "/rules",
     title: "Rules / Regulations",
     icon: InfoOutlined,
+    breadcrumb: false,
+    submenu: [],
+  },
+  {
+    key: "videos",
+    path: "/videos",
+    title: "Videos",
+    icon: VideoCameraOutlined,
     breadcrumb: false,
     submenu: [],
   },

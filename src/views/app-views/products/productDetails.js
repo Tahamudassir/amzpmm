@@ -13,7 +13,8 @@ import {
   InputNumber,
   Select,
 } from "antd";
-import { SyncOutlined, EditOutlined } from "@ant-design/icons";
+import { SyncOutlined, EditOutlined, CopyOutlined } from "@ant-design/icons";
+import copy from "copy-to-clipboard";
 import {
   viewProductAction,
   editProductAction,
@@ -81,6 +82,29 @@ const ProductDetails = (props) => {
     };
     dispatch(editProductImageAction(queryObj));
   };
+
+  const copyFields = () => {
+    if (productDetail) {
+      let { soldBy, keyword, brandName } = productDetail;
+      copy(
+        "Keyword" +
+          "\n" +
+          keyword +
+          "\n" +
+          "\n" +
+          "Brand Name" +
+          "\n" +
+          brandName +
+          "\n" +
+          "\n" +
+          "Sold By" +
+          "\n" +
+          soldBy
+      );
+      message.success("copied to clipboard");
+    }
+  };
+
   const { Option } = Select;
   return (
     <>
@@ -172,6 +196,13 @@ const ProductDetails = (props) => {
                     Edit
                   </Button>
                 )}
+                <span
+                  className="copyIcon"
+                  style={{ fontSize: "20px" }}
+                  onClick={copyFields}
+                >
+                  <CopyOutlined />
+                </span>
               </div>
               {editProduct ? (
                 <div className="bodyProductDetail">
@@ -193,13 +224,13 @@ const ProductDetails = (props) => {
                       <Col span={1} />
                       <Col span={9}>
                         <Form.Item
-                          name="sellerId"
-                          label="Seller Id"
+                          name="soldBy"
+                          label="Sold By"
                           initialValue={
-                            productDetail ? productDetail.sellerId : ""
+                            productDetail ? productDetail.soldBy : ""
                           }
                         >
-                          <Input disabled />
+                          <Input />
                         </Form.Item>
                       </Col>
                       <Col span={14}>
@@ -384,7 +415,7 @@ const ProductDetails = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Sold By :</h4>
-                      <p>{productDetail.brandName}</p>
+                      <p>{productDetail.soldBy}</p>
                     </Col>
                     <Col span={12}>
                       <h4>Brand Name :</h4>

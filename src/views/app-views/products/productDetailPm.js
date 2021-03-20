@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
-import { Row, Col, Spin } from "antd";
+import { Row, Col, Spin, message } from "antd";
+import copy from "copy-to-clipboard";
+import { CopyOutlined } from "@ant-design/icons";
 import { viewProductAction } from "../../../redux/actions/Product";
 import "./styles.css";
 
@@ -31,6 +33,28 @@ const ProductDetails = (props) => {
   useEffect(() => {
     dispatch(viewProductAction({ productId: id }));
   }, [id]);
+
+  const copyFields = () => {
+    if (productDetail) {
+      let { soldBy, keyword, brandName } = productDetail;
+      copy(
+        "Keyword" +
+          "\n" +
+          keyword +
+          "\n" +
+          "\n" +
+          "Brand Name" +
+          "\n" +
+          brandName +
+          "\n" +
+          "\n" +
+          "Sold By" +
+          "\n" +
+          soldBy
+      );
+      message.success("copied to clipboard");
+    }
+  };
 
   return (
     <>
@@ -66,6 +90,13 @@ const ProductDetails = (props) => {
             <div className="productDetailCard">
               <div className="header">
                 <h4>Details</h4>
+                <span
+                  className="copyIcon"
+                  style={{ fontSize: "20px" }}
+                  onClick={copyFields}
+                >
+                  <CopyOutlined />
+                </span>
               </div>
               <div className="bodyProductDetail">
                 <Row gutter={[0, { xs: 8, sm: 8, md: 16, lg: 16, xl: 16 }]}>
@@ -75,7 +106,7 @@ const ProductDetails = (props) => {
                   </Col>
                   <Col span={12}>
                     <h4>Sold By :</h4>
-                    <p>{productDetail.brandName}</p>
+                    <p>{productDetail.soldBy}</p>
                   </Col>
                   <Col span={12}>
                     <h4>Brand Name :</h4>

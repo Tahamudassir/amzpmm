@@ -18,7 +18,6 @@ function* getReservations() {
         type: types.GET_RESERVED_PRODUCTS_SUCCESS,
         payload: response.data,
       });
-      console.log("response", response);
     } else {
       yield put({ type: types.STOP_LOADING });
       message.error("Failed to get reserved products");

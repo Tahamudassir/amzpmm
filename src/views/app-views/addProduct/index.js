@@ -43,6 +43,7 @@ const AddProduct = (props) => {
         }
         let bodyFormData = new FormData();
         bodyFormData.append("brandName", values.brandName);
+        bodyFormData.append("soldBy", values.soldBy);
         bodyFormData.append("chineseSeller", values.chineseSeller);
         bodyFormData.append("commission", values.commission);
         bodyFormData.append("commissionCondition", values.commissionCondition);
@@ -94,6 +95,11 @@ const AddProduct = (props) => {
                     <Input placeholder="Keyword" />
                   </Form.Item>
                 </Col>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                  <Form.Item name="soldBy" rules={rules.required} hasFeedback>
+                    <Input placeholder="soldBy" />
+                  </Form.Item>
+                </Col>
               </Row>
               <Row gutter={[0, { xs: 8, sm: 16, md: 0, lg: 0 }]}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
@@ -130,11 +136,7 @@ const AddProduct = (props) => {
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                  <Form.Item
-                    name="chineseSeller"
-                    rules={rules.required}
-                    hasFeedback
-                  >
+                  <Form.Item name="chineseSeller" hasFeedback>
                     <Input placeholder="Chinese Seller" />
                   </Form.Item>
                 </Col>
