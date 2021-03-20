@@ -1,5 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 import Routes from "./Routes";
 import store from "./redux/store";
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
@@ -11,20 +13,22 @@ const themes = {
   dark: `${process.env.PUBLIC_URL}/css/dark-theme.css`,
   light: `${process.env.PUBLIC_URL}/css/light-theme.css`,
 };
-console.log("store", store);
+let persistor = persistStore(store);
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        <ThemeSwitcherProvider
-          themeMap={themes}
-          defaultTheme={THEME_CONFIG.currentTheme}
-          insertionPoint="styles-insertion-point"
-        >
-          <IntlProvider locale="en">
-            <Routes />
-          </IntlProvider>
-        </ThemeSwitcherProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeSwitcherProvider
+            themeMap={themes}
+            defaultTheme={THEME_CONFIG.currentTheme}
+            insertionPoint="styles-insertion-point"
+          >
+            <IntlProvider locale="en">
+              <Routes />
+            </IntlProvider>
+          </ThemeSwitcherProvider>
+        </PersistGate>
       </Provider>
     </div>
   );

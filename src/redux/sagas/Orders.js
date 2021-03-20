@@ -112,11 +112,28 @@ function* exportOrdersToExcel({ payload }) {
         return d.isBetween(from, to);
       });
       let workbook = XLSX.utils.book_new();
+      let wscols = [
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 40 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 50 },
+      ];
+
+      // workbook["!cols"] = wscols;
       XLSX.utils.book_append_sheet(
         workbook,
         XLSX.utils.json_to_sheet(excelData),
         "orders"
       );
+      // workbook["!cols"].push({ width: 40 });
+
       yield XLSX.writeFile(workbook, "output.xlsx");
 
       yield put({ type: types.EXPORT_TO_EXCEL_SUCCESS });
@@ -125,6 +142,7 @@ function* exportOrdersToExcel({ payload }) {
       message.error("failed to generate excel file");
     }
   } catch (error) {
+    console.log("error", error);
     yield put({ type: types.EXPORT_TO_EXCEL_FAILURE });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);

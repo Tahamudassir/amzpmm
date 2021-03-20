@@ -17,6 +17,7 @@ const rootPersistConfig = {
   key: "root",
   storage: storage,
   whitelist: ["auth"],
+  blacklist: ["orders", "products", "reservations"],
   transforms: [expireIn(expireTime, expirationKey, {})],
 };
 // const authPersistConfig = {
