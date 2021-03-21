@@ -7,6 +7,13 @@ export const getOrdersAction = (queryObj) => {
   };
 };
 
+export const getOrdersPmAction = (payload) => {
+  return {
+    type: types.GET_ORDERS_PM,
+    payload: payload,
+  };
+};
+
 export const addNewOrderAction = (queryData) => {
   return {
     type: types.NEW_ORDER,
@@ -59,6 +66,13 @@ export const searchByProductId = (id) => {
 export const exportToExcelAction = (dates) => {
   return {
     type: types.EXPORT_TO_EXCEL,
+    payload: dates,
+  };
+};
+
+export const exportToExcelPmAction = (dates) => {
+  return {
+    type: types.EXPORT_TO_EXCEL_PM,
     payload: dates,
   };
 };

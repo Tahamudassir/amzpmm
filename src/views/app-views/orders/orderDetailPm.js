@@ -342,7 +342,7 @@ const OrderDetailPm = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Refund Date :</h4>
-                      {orderDetail.reviewDate && (
+                      {orderDetail.refunddate && (
                         <p>
                           {moment(orderDetail.refunddate).format("DD-MM-YYYY")}
                         </p>
@@ -355,8 +355,8 @@ const OrderDetailPm = (props) => {
                       </p>
                     </Col>
                     <Col span={12}>
-                      <h4>Seller ID :</h4>
-                      {/* <p>{orderDetail.user}</p> */}
+                      <h4>Seller:</h4>
+                      <p>{orderDetail.user}</p>
                     </Col>
                     <Col span={12}>
                       <h4>Commission :</h4>

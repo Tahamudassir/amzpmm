@@ -59,6 +59,7 @@ const reservations = (state = initState, action) => {
       };
     case types.STOP_LOADING:
       return {
+        ...state,
         loading: false,
       };
     default:

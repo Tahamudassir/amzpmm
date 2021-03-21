@@ -95,7 +95,8 @@ const AddProduct = (props) => {
                     <Input placeholder="Keyword" />
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
+                <Col xs={24} sm={24} md={11} lg={11} xl={11}>
                   <Form.Item name="soldBy" rules={rules.required} hasFeedback>
                     <Input placeholder="soldBy" />
                   </Form.Item>
@@ -113,7 +114,11 @@ const AddProduct = (props) => {
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
                 <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                  <Form.Item name="category" rules={rules.required} hasFeedback>
+                  <Form.Item
+                    name="productCategory"
+                    rules={rules.required}
+                    hasFeedback
+                  >
                     <Select placeholder="Select a category">
                       {categories &&
                         categories.map((category) => (

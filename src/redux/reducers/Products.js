@@ -51,11 +51,6 @@ const products = (state = initState, action) => {
         loading: false,
         productDetail: action.payload,
       };
-    case types.VIEW_PRODUCT_FAILURE:
-      return {
-        ...state,
-        loading: false,
-      };
     case types.CHANGE_PRODUCT_STATUS:
       return {
         ...state,
@@ -66,11 +61,6 @@ const products = (state = initState, action) => {
         ...state,
         loading: false,
         products: action.payload,
-      };
-    case types.CHANGE_PRODUCT_STATUS_FAILURE:
-      return {
-        ...state,
-        loading: false,
       };
     case types.SEARCH_BY_MARKET:
       return {
@@ -103,11 +93,6 @@ const products = (state = initState, action) => {
         loading: false,
         clearForm: true,
       };
-    case types.ADD_PRODUCT_FAILURE:
-      return {
-        ...state,
-        loading: false,
-      };
     case types.EDIT_PRODUCT:
       return {
         ...state,
@@ -119,7 +104,7 @@ const products = (state = initState, action) => {
         loading: false,
         productDetail: action.payload,
       };
-    case types.EDIT_PRODUCT_FAILURE:
+    case types.STOP_LOADING:
       return {
         ...state,
         loading: false,

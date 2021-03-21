@@ -8,7 +8,7 @@ const UserInfo = (props) => {
   return (
     <>
       <Popover content={() => content(info)} title="User Info">
-        <p style={{ margin: 0 }}>{info.username}</p>
+        <p style={{ margin: 0 }}>{info && info.username}</p>
       </Popover>
     </>
   );

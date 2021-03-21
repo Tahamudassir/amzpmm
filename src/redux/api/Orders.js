@@ -1,9 +1,11 @@
 import API from "../config/lib";
 
 export async function getOrdersApi() {
+  return API.get("/order/getuserordered");
+}
+export async function getOrdersPmApi() {
   return API.get("/order/getuserorders");
 }
-
 export async function addOrdersApi(queryData) {
   return API.post("/order/add", queryData);
 }

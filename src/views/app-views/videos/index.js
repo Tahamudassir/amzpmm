@@ -5,19 +5,19 @@ import Loading from "../../../components/Loading";
 import "./style.css";
 const baseURL = process.env.REACT_APP_API_URL;
 
-const Videos = () => {
+const AddRules = () => {
   const [loading, setLoading] = useState(false);
-  const [rules, setRules] = useState(null);
+  const [videos, setVideos] = useState(null);
 
   useEffect(() => {
-    // getVideos();
+    getVideos();
   }, []);
 
   const getVideos = async () => {
+    showLoading();
     try {
-      showLoading();
       let result = await axios.get(`${baseURL}/admin/getvideos`);
-      setRules(result.data[0]);
+      setVideos(result.data);
       hideLoading();
     } catch (err) {
       message.error(err.message);
@@ -27,12 +27,27 @@ const Videos = () => {
 
   const showLoading = () => setLoading(true);
   const hideLoading = () => setLoading(false);
+
   return (
     <>
-      <h4 className="videosTitle">Video Tutorials</h4>
+      <h4 className="videosMainTitle">Videos</h4>
       {loading && <Loading />}
+      <div className="wrapperVideos">
+        {videos &&
+          videos.map((video) => (
+            <div key={video._id} className="cardVideo">
+              <div className="cardVideoHeader">
+                <h4 className="videoTitle">{video.title}</h4>
+              </div>
+              <span
+                style={{ width: "100%" }}
+                dangerouslySetInnerHTML={{ __html: video.link }}
+              />
+            </div>
+          ))}
+      </div>
     </>
   );
 };
 
-export default Videos;
+export default AddRules;

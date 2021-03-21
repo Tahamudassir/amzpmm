@@ -1,5 +1,4 @@
 import React from "react";
-const reactAppUrl = process.env.REACT_APP_URL;
 
 const PublicProducts = () => {
   return (
@@ -10,7 +9,7 @@ const PublicProducts = () => {
         alignItems: "center",
       }}
     >
-      <a href={`${reactAppUrl}/products/public`} target="_blank">
+      <a href={"https://amzmarketings.com/public/products"} target="_blank">
         Public Products (Link)
       </a>
     </div>

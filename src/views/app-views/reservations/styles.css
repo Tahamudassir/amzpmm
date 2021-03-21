@@ -14,6 +14,10 @@
   margin: 0;
   color: #3d5170;
 }
+.deleteBtn {
+  background: #ff6347;
+  border-color: #ff6347;
+}
 
 .reserveProducts p {
   margin: 5px 0px;

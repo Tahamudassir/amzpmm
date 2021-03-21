@@ -6,6 +6,7 @@ import staticData from "../../../constants/static.json";
 import "./styles.css";
 
 const ChangePassword = (props) => {
+  let [form] = Form.useForm();
   const onChangePassword = (data) => {
     if (data.password !== data.confirmPassword) {
       message.error("New password and confirm password does not match");
@@ -15,6 +16,7 @@ const ChangePassword = (props) => {
         newpassword: data.password,
       };
       props.dispatch(changePasswordAction(queryObj));
+      form.resetFields();
     }
   };
 
@@ -26,7 +28,7 @@ const ChangePassword = (props) => {
           <Col xs={24} sm={24} md={11} lg={11} xl={11}>
             <p className="labelPwd">Update Password</p>
             <p>{staticData.updatePasswordDesc}</p>
-            <Form onFinish={onChangePassword}>
+            <Form onFinish={onChangePassword} form={form}>
               <Form.Item
                 name="oldPassword"
                 rules={[

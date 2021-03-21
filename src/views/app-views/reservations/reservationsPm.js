@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getReservationsPmAction } from "../../../redux/actions/Reservations";
+import {
+  getReservationsPmAction,
+  releaseProductAction,
+} from "../../../redux/actions/Reservations";
 import { Table, Button } from "antd";
 import moment from "moment-timezone";
 import "./styles.css";
@@ -42,12 +45,12 @@ const Reservations = (props) => {
     },
     {
       key: "id",
-      render: () => (
+      render: (cell) => (
         <Button
           type="primary"
           className="btnViewOrder"
           size="small"
-          onClick={() => history.push("/create-order")}
+          onClick={() => history.push(`/create-order/${cell.productId}`)}
         >
           Create Order
         </Button>
@@ -56,12 +59,22 @@ const Reservations = (props) => {
     {
       key: "id",
       render: (cell, row, index) => (
-        <Button type="primary" className="btnViewOrder" size="small">
+        <Button
+          type="primary"
+          className="deleteBtn"
+          size="small"
+          onClick={() => onReleaseProduct(cell)}
+        >
           Release
         </Button>
       ),
     },
   ];
+
+  const onReleaseProduct = (obj) => {
+    let { productId, _id } = obj;
+    dispatch(releaseProductAction({ productId, reservationId: _id }));
+  };
   return (
     <>
       <h4 className="reserveTitle">Reserved Orders</h4>

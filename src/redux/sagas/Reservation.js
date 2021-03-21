@@ -29,9 +29,10 @@ function* getReservations() {
   }
 }
 
-function* getReservationsPm() {
+function* getPmReservations() {
   try {
     const response = yield getReservationsPmApi();
+    console.log("response", response);
     if (response.status >= 200 && response.status < 300) {
       yield put({
         type: types.GET_RESERVED_PRODUCTS_SUCCESS_PM,
@@ -42,6 +43,7 @@ function* getReservationsPm() {
       message.error("Failed to get reserved products");
     }
   } catch (error) {
+    console.log("error", error);
     yield put({ type: types.STOP_LOADING });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
@@ -89,7 +91,7 @@ function* releaseProduct({ payload }) {
 
 export default function* reservationsSaga() {
   yield takeLatest(types.GET_RESERVED_PRODUCTS, getReservations);
-  yield takeLatest(types.GET_RESERVED_PRODUCTS_PM, getReservationsPm());
+  yield takeLatest(types.GET_RESERVED_PRODUCTS_PM, getPmReservations);
   yield takeLatest(types.RESERVE_PRODUCT, reserveProduct);
   yield takeLatest(types.RELEASE_PRODUCT, releaseProduct);
 }

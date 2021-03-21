@@ -1,4 +1,4 @@
-.cardRules {
+.videoFormCard {
   background-color: #fff;
   border-radius: 0.625rem;
   box-shadow: 0 2px 0 rgb(90 97 105 / 11%), 0 4px 8px rgb(90 97 105 / 12%),
@@ -6,13 +6,9 @@
   font-weight: 300;
   padding: 1rem !important;
   margin-top: 20px;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: space-between;
 }
-.videosTitle {
+.videosMainTitle {
   font-size: 1.625rem;
   font-weight: 500;
   line-height: 1;
@@ -20,39 +16,39 @@
   color: #3d5170;
   margin-bottom: 20px;
 }
-.documentHeading {
-  margin-top: 40px;
+.videoTitle {
   font-size: 1.625rem;
   font-weight: 500;
   line-height: 1;
   color: #3d5170;
-  margin-bottom: 40px;
+  margin: 0px;
 }
-.rulesFileWrapper {
-  display: flex;
-  justify-content: center;
-}
-.btnUploadFile {
+.cardVideo {
   width: 100%;
+  background: #fff;
+  border: 1px solid #cdcdcd;
+  padding: 10px;
+  margin: 20px 0px;
+  border-radius: 4px;
+}
+.cardVideoHeader {
   display: flex;
-  /* align-items: center; */
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin-bottom: 5px;
+}
+.wrapperVideos {
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
 }
 .uploadIcon {
   height: 100px;
   width: 100px;
 }
-
-@media (max-width: 780px) {
-  .btnUploadFile {
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .changeFile {
-    margin-top: 10px;
-    /* margin-bottom: 10px; */
-  }
-  .cardRules {
-    width: "70%";
+@media (max-width: 580px) {
+  .cardVideo {
+    width: 90%;
   }
 }

@@ -23,11 +23,16 @@ const orders = (state = initState, action) => {
         loading: false,
         orders: action.payload,
       };
-    case types.GET_ORDERS_FAILURE:
+    case types.GET_ORDERS_PM:
       return {
         ...state,
-        orders: action.payload,
+        loading: true,
+      };
+    case types.GET_ORDERS_PM_SUCCESS:
+      return {
+        ...state,
         loading: false,
+        orders: action.payload,
       };
     case types.VIEW_ORDER:
       return {
@@ -39,11 +44,6 @@ const orders = (state = initState, action) => {
         ...state,
         loading: false,
         orderDetail: action.payload,
-      };
-    case types.VIEW_ORDER_FAILURE:
-      return {
-        ...state,
-        loading: false,
       };
     case types.EDIT_ORDER_PIC:
       return {
@@ -72,21 +72,10 @@ const orders = (state = initState, action) => {
         loading: false,
         orderDetail: action.payload,
       };
-    case types.EDIT_ORDER_FAILURE:
-      return {
-        ...state,
-        loading: false,
-      };
-
     case types.NEW_ORDER:
       return {
         ...state,
         loading: true,
-      };
-    case types.NEW_ORDER_FAILURE:
-      return {
-        ...state,
-        loading: false,
       };
     case types.NEW_ORDER_SUCCESS:
       return {
@@ -119,15 +108,20 @@ const orders = (state = initState, action) => {
         ...state,
         loading: false,
       };
-    case types.EXPORT_TO_EXCEL_FAILURE:
+    case types.EXPORT_TO_EXCEL_PM:
       return {
         ...state,
-        loading: false,
+        loading: true,
       };
     case types.RESET_VARIABLES:
       return {
         ...state,
         clearForm: false,
+      };
+    case types.STOP_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

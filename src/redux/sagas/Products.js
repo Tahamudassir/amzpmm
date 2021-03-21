@@ -42,7 +42,6 @@ function* getProductsPm(action) {
       yield put({ type: types.GET_PRODUCTS_FAILURE });
     }
   } catch (error) {
-    console.log("error", error);
     yield put({ type: types.GET_PRODUCTS_FAILURE });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
@@ -58,10 +57,10 @@ function* viewProduct(action) {
         payload: response.data[0],
       });
     } else {
-      yield put({ type: types.VIEW_PRODUCT_FAILURE });
+      yield put({ type: types.STOP_LOADING });
     }
   } catch (error) {
-    yield put({ type: types.VIEW_PRODUCT_FAILURE });
+    yield put({ type: types.STOP_LOADING });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
   }
@@ -77,10 +76,10 @@ function* editProduct(action) {
       });
       message.success("product edited successfully");
     } else {
-      yield put({ type: types.EDIT_PRODUCT_FAILURE });
+      yield put({ type: types.STOP_LOADING });
     }
   } catch (error) {
-    yield put({ type: types.EDIT_PRODUCT_FAILURE });
+    yield put({ type: types.STOP_LOADING });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
   }
@@ -93,10 +92,10 @@ function* addProduct(action) {
       yield put({ type: types.SET_NULL });
       message.success("Product added successfully");
     } else {
-      yield put({ type: types.ADD_PRODUCT_FAILURE });
+      yield put({ type: types.STOP_LOADING });
     }
   } catch (error) {
-    yield put({ type: types.ADD_PRODUCT_FAILURE });
+    yield put({ type: types.STOP_LOADING });
     console.log("error", error);
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
@@ -135,10 +134,10 @@ function* changeProductStatus({ payload }) {
       });
       message.success("changed product status");
     } else {
-      yield put({ type: types.CHANGE_PRODUCT_STATUS_FAILURE });
+      yield put({ type: types.STOP_LOADING });
     }
   } catch (error) {
-    yield put({ type: types.CHANGE_PRODUCT_STATUS_FAILURE });
+    yield put({ type: types.STOP_LOADING });
     let errorMessage = yield getErrorMessage(error);
     message.error(errorMessage);
   }

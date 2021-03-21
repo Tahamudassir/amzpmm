@@ -25,14 +25,17 @@ export const AppViews = () => {
         />
         <Route path="/rules" component={lazy(() => import(`./tutorial`))} />
         <Route path="/videos" component={lazy(() => import(`./videos`))} />
-        <Route path="/orders" component={lazy(() => import(`./orders`))} />
+        <Route
+          path="/orders"
+          component={lazy(() => import(`./orders/ordersPm`))}
+        />
         <Route
           path="/order-detail/:id"
           component={lazy(() => import(`./orders/orderDetailPm`))}
         />
         <Route
           path="/create-excel"
-          component={lazy(() => import(`./createExcel`))}
+          component={lazy(() => import(`./createExcel/excelPm`))}
         />
         <Route path="/tutorial" component={lazy(() => import(`./tutorial`))} />
         <Route
