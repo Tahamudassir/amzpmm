@@ -8,6 +8,7 @@ import {
   searchOrderByCustomerEmail,
   searchByProductId,
 } from "../../../redux/actions/Orders";
+import UserInfo from "../../../components/UserInfo";
 import { filterOrders } from "../../../redux/selectors";
 import moment from "moment-timezone";
 import orderStatus from "../../../constants/orderStatus";
@@ -38,10 +39,16 @@ const Orders = (props) => {
       key: "id",
       render: (cell, row, index) => <>{index + 1}</>,
     },
+    // {
+    //   title: "User",
+    //   dataIndex: "user",
+    //   key: "id",
+    // },
     {
-      title: "User",
-      dataIndex: "user",
+      title: "Seller Name",
+      dataIndex: "User",
       key: "id",
+      render: (user) => <UserInfo user={user} />,
     },
     {
       title: "Order No",
@@ -50,10 +57,14 @@ const Orders = (props) => {
     },
     {
       title: "Product",
-      dataIndex: "orderPic",
+      dataIndex: "productImage",
       key: "id",
       render: (imageUrl) => (
-        <img src={imageUrl} style={{ width: "100px" }} alt="prodcut" />
+        <img
+          src={imageUrl}
+          style={{ width: "100px", height: "100px", objectFit: "contain" }}
+          alt="prodcut"
+        />
       ),
     },
     {
@@ -67,8 +78,8 @@ const Orders = (props) => {
       key: "id",
     },
     {
-      title: "Review Date",
-      dataIndex: "updatedAt",
+      title: "Created At",
+      dataIndex: "createdAt",
       key: "id",
       render: (date) => moment(date).format("DD-MM-YYYY"),
     },
@@ -165,6 +176,7 @@ const Orders = (props) => {
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
+          pagination={{ pageSize: 50 }}
         />
       </div>
     </>

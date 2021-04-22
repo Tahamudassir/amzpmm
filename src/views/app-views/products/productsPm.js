@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { Table, Button, Row, Col, Select, Input, Spin } from "antd";
+import { Table, Button, Row, Col, Select, Input, Spin, message } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import ProductImage from "../../../components/ProductImage";
 import {
@@ -30,7 +30,10 @@ const Products = (props) => {
     dispatch(getCategoryAction());
   }, []);
 
-  const onReserveProduct = (id) => {
+  const onReserveProduct = (id, saleLimitDayLeft) => {
+    if (saleLimitDayLeft === 0) {
+      return message.warning("Daily sale limit reached for this product");
+    }
     dispatch(reserveProductAction({ productId: id }));
   };
 
@@ -74,6 +77,7 @@ const Products = (props) => {
       title: "Keyword",
       dataIndex: "keyword",
       key: "id",
+      render: (keyword) => <p className="keyword">{keyword}</p>,
     },
     {
       title: "Product ID",
@@ -113,7 +117,7 @@ const Products = (props) => {
           type="primary"
           size="small"
           onClick={() => {
-            onReserveProduct(cell.productId);
+            onReserveProduct(cell.productId, cell.saleLimitDayLeft);
           }}
           icon={<EditOutlined />}
         >
@@ -203,6 +207,7 @@ const Products = (props) => {
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
+          pagination={{ pageSize: 50 }}
         />
       </div>
       {reserving && (

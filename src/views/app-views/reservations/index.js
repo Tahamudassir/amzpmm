@@ -5,6 +5,7 @@ import {
   releaseProductAction,
 } from "../../../redux/actions/Reservations";
 import { Table, Button } from "antd";
+import UserInfo from "../../../components/UserInfo";
 import moment from "moment-timezone";
 import "./styles.css";
 
@@ -16,15 +17,11 @@ const Reservations = (props) => {
   }, []);
 
   const columns = [
-    // {
-    //   title: "#",
-    //   dataIndex: "orderNo",
-    //   key: "id",
-    // },
     {
-      title: "User",
-      dataIndex: "user",
+      title: "Seller Name",
+      dataIndex: "User",
       key: "id",
+      render: (user) => <UserInfo user={user} />,
     },
     {
       title: "Product ID",
@@ -42,7 +39,11 @@ const Reservations = (props) => {
       dataIndex: "image",
       key: "id",
       render: (imageUrl) => (
-        <img src={imageUrl} style={{ width: "100px" }} alt="order" />
+        <img
+          src={imageUrl}
+          style={{ width: "100px", height: "100px", objectFit: "contain" }}
+          alt="order"
+        />
       ),
     },
     {
@@ -73,6 +74,7 @@ const Reservations = (props) => {
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
+          pagination={{ pageSize: 50 }}
         />
       </div>
     </>

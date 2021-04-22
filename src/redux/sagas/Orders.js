@@ -8,6 +8,7 @@ import {
   viewOrderApi,
   editOrderApi,
   getOrdersByStatusApi,
+  getOrdersByStatusPmApi,
   editOrderPicApi,
   editRefundPicApi,
   editReviewPicApi,
@@ -23,7 +24,6 @@ function* getOrders({ payload }) {
     let response;
     if (payload.status === "All") {
       response = yield getOrdersApi();
-      console.log("response", response);
     } else {
       response = yield getOrdersByStatusApi(payload);
     }
@@ -45,7 +45,7 @@ function* getOrdersPm({ payload }) {
     if (payload.status === "All") {
       response = yield getOrdersPmApi();
     } else {
-      response = yield getOrdersByStatusApi(payload);
+      response = yield getOrdersByStatusPmApi(payload);
     }
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.GET_ORDERS_PM_SUCCESS, payload: response.data });
@@ -119,21 +119,21 @@ function* editOrder(action) {
 function* exportOrdersToExcel({ payload }) {
   try {
     let from = moment(payload.from);
-    let to = moment(payload.to);
+    let to = moment(payload.to).add(1, "days");
     let response;
 
     if (payload.orderstatus === "All") {
       response = yield getOrdersApi();
     } else {
       response = yield getOrdersByStatusApi({
-        orderstatus: payload.orderstatus,
+        status: payload.orderstatus,
       });
     }
     if (response.status >= 200 && response.status < 300) {
       const data = response.data;
       const excelData = data.filter((order) => {
         let d = moment(order.createdAt);
-        return d.isBetween(from, to);
+        return d.isBetween(from, to, "days", "[]");
       });
 
       let workbook = XLSX.utils.book_new();
@@ -157,21 +157,21 @@ function* exportOrdersToExcel({ payload }) {
 function* exportOrdersPmToExcel({ payload }) {
   try {
     let from = moment(payload.from);
-    let to = moment(payload.to);
+    let to = moment(payload.to).add(1, "days");
     let response;
 
     if (payload.orderstatus === "All") {
       response = yield getOrdersPmApi();
     } else {
-      response = yield getOrdersByStatusApi({
-        orderstatus: payload.orderstatus,
+      response = yield getOrdersByStatusPmApi({
+        status: payload.orderstatus,
       });
     }
     if (response.status >= 200 && response.status < 300) {
       const data = response.data;
       const excelData = data.filter((order) => {
         let d = moment(order.createdAt);
-        return d.isBetween(from, to);
+        return d.isBetween(from, to, "days", "[]");
       });
 
       let workbook = XLSX.utils.book_new();

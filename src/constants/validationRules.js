@@ -28,4 +28,10 @@ export default {
       message: "This field is required",
     },
   ],
+  imageRequired: [
+    {
+      required: true,
+      message: "This image is required",
+    },
+  ],
 };

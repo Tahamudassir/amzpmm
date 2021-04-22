@@ -1,14 +1,6 @@
-import { put, takeLatest, select } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import { message } from "antd";
-import {
-  // addCategoryApi,
-  // addMarketApi,
-  getCategoryApi,
-  getMarketApi,
-  // deleteMarketApi,
-  // deleteCategoryApi,
-} from "../api/AppData";
-// import { selectMarkets, selectCategories } from "../selectors";
+import { getCategoryApi, getMarketApi } from "../api/AppData";
 import { getErrorMessage } from "../constants/ErrorMessage";
 import types from "../constants/AppData";
 

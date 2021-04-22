@@ -228,7 +228,7 @@ const Profile = (props) => {
                 <Col span={8}>
                   <Form.Item
                     name="paymentType"
-                    label="Payment Type"
+                    label="Account Name"
                     hasFeedback
                     initialValue={
                       user && user.paymentType ? user.paymentType : ""
@@ -238,18 +238,6 @@ const Profile = (props) => {
                   </Form.Item>
                 </Col>
                 <Col span={2}></Col>
-                <Col span={14}>
-                  <Form.Item
-                    name="branchCity"
-                    label="Bank Branch City"
-                    hasFeedback
-                    initialValue={
-                      user && user.branchCity ? user.branchCity : ""
-                    }
-                  >
-                    <Input />
-                  </Form.Item>
-                </Col>
               </Row>
 
               <Button type="primary" htmlType="submit" loading={loading}>

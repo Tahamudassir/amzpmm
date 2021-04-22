@@ -109,6 +109,11 @@
   margin-left: 20px;
   cursor: pointer;
 }
+.keyword {
+  width: 200px;
+  word-break: break-all;
+  margin: 0px;
+}
 @media (max-width: 780px) {
   .headingDetails {
     text-align: center;

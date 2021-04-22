@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Row, Col, Input, Button, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { addNewOrderAction } from "../../../redux/actions/Orders";
@@ -13,7 +13,7 @@ const rules = {
       message: "Please input customer email address",
     },
     {
-      type: "email",
+      pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
       message: "Please enter a valid email!",
     },
   ],
@@ -38,6 +38,7 @@ const CreateOrder = (props) => {
   const { loading, dispatch, clearForm } = props;
   const [form] = Form.useForm();
   const [orderPic, setOrderPic] = React.useState(null);
+  const location = useLocation();
   const { id } = useParams();
 
   useEffect(() => {
@@ -63,6 +64,7 @@ const CreateOrder = (props) => {
         bodyFormData.append("orderNumber", values.orderNumber);
         bodyFormData.append("customer_email", values.customer_email);
         bodyFormData.append("orderPic", orderPic.file);
+        bodyFormData.append("reservationId", location.state.reservationId);
         dispatch(addNewOrderAction(bodyFormData));
       })
       .catch((info) => {

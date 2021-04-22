@@ -1,4 +1,4 @@
-import { put, takeLatest, select } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import { message } from "antd";
 import {
   signinApi,

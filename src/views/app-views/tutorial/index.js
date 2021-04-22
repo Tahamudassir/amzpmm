@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import Viewer, { Worker, SpecialZoomLevel } from "@phuocng/react-pdf-viewer";
+import "@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css";
 import axios from "../../../redux/config/lib";
 import { message } from "antd";
 import Loading from "../../../components/Loading";
 import "./style.css";
-// import pdf from "../../../assets/git.pdf";
 const baseURL = process.env.REACT_APP_API_URL;
 
 const Tutorials = (props) => {
@@ -32,7 +33,7 @@ const Tutorials = (props) => {
   const hideLoading = () => setLoading(false);
   return (
     <>
-      {/* <h4 className="ordersTitle">Rules Regulations</h4> */}
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js"></Worker>
       {loading && <Loading />}
 
       {user && user.userType === "PMM" ? (
@@ -40,20 +41,26 @@ const Tutorials = (props) => {
           <h4 className="documentHeading">
             Rules Regulations Document for PMM
           </h4>
-          <embed
-            src="http://www.pdf995.com/samples/pdf.pdf"
-            width="100%"
-            height="700px"
-          ></embed>
+          {rules && rules.rulesPmm && (
+            <div style={{ height: "600px" }}>
+              <Viewer
+                fileUrl={rules.rulesPmm}
+                defaultScale={SpecialZoomLevel.PageFit}
+              />
+            </div>
+          )}
         </>
       ) : (
         <>
           <h4 className="documentHeading">Rules Regulations Document for PM</h4>
-          <embed
-            src="http://www.pdf995.com/samples/pdf.pdf"
-            width="100%"
-            height="700px"
-          ></embed>
+          {rules && rules.rulesPm && (
+            <div style={{ height: "600px" }}>
+              <Viewer
+                fileUrl={rules.rulesPm}
+                defaultScale={SpecialZoomLevel.PageFit}
+              />
+            </div>
+          )}
         </>
       )}
     </>

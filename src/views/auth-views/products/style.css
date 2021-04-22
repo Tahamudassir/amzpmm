@@ -71,6 +71,11 @@
 .changePic {
   margin: 15px 0px;
 }
+.keyword {
+  width: 200px;
+  word-break: break-all;
+  margin: 0px;
+}
 .divider {
   border-top: 1px solid #d3d3d3;
   margin: 10px 5%;

@@ -25,7 +25,7 @@ const Home = () => {
 
   const getStats = async () => {
     try {
-      let stats = await axios.get(`${baseURL}/order/usercount2`);
+      let stats = await axios.get(`${baseURL}/order/usercount`);
       showStats(stats.data);
     } catch (err) {
       message.error(err.message);

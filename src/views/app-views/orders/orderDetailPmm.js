@@ -9,6 +9,8 @@ import {
   editOrderPicAction,
 } from "../../../redux/actions/Orders";
 import moment from "moment-timezone";
+import copy from "copy-to-clipboard";
+import { CopyOutlined } from "@ant-design/icons";
 import Loading from "../../../components/Loading";
 import rules from "../../../constants/validationRules";
 import orderStatus from "../../../constants/orderStatus";
@@ -56,6 +58,23 @@ const OrderDetailPm = (props) => {
     };
     dispatch(editOrderPicAction(queryObj));
     refundImg.value = null;
+  };
+
+  const copyFields = () => {
+    if (orderDetail) {
+      let { orderNumber, customer_email } = orderDetail;
+      copy(
+        "Order No" +
+          "\n" +
+          orderNumber +
+          "\n" +
+          "\n" +
+          "Brand Name" +
+          "\n" +
+          customer_email
+      );
+      message.success("copied to clipboard");
+    }
   };
 
   const { Option } = Select;
@@ -126,6 +145,7 @@ const OrderDetailPm = (props) => {
             <div className="productDetailCard">
               <div className="header">
                 <h4>Details</h4>
+
                 {editOrder ? (
                   <Button
                     type="primary"
@@ -145,6 +165,13 @@ const OrderDetailPm = (props) => {
                     Edit
                   </Button>
                 )}
+                <span
+                  className="copyIcon"
+                  style={{ fontSize: "20px" }}
+                  onClick={copyFields}
+                >
+                  <CopyOutlined />
+                </span>
               </div>
               {editOrder ? (
                 <div className="bodyProductDetail">
@@ -286,9 +313,9 @@ const OrderDetailPm = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Refund Date :</h4>
-                      {orderDetail.refunddate && (
+                      {orderDetail.refundate && (
                         <p>
-                          {moment(orderDetail.refunddate).format("DD-MM-YYYY")}
+                          {moment(orderDetail.refundate).format("DD-MM-YYYY")}
                         </p>
                       )}
                     </Col>
@@ -299,8 +326,10 @@ const OrderDetailPm = (props) => {
                       </p>
                     </Col>
                     <Col span={12}>
-                      <h4>Seller:</h4>
-                      <p>{orderDetail.user}</p>
+                      <h4>Chinese Seller:</h4>
+                      <p>
+                        {orderDetail.chineseSeller && orderDetail.chineseSeller}
+                      </p>
                     </Col>
                     <Col span={12}>
                       <h4>Commission :</h4>

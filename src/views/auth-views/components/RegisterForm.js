@@ -143,14 +143,7 @@ export const RegisterForm = (props) => {
             <Option value="PM">Proxy Marketer</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="experience"
-          label="Proxy Marketing Experience"
-          width="100%"
-          rules={rules.required}
-        >
-          <InputNumber min={0} />
-        </Form.Item>
+
         <Form.Item
           name="address"
           label="Address"
@@ -162,35 +155,13 @@ export const RegisterForm = (props) => {
         <Form.Item name="city" label="City" rules={rules.required} hasFeedback>
           <Input />
         </Form.Item>
-        <Form.Item name="referralName" label="Referral Name" hasFeedback>
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="referralContact"
-          label="Referral Contact Number"
-          rules={rules.phone_not_required}
-          hasFeedback
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="paymentType"
-          label="Bank Account /Jazz Cash /Easy paisa Title"
-          hasFeedback
-        >
+        <Form.Item name="paymentType" label="Account Holder Name" hasFeedback>
           <Input />
         </Form.Item>
         <Form.Item name="bankName" label="Bank Name" hasFeedback>
           <Input />
         </Form.Item>
-        <Form.Item
-          name="payNumber"
-          label="Bank Account /Jazz Cash /Easy paisa Number"
-          hasFeedback
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item name="branchCity" label="Bank Branch City" hasFeedback>
+        <Form.Item name="payNumber" label="Account Number" hasFeedback>
           <Input />
         </Form.Item>
         <Form.Item>

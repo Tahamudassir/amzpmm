@@ -40,7 +40,11 @@ const Reservations = (props) => {
       dataIndex: "image",
       key: "id",
       render: (imageUrl) => (
-        <img src={imageUrl} style={{ width: "100px" }} alt="order" />
+        <img
+          src={imageUrl}
+          style={{ width: "100px", height: "100px", objectFit: "contain" }}
+          alt="order"
+        />
       ),
     },
     {
@@ -50,7 +54,14 @@ const Reservations = (props) => {
           type="primary"
           className="btnViewOrder"
           size="small"
-          onClick={() => history.push(`/create-order/${cell.productId}`)}
+          onClick={() => {
+            history.push({
+              pathname: `/create-order/${cell.productId}`,
+              state: {
+                reservationId: cell._id,
+              },
+            });
+          }}
         >
           Create Order
         </Button>
@@ -58,7 +69,7 @@ const Reservations = (props) => {
     },
     {
       key: "id",
-      render: (cell, row, index) => (
+      render: (cell) => (
         <Button
           type="primary"
           className="deleteBtn"
@@ -70,7 +81,12 @@ const Reservations = (props) => {
       ),
     },
   ];
-
+  // this.props.router.push({
+  //   pathname: '/other-page',
+  //   state: {
+  //     id: 7,
+  //     color: 'green'
+  //   }
   const onReleaseProduct = (obj) => {
     let { productId, _id } = obj;
     dispatch(releaseProductAction({ productId, reservationId: _id }));

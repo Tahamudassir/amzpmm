@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Table, Row, Col, Select, Input } from "antd";
+import ProductImage from "../../../components/ProductImage";
 import {
   getProductsPmAction,
   searchById,
@@ -59,13 +60,14 @@ const Products = (props) => {
     },
     {
       title: "Category",
-      dataIndex: "category",
+      dataIndex: "productCategory",
       key: "id",
     },
     {
       title: "Keyword",
       dataIndex: "keyword",
       key: "id",
+      render: (keyword) => <p className="keyword">{keyword}</p>,
     },
     {
       title: "Product ID",
@@ -74,11 +76,9 @@ const Products = (props) => {
     },
     {
       title: "Image",
-      dataIndex: "image",
+      dataIndex: "",
       key: "id",
-      render: (imageUrl) => (
-        <img src={imageUrl} style={{ width: "100px" }} alt="prodcut" />
-      ),
+      render: (cell) => <ProductImage image={cell.image} id={cell.productId} />,
     },
   ];
 
@@ -162,6 +162,7 @@ const Products = (props) => {
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
+          pagination={{ pageSize: 50 }}
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ export const AppViews = () => {
   return (
     <Suspense fallback={<Loading cover="content" />}>
       <Switch>
-        <Route path="/home" component={lazy(() => import(`./home`))} />
+        <Route path="/home" component={lazy(() => import(`./home/homePm`))} />
         <Route
           path={`/reservations`}
           component={lazy(() => import("./reservations/reservationsPm"))}

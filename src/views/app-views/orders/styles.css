@@ -7,6 +7,10 @@
   padding: 1rem !important;
   margin-top: 20px;
 }
+.copyIcon {
+  margin-left: 20px;
+  cursor: pointer;
+}
 .ordersTitle {
   font-size: 1.625rem;
   font-weight: 500;

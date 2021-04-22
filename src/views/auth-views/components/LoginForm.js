@@ -34,16 +34,23 @@ export const LoginForm = (props) => {
         </span>
       </Divider>
       <div className="d-flex justify-content-center">
-        <Button className="mr-2" icon={<WhatsAppOutlined color="#00FF00" />}>
-          Whatsapp
-        </Button>
-        <Button icon={<CustomIcon svg={FacebookSVG} />}>Facebook</Button>
+        <a href="https://wa.me/923007070691" target="_blank" rel={"external"}>
+          <Button className="mr-2" icon={<WhatsAppOutlined color="#00FF00" />}>
+            Whatsapp
+          </Button>
+        </a>
+        <a
+          href="https://www.facebook.com/groups/2716592638558789/?ref=share"
+          rel={"external"}
+        >
+          <Button icon={<CustomIcon svg={FacebookSVG} />}>Facebook</Button>
+        </a>
       </div>
     </div>
   );
   const registerWithUs = (
     <div>
-      <Divider>
+      <Divider style={{ margin: "8px 0px" }}>
         <span className="text-muted font-size-base font-weight-normal">or</span>
       </Divider>
       <div className="d-flex justify-content-center">

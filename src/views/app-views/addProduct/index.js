@@ -38,9 +38,9 @@ const AddProduct = (props) => {
     form
       .validateFields()
       .then((values) => {
-        if (amazonImage === null || image === null) {
-          message.error("Product images are required");
-        }
+        // if (amazonImage === null || image === null) {
+        //   message.error("Product images are required");
+        // } else {
         let bodyFormData = new FormData();
         bodyFormData.append("brandName", values.brandName);
         bodyFormData.append("soldBy", values.soldBy);
@@ -50,31 +50,41 @@ const AddProduct = (props) => {
         bodyFormData.append("instructions", values.instructions);
         bodyFormData.append("keyword", values.keyword);
         bodyFormData.append("market", values.market);
+        bodyFormData.append("productCategory", values.productCategory);
         bodyFormData.append("refundCondition", values.refundCondition);
         bodyFormData.append("saleLimitDay", values.saleLimitDay);
         bodyFormData.append("saleLimitOverall", values.saleLimitOverall);
         bodyFormData.append("systemCommission", values.systemCommission);
-        bodyFormData.append("files", image.originFileObj);
-        bodyFormData.append("files", amazonImage.originFileObj);
+        bodyFormData.append("files", values.amazonImage.file.originFileObj);
+        bodyFormData.append("files", values.image.file.originFileObj);
         dispatch(addProductAction(bodyFormData));
+        // console.log("image", values.image);
+        // }
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
-  const onChangeAmazonImage = (info) => {
-    setAmazonImage(info.file);
-  };
-  const onChangeImage = (info) => {
-    setImage(info.file);
-  };
-  const removeImage = () => {
-    setImage(null);
-    return true;
-  };
-  const removeAmazonImage = () => {
-    setAmazonImage(null);
-    return true;
+  // const onChangeAmazonImage = (info) => {
+  //   setAmazonImage(info.file);
+  // };
+  // const onChangeImage = (info) => {
+  //   setImage(info.file);
+  // };
+  // const removeImage = () => {
+  //   setImage(null);
+  //   return true;
+  // };
+  // const removeAmazonImage = () => {
+  //   setAmazonImage(null);
+  //   return true;
+  // };
+
+  const normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
   };
   return (
     <>
@@ -152,7 +162,7 @@ const AddProduct = (props) => {
               >
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <p className="labelPicture">Amazon Picture</p>
-                  <Upload
+                  {/* <Upload
                     customRequest={dummyRequest}
                     onChange={onChangeAmazonImage}
                     listType="picture"
@@ -160,11 +170,22 @@ const AddProduct = (props) => {
                     accept="image/x-png,image/gif,image/jpeg"
                   >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                  </Upload>
+                  </Upload> */}
+                  <Form.Item
+                    name="amazonImage"
+                    label="Upload"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                    rules={rules.imageRequired}
+                  >
+                    <Upload customRequest={dummyRequest} listType="picture">
+                      <Button icon={<UploadOutlined />}>Click to upload</Button>
+                    </Upload>
+                  </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <p className="labelPicture">Picture</p>
-                  <Upload
+                  {/* <Upload
                     customRequest={dummyRequest}
                     onChange={onChangeImage}
                     listType="picture"
@@ -172,7 +193,22 @@ const AddProduct = (props) => {
                     onRemove={removeImage}
                   >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                  </Upload>
+                  </Upload> */}
+                  <Form.Item
+                    name="image"
+                    label="Upload"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                    rules={rules.imageRequired}
+                  >
+                    <Upload
+                      customRequest={dummyRequest}
+                      listType="picture"
+                      accept="image/x-png,image/gif,image/jpeg"
+                    >
+                      <Button icon={<UploadOutlined />}>Click to upload</Button>
+                    </Upload>
+                  </Form.Item>
                 </Col>
               </Row>
               <Row>

@@ -78,6 +78,7 @@ const Products = (props) => {
       title: "Keyword",
       dataIndex: "keyword",
       key: "id",
+      render: (keyword) => <p className="keyword">{keyword}</p>,
     },
     {
       title: "Product ID",
@@ -234,6 +235,7 @@ const Products = (props) => {
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
+          pagination={{ pageSize: 50 }}
         />
       </div>
     </>

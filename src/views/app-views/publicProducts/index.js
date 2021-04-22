@@ -9,7 +9,11 @@ const PublicProducts = () => {
         alignItems: "center",
       }}
     >
-      <a href={"https://amzmarketings.com/public/products"} target="_blank">
+      <a
+        href={"https://extremeproxymarketing.com/products/public"}
+        target="_blank"
+        rel={"external"}
+      >
         Public Products (Link)
       </a>
     </div>

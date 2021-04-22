@@ -72,7 +72,7 @@ function* releaseProduct({ payload }) {
     const reservations = yield select(selectReservations);
     if (response.status >= 200 && response.status < 300) {
       const newReservations = reservations.filter(
-        (reservation) => reservation.productId !== payload.productId
+        (reservation) => reservation._id !== payload.reservationId
       );
       yield put({
         type: types.RELEASE_PRODUCT_SUCCESS,

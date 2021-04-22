@@ -15,7 +15,9 @@ export const filterOrders = (data) => {
       orders.filter(
         (order) =>
           order.orderNumber === orderId ||
-          order.customer_email === customer_email ||
+          order.customer_email
+            .toLowerCase()
+            .includes(customer_email.toLowerCase()) ||
           order.product_id === product_id
       )
     );
@@ -35,7 +37,8 @@ export const filterProducts = (data) => {
       products.filter(
         (product) =>
           product.productId === productId ||
-          product.keyword.toLowerCase() === keyword.toLowerCase() ||
+          (keyword !== "" &&
+            product.keyword.toLowerCase().includes(keyword.toLowerCase())) ||
           product.market === market ||
           product.productCategory === category
       )

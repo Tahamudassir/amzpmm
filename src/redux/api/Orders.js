@@ -1,29 +1,32 @@
 import API from "../config/lib";
 
-export async function getOrdersApi() {
+export function getOrdersApi() {
   return API.get("/order/getuserordered");
 }
-export async function getOrdersPmApi() {
+export function getOrdersPmApi() {
   return API.get("/order/getuserorders");
 }
-export async function addOrdersApi(queryData) {
+export function addOrdersApi(queryData) {
   return API.post("/order/add", queryData);
 }
-export async function getOrdersByStatusApi(queryData) {
+export function getOrdersByStatusApi(queryData) {
+  return API.post("/order/getuserorderbystatus2", queryData);
+}
+export function getOrdersByStatusPmApi(queryData) {
   return API.post("/order/getuserorderbystatus", queryData);
 }
-export async function viewOrderApi(queryData) {
+export function viewOrderApi(queryData) {
   return API.post("/order/getorderbyid", queryData);
 }
-export async function editOrderApi(queryData) {
+export function editOrderApi(queryData) {
   return API.post("/order/editorder", queryData);
 }
-export async function editReviewPicApi(queryData) {
+export function editReviewPicApi(queryData) {
   return API.post(`/order/editreviewpic/${queryData.id}`, queryData.image);
 }
-export async function editOrderPicApi(queryData) {
+export function editOrderPicApi(queryData) {
   return API.post(`/order/editorderpic/${queryData.id}`, queryData.image);
 }
-export async function editRefundPicApi(queryData) {
+export function editRefundPicApi(queryData) {
   return API.post(`/order/editrefundpic/${queryData.id}`, queryData.image);
 }
