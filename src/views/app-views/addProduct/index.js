@@ -15,9 +15,6 @@ import "./styles.css";
 const AddProduct = (props) => {
   const { dispatch, loading, clearForm, markets, categories } = props;
   const [form] = Form.useForm();
-  const [amazonImage, setAmazonImage] = useState(null);
-  const [image, setImage] = useState(null);
-
   const { TextArea } = Input;
   const { Option } = Select;
 
@@ -29,8 +26,6 @@ const AddProduct = (props) => {
   useEffect(() => {
     if (clearForm) {
       form.resetFields();
-      setAmazonImage(null);
-      setImage(null);
     }
   }, [clearForm]);
 
@@ -38,9 +33,6 @@ const AddProduct = (props) => {
     form
       .validateFields()
       .then((values) => {
-        // if (amazonImage === null || image === null) {
-        //   message.error("Product images are required");
-        // } else {
         let bodyFormData = new FormData();
         bodyFormData.append("brandName", values.brandName);
         bodyFormData.append("soldBy", values.soldBy);
@@ -55,30 +47,14 @@ const AddProduct = (props) => {
         bodyFormData.append("saleLimitDay", values.saleLimitDay);
         bodyFormData.append("saleLimitOverall", values.saleLimitOverall);
         bodyFormData.append("systemCommission", values.systemCommission);
-        bodyFormData.append("files", values.amazonImage.file.originFileObj);
-        bodyFormData.append("files", values.image.file.originFileObj);
+        bodyFormData.append("files", values.amazonImage[0].originFileObj);
+        bodyFormData.append("files", values.image[0].originFileObj);
         dispatch(addProductAction(bodyFormData));
-        // console.log("image", values.image);
-        // }
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
-  // const onChangeAmazonImage = (info) => {
-  //   setAmazonImage(info.file);
-  // };
-  // const onChangeImage = (info) => {
-  //   setImage(info.file);
-  // };
-  // const removeImage = () => {
-  //   setImage(null);
-  //   return true;
-  // };
-  // const removeAmazonImage = () => {
-  //   setAmazonImage(null);
-  //   return true;
-  // };
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -162,18 +138,8 @@ const AddProduct = (props) => {
               >
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <p className="labelPicture">Amazon Picture</p>
-                  {/* <Upload
-                    customRequest={dummyRequest}
-                    onChange={onChangeAmazonImage}
-                    listType="picture"
-                    onRemove={removeAmazonImage}
-                    accept="image/x-png,image/gif,image/jpeg"
-                  >
-                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                  </Upload> */}
                   <Form.Item
                     name="amazonImage"
-                    label="Upload"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={rules.imageRequired}
@@ -185,18 +151,8 @@ const AddProduct = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <p className="labelPicture">Picture</p>
-                  {/* <Upload
-                    customRequest={dummyRequest}
-                    onChange={onChangeImage}
-                    listType="picture"
-                    accept="image/x-png,image/gif,image/jpeg"
-                    onRemove={removeImage}
-                  >
-                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                  </Upload> */}
                   <Form.Item
                     name="image"
-                    label="Upload"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={rules.imageRequired}
