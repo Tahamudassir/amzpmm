@@ -29,10 +29,12 @@ const Products = (props) => {
     markets,
     total,
     categories,
+    currentNumber,
+    sizePage,
   } = props
   const history = useHistory()
-  const [current, setCurrent] = useState(1)
-  const [pageSize, setPageSize] = useState(50)
+  const [current, setCurrent] = useState(currentNumber)
+  const [pageSize, setPageSize] = useState(sizePage)
 
   useEffect(() => {
     dispatch(
@@ -159,6 +161,7 @@ const Products = (props) => {
   const handleTableChange = (pagination) => {
     const { current, pageSize } = pagination
     setPageSize(pageSize)
+    setCurrent(current)
     dispatch(
       getProductsPmAction({
         status: 'Enabled',
@@ -239,6 +242,7 @@ const Products = (props) => {
           pagination={{
             total: total, // total count returned from backend,
             pageSize,
+            current,
           }}
         />
       </div>
@@ -252,7 +256,7 @@ const Products = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  const { loading, total } = state.products
+  const { loading, total, sizePage, currentNumber } = state.products
   const { categories, markets } = state.appData
   return {
     products: filterProducts(state.products),
@@ -260,6 +264,8 @@ const mapStateToProps = (state) => {
     markets,
     loading,
     total,
+    sizePage,
+    currentNumber,
   }
 }
 
