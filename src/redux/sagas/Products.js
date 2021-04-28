@@ -17,6 +17,7 @@ function* getProducts(action) {
   console.log('get saga', action)
   try {
     const response = yield getProductsApi(action.payload)
+    console.log("data " , response)
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.GET_PRODUCTS_SUCCESS, payload: response.data })
     } else {

@@ -10,7 +10,7 @@ const initState = {
   category: '',
   total: 0,
   sizePage: 50,
-  currentNumber: 1
+  currentNumber: 1,
 }
 
 const products = (state = initState, action) => {
@@ -24,7 +24,7 @@ const products = (state = initState, action) => {
       return {
         ...state,
         loading: false,
-        products: action.payload.events,
+        products: action.payload.event,
         keyword: '',
         market: '',
         productId: null,
@@ -43,7 +43,7 @@ const products = (state = initState, action) => {
         ...state,
         loading: true,
         currentNumber: action.payload.current,
-        sizePage: action.payload.pageSize
+        sizePage: action.payload.pageSize,
       }
 
     case types.VIEW_PRODUCT:
