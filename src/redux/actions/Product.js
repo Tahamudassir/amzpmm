@@ -1,6 +1,7 @@
 import types from '../constants/Products'
 
 export const getProductsAction = (queryData) => {
+  console.log("action call" , queryData)
   return {
     type: types.GET_PRODUCTS,
     payload: queryData,

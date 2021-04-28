@@ -19,12 +19,14 @@ const products = (state = initState, action) => {
       return {
         ...state,
         loading: true,
+        sizePage: action.payload.pageSize,
+        currentNumber: action.payload.current,
       }
     case types.GET_PRODUCTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        products: action.payload.event,
+        products: action.payload.events,
         keyword: '',
         market: '',
         productId: null,

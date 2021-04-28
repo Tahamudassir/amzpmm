@@ -21,10 +21,19 @@ import { filterProducts } from '../../../redux/selectors'
 import './styles.css'
 
 const Products = (props) => {
-  const { dispatch, products, loading, markets, total, categories } = props
+  const {
+    dispatch,
+    products,
+    loading,
+    markets,
+    total,
+    categories,
+    sizePage,
+    currentNumber,
+  } = props
   const [productStatus, setProductStatus] = useState('Enabled')
-  const [current, setCurrent] = useState(1)
-  const [pageSize, setPageSize] = useState(50)
+  const [current, setCurrent] = useState(currentNumber)
+  const [pageSize, setPageSize] = useState(sizePage)
   const history = useHistory()
 
   useEffect(() => {
@@ -152,6 +161,7 @@ const Products = (props) => {
   const handleTableChange = (pagination) => {
     const { current, pageSize } = pagination
     setPageSize(pageSize)
+    setCurrent(current)
     dispatch(getProductsAction({ status: 'Enabled', current, pageSize }))
   }
   const { Search } = Input
@@ -245,6 +255,7 @@ const Products = (props) => {
           pagination={{
             total: total, // total count returned from backend,
             pageSize,
+            current,
           }}
         />
       </div>
@@ -253,7 +264,7 @@ const Products = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  const { loading, total } = state.products
+  const { loading, total, sizePage, currentNumber } = state.products
   const { categories, markets } = state.appData
   return {
     products: filterProducts(state.products),
@@ -261,6 +272,8 @@ const mapStateToProps = (state) => {
     categories,
     markets,
     total,
+    sizePage,
+    currentNumber,
   }
 }
 

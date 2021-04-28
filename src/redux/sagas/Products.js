@@ -17,7 +17,7 @@ function* getProducts(action) {
   console.log('get saga', action)
   try {
     const response = yield getProductsApi(action.payload)
-    console.log("data " , response)
+    console.log('data ', response)
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.GET_PRODUCTS_SUCCESS, payload: response.data })
     } else {
@@ -31,6 +31,7 @@ function* getProducts(action) {
 }
 
 function* getProductsPm(action) {
+  console.log('action saga', action)
   try {
     let response = null
     if (action.payload.public) {
@@ -38,6 +39,7 @@ function* getProductsPm(action) {
     } else {
       response = yield getProductsPmApi(action)
     }
+    console.log('response ', response)
     if (response.status >= 200 && response.status < 300) {
       yield put({ type: types.GET_PRODUCTS_SUCCESS, payload: response.data })
     } else {
