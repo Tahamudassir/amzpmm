@@ -323,7 +323,11 @@ const OrderDetailPm = (props) => {
                       <p>{orderDetail.orderNumber}</p>
                     </Col>
                     <Col span={12}>
+<<<<<<< HEAD
                       <h4>Brand Name :</h4>
+=======
+                      <h4>Customer Email :</h4>
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
                       <p>{orderDetail.customer_email}</p>
                     </Col>
                     <Col span={12}>

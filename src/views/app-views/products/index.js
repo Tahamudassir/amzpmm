@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Button, Row, Col, Select, Input } from "antd";
 import { EyeOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import ProductImage from "../../../components/ProductImage";
+=======
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Table, Button, Row, Col, Select, Input } from 'antd'
+import { EyeOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import ProductImage from '../../../components/ProductImage'
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
 import {
   getProductsAction,
   searchById,
@@ -11,6 +20,7 @@ import {
   searchByKeyword,
   changeProductStatusAction,
   searchByCategory,
+<<<<<<< HEAD
   searchByChineseId,
 } from "../../../redux/actions/Product";
 import {
@@ -20,6 +30,16 @@ import {
 
 // import UserInfo from "../../../components/UserInfo";
 import "./styles.css";
+=======
+} from '../../../redux/actions/Product'
+import {
+  getMarketsAction,
+  getCategoryAction,
+} from '../../../redux/actions/AppData'
+import { filterProducts } from '../../../redux/selectors'
+// import UserInfo from "../../../components/UserInfo";
+import './styles.css'
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
 
 const Products = (props) => {
   const {
@@ -31,6 +51,7 @@ const Products = (props) => {
     categories,
     sizePage,
     currentNumber,
+<<<<<<< HEAD
   } = props;
   const [productStatus, setProductStatus] = useState("Enabled");
   const [current, setCurrent] = useState(currentNumber);
@@ -117,13 +138,95 @@ const Products = (props) => {
       title: "",
       dataIndex: "",
       key: "id",
+=======
+  } = props
+  const [productStatus, setProductStatus] = useState('Enabled')
+  const [current, setCurrent] = useState(currentNumber)
+  const [pageSize, setPageSize] = useState(sizePage)
+  const history = useHistory()
+
+  useEffect(() => {
+    dispatch(getProductsAction({ status: 'Enabled', current, pageSize }))
+    dispatch(getMarketsAction())
+    dispatch(getCategoryAction())
+  }, [])
+
+  const changeProductStatus = (e) => {
+    setProductStatus(e)
+    dispatch(getProductsAction({ status: e }))
+  }
+
+  const navigateToAddProduct = () => {
+    history.push('/add-product')
+  }
+  const navigateToDetails = (id) => {
+    history.push(`/product-details/${id}`)
+  }
+
+  const columns = [
+    {
+      title: 'Seller Name',
+      dataIndex: 'sellerName',
+      key: 'id',
+    },
+    {
+      title: 'Market',
+      dataIndex: 'market',
+      key: 'id',
+    },
+    {
+      title: 'Sale Limit',
+      dataIndex: 'saleLimitDay',
+      key: 'id',
+    },
+    {
+      title: 'Remaining Order',
+      dataIndex: 'saleLimitDayLeft',
+      key: 'id',
+    },
+    {
+      title: 'Commision',
+      dataIndex: 'commission',
+      key: 'id',
+    },
+    {
+      title: 'Category',
+      dataIndex: 'productCategory',
+      key: 'id',
+    },
+    {
+      title: 'Keyword',
+      dataIndex: 'keyword',
+      key: 'id',
+      render: (keyword) => <p className="keyword">{keyword}</p>,
+    },
+    {
+      title: 'Product ID',
+      dataIndex: 'productId',
+      key: 'id',
+    },
+    {
+      title: 'Image',
+      dataIndex: '',
+      key: 'id',
+      render: (cell) => <ProductImage image={cell.image} id={cell.productId} />,
+    },
+    {
+      title: '',
+      dataIndex: '',
+      key: 'id',
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
       render: (cell) => (
         <Button
           type="primary"
           className="btnAddProduct"
           size="small"
           onClick={() => {
+<<<<<<< HEAD
             navigateToDetails(cell.productId);
+=======
+            navigateToDetails(cell.productId)
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
           }}
           icon={<EyeOutlined />}
         >
@@ -132,14 +235,21 @@ const Products = (props) => {
       ),
     },
     {
+<<<<<<< HEAD
       title: "",
       dataIndex: "",
       key: "id",
+=======
+      title: '',
+      dataIndex: '',
+      key: 'id',
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
       render: (cell) => {
         return (
           <Button
             type="primary"
             size="small"
+<<<<<<< HEAD
             // onClick={() => editProductStatus(cell.status, cell.productId)}
             onClick={() =>
               editProductStatus(cell.status, cell.productId, cell._id)
@@ -332,6 +442,45 @@ const Products = (props) => {
 
   const { Search } = Input;
   const { Option } = Select;
+=======
+            onClick={() => editProductStatus(cell.status, cell.productId)}
+          >
+            {cell.status}
+          </Button>
+        )
+      },
+    },
+  ]
+
+  const editProductStatus = (oldStatus, productId) => {
+    if (oldStatus === 'Enabled') {
+      dispatch(changeProductStatusAction({ productId, status: 'Disabled' }))
+    } else {
+      dispatch(changeProductStatusAction({ productId, status: 'Enabled' }))
+    }
+  }
+
+  const onSearchById = (e) => {
+    dispatch(searchById(parseInt(e)))
+  }
+  const onSearchByMarket = (e) => {
+    dispatch(searchByMarket(e))
+  }
+  const onSearchByKeyword = (e) => {
+    dispatch(searchByKeyword(e))
+  }
+  const onSearchByCategory = (e) => {
+    dispatch(searchByCategory(e))
+  }
+  const handleTableChange = (pagination) => {
+    const { current, pageSize } = pagination
+    setPageSize(pageSize)
+    setCurrent(current)
+    dispatch(getProductsAction({ status: 'Enabled', current, pageSize }))
+  }
+  const { Search } = Input
+  const { Option } = Select
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   return (
     <>
       <div className="headerProducts">
@@ -348,7 +497,11 @@ const Products = (props) => {
       </div>
       <Row
         gutter={[0, { xs: 16, sm: 16, md: 16, lg: 0 }]}
+<<<<<<< HEAD
         style={{ marginBottom: "20px" }}
+=======
+        style={{ marginBottom: '20px' }}
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Search
@@ -371,11 +524,19 @@ const Products = (props) => {
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Select
             showSearch
+<<<<<<< HEAD
             style={{ width: "100%" }}
             placeholder="Filter Market"
             onSelect={onSearchByMarket}
             allowClear
             onClear={() => handleClear()}
+=======
+            style={{ width: '100%' }}
+            placeholder="Filter Market"
+            onSelect={onSearchByMarket}
+            allowClear
+            onClear={() => dispatch(searchByMarket(''))}
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
           >
             {markets &&
               markets.map((market) => (
@@ -386,7 +547,11 @@ const Products = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Select
+<<<<<<< HEAD
             style={{ width: "100%" }}
+=======
+            style={{ width: '100%' }}
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
             placeholder="Products Status"
             value={productStatus}
             onChange={changeProductStatus}
@@ -395,6 +560,7 @@ const Products = (props) => {
             <Option value="Disabled">Disabled</Option>
           </Select>
         </Col>
+<<<<<<< HEAD
         <Col xs={24} sm={24} md={5} lg={5} xl={5} style={{ marginTop: "10px" }}>
           <Select
             showSearch
@@ -403,6 +569,16 @@ const Products = (props) => {
             onSelect={onSearchByCategory}
             allowClear
             onClear={() => handleClear()}
+=======
+        <Col xs={24} sm={24} md={5} lg={5} xl={5} style={{ marginTop: '10px' }}>
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            placeholder="Filter Category"
+            onSelect={onSearchByCategory}
+            allowClear
+            onClear={() => dispatch(searchByCategory(''))}
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
           >
             {categories &&
               categories.map((category) => (
@@ -410,6 +586,7 @@ const Products = (props) => {
               ))}
           </Select>
         </Col>
+<<<<<<< HEAD
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
@@ -420,6 +597,8 @@ const Products = (props) => {
             onSearch={onSearchByChineseSellerId}
           />
         </Col>
+=======
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
       </Row>
       <div className="cardProducts">
         <Table
@@ -436,6 +615,7 @@ const Products = (props) => {
         />
       </div>
     </>
+<<<<<<< HEAD
   );
 };
 
@@ -445,13 +625,30 @@ const mapStateToProps = (state) => {
   return {
     // products: filterProducts(state.products),
     products,
+=======
+  )
+}
+
+const mapStateToProps = (state) => {
+  const { loading, total, sizePage, currentNumber } = state.products
+  const { categories, markets } = state.appData
+  return {
+    products: filterProducts(state.products),
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
     loading,
     categories,
     markets,
     total,
     sizePage,
     currentNumber,
+<<<<<<< HEAD
   };
 };
 
 export default connect(mapStateToProps)(Products);
+=======
+  }
+}
+
+export default connect(mapStateToProps)(Products)
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3

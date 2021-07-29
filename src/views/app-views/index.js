@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Loading from "components/shared-components/Loading";
+<<<<<<< HEAD
 // import { useDispatch } from "react-redux";
 // import { getAnnouncementAction } from "../../redux/actions/Announcement";
 
@@ -10,6 +11,10 @@ export const AppViews = () => {
   //   console.log("asdladsh");
   //   dispatch(getAnnouncementAction());
   // }, [dispatch]);
+=======
+
+export const AppViews = () => {
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   return (
     <Suspense fallback={<Loading cover="content" />}>
       <Switch>

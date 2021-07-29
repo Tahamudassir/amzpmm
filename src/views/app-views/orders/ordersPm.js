@@ -8,12 +8,17 @@ import {
   searchOrderByCustomerEmail,
   searchByProductId,
 } from "../../../redux/actions/Orders";
+<<<<<<< HEAD
 
+=======
+import { filterOrders } from "../../../redux/selectors";
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
 import moment from "moment-timezone";
 import orderStatus from "../../../constants/orderStatus";
 import "./styles.css";
 
 const Orders = (props) => {
+<<<<<<< HEAD
   // const { dispatch, orders, loading } = props;
   const { dispatch, orders, loading, total, sizePage, currentNumber } = props;
   const history = useHistory();
@@ -36,6 +41,14 @@ const Orders = (props) => {
         pageSize,
       })
     );
+=======
+  const { dispatch, orders, loading } = props;
+  const history = useHistory();
+  const [status, setOrderStatus] = useState("All");
+
+  useEffect(() => {
+    dispatch(getOrdersPmAction({ status: "All" }));
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   }, []);
 
   const navigateToDetails = (id) => {
@@ -47,6 +60,7 @@ const Orders = (props) => {
     dispatch(getOrdersPmAction({ status: e }));
   };
 
+<<<<<<< HEAD
   const onSearchByOrderId = (e) => {
     setCurrent(1);
     setCustomerEmail("");
@@ -136,6 +150,8 @@ const Orders = (props) => {
     }
   };
 
+=======
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   const columns = [
     {
       title: "#",
@@ -200,6 +216,7 @@ const Orders = (props) => {
       ),
     },
   ];
+<<<<<<< HEAD
   // const onSearchByOrderId = (e) => {
   //   dispatch(searchOrderById(e));
   // };
@@ -211,6 +228,19 @@ const Orders = (props) => {
   // const onSearchByProductId = (e) => {
   //   dispatch(searchByProductId(e));
   // };
+=======
+  const onSearchByOrderId = (e) => {
+    dispatch(searchOrderById(e));
+  };
+
+  const onSearchByEmail = (e) => {
+    dispatch(searchOrderByCustomerEmail(e));
+  };
+
+  const onSearchByProductId = (e) => {
+    dispatch(searchByProductId(e));
+  };
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
 
   const { Search } = Input;
   const { Option } = Select;
@@ -274,6 +304,7 @@ const Orders = (props) => {
           columns={columns}
           scroll={{ x: true }}
           loading={loading}
+<<<<<<< HEAD
           // pagination={{ pageSize,}}
           onChange={handleTableChange}
           pagination={{
@@ -282,6 +313,9 @@ const Orders = (props) => {
             current,
             public: true,
           }}
+=======
+          pagination={{ pageSize: 50 }}
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
         />
       </div>
     </>
@@ -289,10 +323,16 @@ const Orders = (props) => {
 };
 
 const mapStateToProps = ({ orders }) => {
+<<<<<<< HEAD
   // const { loading } = orders;
   const { loading } = orders;
   return {
     orders: orders.orders || [],
+=======
+  const { loading } = orders;
+  return {
+    orders: filterOrders(orders),
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
     loading,
   };
 };

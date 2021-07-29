@@ -69,7 +69,11 @@ const OrderDetailPm = (props) => {
           orderNumber +
           "\n" +
           "\n" +
+<<<<<<< HEAD
           "Customer Email" +
+=======
+          "Brand Name" +
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
           "\n" +
           customer_email
       );
@@ -354,7 +358,10 @@ const OrderDetailPm = (props) => {
 
 const mapStateToProps = ({ orders }) => {
   const { orderDetail, loading } = orders;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   return {
     orderDetail,
     loading,
