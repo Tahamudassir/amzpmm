@@ -1,0 +1,54 @@
+.videoFormCard {
+  background-color: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 2px 0 rgb(90 97 105 / 11%), 0 4px 8px rgb(90 97 105 / 12%),
+    0 10px 10px rgb(90 97 105 / 6%), 0 7px 70px rgb(90 97 105 / 10%);
+  font-weight: 300;
+  padding: 1rem !important;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.videosMainTitle {
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  color: #3d5170;
+  margin-bottom: 20px;
+}
+.videoTitle {
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #3d5170;
+  margin: 0px;
+}
+.cardVideo {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #cdcdcd;
+  padding: 10px;
+  margin: 20px 0px;
+  border-radius: 4px;
+}
+.cardVideoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin-bottom: 5px;
+}
+.wrapperVideos {
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}
+.uploadIcon {
+  height: 100px;
+  width: 100px;
+}
+@media (max-width: 580px) {
+  .cardVideo {
+    width: 90%;
+  }
+}

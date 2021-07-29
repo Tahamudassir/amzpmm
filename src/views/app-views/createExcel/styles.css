@@ -1,0 +1,33 @@
+.createExcel {
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  margin-bottom: 10px;
+  color: #3d5170;
+}
+.cardCreateExcel {
+  background-color: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 2px 0 rgb(90 97 105 / 11%), 0 4px 8px rgb(90 97 105 / 12%),
+    0 10px 10px rgb(90 97 105 / 6%), 0 7px 70px rgb(90 97 105 / 10%);
+  font-weight: 300;
+  padding: 1rem !important;
+  margin-top: 20px;
+}
+.labelDatePicker {
+  margin: 0px;
+  margin-left: 5px;
+  font-weight: 500;
+}
+.loadingSpin {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0);
+}
+@media (max-width: 780px) {
+  .createExcel {
+    text-align: center;
+  }
+}
