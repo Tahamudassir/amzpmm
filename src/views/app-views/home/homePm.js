@@ -6,11 +6,7 @@ import Loading from "../../../components/Loading";
 import "./styles.css";
 const baseURL = process.env.REACT_APP_API_URL;
 
-<<<<<<< HEAD
 const Home = (props) => {
-=======
-const Home = () => {
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   const [cancelled, setCancelled] = useState(0);
   const [completed, setCompleted] = useState(0);
   const [refunded, setRefunded] = useState(0);
@@ -24,12 +20,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-<<<<<<< HEAD
     // let params = new URLSearchParams(props.location.search);
     // console.log(params.get("pageNumber"));
 
-=======
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
     getStats();
   }, []);
 

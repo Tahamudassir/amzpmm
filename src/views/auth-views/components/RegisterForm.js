@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-<<<<<<< HEAD
 import { Button, Form, Input, Select } from "antd";
-=======
-import { Button, Form, Input, Select, InputNumber } from "antd";
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
 import { signUpAction } from "../../../redux/actions/Auth";
 const { Option } = Select;
 const rules = {
@@ -25,7 +21,6 @@ const rules = {
       message: "Please input your password",
     },
   ],
-<<<<<<< HEAD
   // cnic: [
   //   {
   //     required: true,
@@ -36,18 +31,6 @@ const rules = {
   //     message: "Cnic should not contain any characters other then numbers",
   //   },
   // ],
-=======
-  cnic: [
-    {
-      required: true,
-      message: "Please input your cnic",
-    },
-    {
-      pattern: /^[0-9]+$/,
-      message: "Cnic should not contain any characters other then numbers",
-    },
-  ],
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   required: [
     {
       required: true,
@@ -129,15 +112,9 @@ export const RegisterForm = (props) => {
         >
           <Input />
         </Form.Item>
-<<<<<<< HEAD
         {/* <Form.Item name="cnic" label="CNIC" rules={rules.cnic} hasFeedback>
           <Input />
         </Form.Item> */}
-=======
-        <Form.Item name="cnic" label="CNIC" rules={rules.cnic} hasFeedback>
-          <Input />
-        </Form.Item>
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
         <Form.Item
           name="phone"
           label="Phone (Whatsapp)"

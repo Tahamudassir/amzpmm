@@ -30,19 +30,8 @@ import Loading from "../../../components/Loading";
 import "./styles.css";
 
 const ProductDetails = (props) => {
-<<<<<<< HEAD
   const { productDetail, loading, dispatch, uploading, categories, markets } =
     props;
-=======
-  const {
-    productDetail,
-    loading,
-    dispatch,
-    uploading,
-    categories,
-    markets,
-  } = props;
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
   const [form] = Form.useForm();
   const [editProduct, setEditProduct] = useState(false);
   const { id } = useParams();
@@ -60,7 +49,6 @@ const ProductDetails = (props) => {
     form
       .validateFields()
       .then((values) => {
-<<<<<<< HEAD
         if (
           values.saleLimitOverall !== productDetail.saleLimitOverall ||
           values.saleLimitDay !== productDetail.saleLimitDay
@@ -75,9 +63,6 @@ const ProductDetails = (props) => {
         } else {
           dispatch(editProductAction({ ...values, id: productDetail._id }));
         }
-=======
-        dispatch(editProductAction(values));
->>>>>>> 74d4a9639ab57f9c826d536cfbf1d2405f42d1f3
       })
       .catch((info) => {
         message.error("Validate Failed:", info);
