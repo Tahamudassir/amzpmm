@@ -42,8 +42,8 @@ const Products = (props) => {
   const [productCode, setProductCode] = useState("");
   const [market, setMarket] = useState("");
   const [sellerId, setSellerId] = useState("");
-
   useEffect(() => {
+    // debugger;
     if (current !== 1) {
       setCurrent(current - 1);
       handleTableChange({ current: current - 1, pageSize });
@@ -277,6 +277,13 @@ const Products = (props) => {
       })
     );
   };
+  //! Filter Duplicate Categories
+  let filterDuplicateCategories=products?.map((x)=>x.productCategory);
+  let uniqCategory= [...new Set(filterDuplicateCategories)];
+  //! Filter Duplicate Markets
+  let filterDuplicatedMarket= products?.map((x)=>x.market);
+  let uniqMarket=[...new Set(filterDuplicatedMarket)];
+  // console.log("Filter Duplicate Market Res", uniqMarket);
   const { Search } = Input;
   const { Option } = Select;
   return (
@@ -317,9 +324,9 @@ const Products = (props) => {
             // onClear={() => dispatch(searchByMarket(""))}
             onClear={() => handleClear()}
           >
-            {markets &&
-              markets.map((market) => (
-                <Option value={market.name}>{market.name}</Option>
+            {uniqMarket &&
+              uniqMarket.map((x, index) => (
+                <Option key={index} value={x}>{x}</Option>
               ))}
           </Select>
         </Col>
@@ -334,9 +341,9 @@ const Products = (props) => {
             // onClear={() => dispatch(searchByCategory(""))}
             onClear={() => handleClear()}
           >
-            {categories &&
-              categories.map((category) => (
-                <Option value={category.name}>{category.name}</Option>
+            {uniqCategory &&
+              uniqCategory.map((x, index) => (
+                <Option key={index} value={x}>{x}</Option>
               ))}
           </Select>
         </Col>

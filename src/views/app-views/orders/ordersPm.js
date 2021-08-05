@@ -12,16 +12,36 @@ import moment from "moment-timezone";
 import orderStatus from "../../../constants/orderStatus";
 import "./styles.css";
 
+const getLocalStatus= ()=>{
+  let status= localStorage.getItem('status');
+  return status;
+  // console.log("GET local status", status);
+}
+
+
 const Orders = (props) => {
   // const { dispatch, orders, loading } = props;
   const { dispatch, orders, loading, total, sizePage, currentNumber } = props;
   const history = useHistory();
-  const [status, setOrderStatus] = useState("All");
+  const [status, setOrderStatus] = useState(getLocalStatus());
+  // const [status, setOrderStatus] = useState("All");
   const [current, setCurrent] = useState(currentNumber);
   const [orderId, setOrderId] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [productId, setProductId] = useState("");
   const [pageSize, setPageSize] = useState(sizePage);
+
+  useEffect(()=>{
+    // debugger;
+    if(status===null){
+    localStorage.setItem('status', status);
+      setOrderStatus("All");
+    }
+    else{
+      localStorage.setItem('status', status);
+    }
+   },[status])
+
   useEffect(() => {
     let params = new URLSearchParams(props.location.search);
     const number = params.get("pageNumber");
@@ -30,12 +50,12 @@ const Orders = (props) => {
     }
     dispatch(
       getOrdersPmAction({
-        status: "All",
+        status: status,
         current: number ? number : 1,
         pageSize,
       })
     );
-  }, []);
+  }, [status]);
 
   const navigateToDetails = (id) => {
     history.push(`/order-detail/${id}`);
@@ -61,16 +81,18 @@ const Orders = (props) => {
     setCurrent(1);
     setOrderId("");
     setProductId("");
-    setOrderStatus("");
+    // setOrderStatus("");
     setCustomerEmail(e);
-    dispatch(
-      searchOrderByCustomerEmail({
-        customer_email: e,
-        current: 1,
-        pageSize,
-        public: true,
-      })
-    );
+      dispatch(
+        searchOrderByCustomerEmail({
+          customer_email: e,
+          current: 1,
+          pageSize,
+          public: true,
+        })
+      );  
+    
+    
   };
 
   const onSearchByProductId = (e) => {
