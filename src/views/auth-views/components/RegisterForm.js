@@ -3,8 +3,13 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, Form, Input, Select } from "antd";
 import { signUpAction } from "../../../redux/actions/Auth";
+
 const { Option } = Select;
 const rules = {
+  name: {
+    required: true,
+    message: "Please input your name",
+  },
   email: [
     {
       required: true,
@@ -21,16 +26,7 @@ const rules = {
       message: "Please input your password",
     },
   ],
-  // cnic: [
-  //   {
-  //     required: true,
-  //     message: "Please input your cnic",
-  //   },
-  //   {
-  //     pattern: /^[0-9]+$/,
-  //     message: "Cnic should not contain any characters other then numbers",
-  //   },
-  // ],
+
   required: [
     {
       required: true,
@@ -57,9 +53,26 @@ const rules = {
   ],
 };
 
+const banks = [
+  "JazzCash",
+  "EasyPaisa",
+  "PayPal",
+  "Allied Bank Limited",
+  "Faysal Bank Limited",
+  "Habib Bank Limited (HBL)",
+  "Standard Chartered Bank Limited",
+  "MCB Bank Limited",
+  "Meezan Bank Limited",
+  "National Bank of Pakistan",
+  "Bank of Punjab",
+  "Faysal Bank",
+  "United Bank Limited",
+];
+
 export const RegisterForm = (props) => {
   const { loading, dispatch, redirectPath, allowRedirect } = props;
   const [form] = Form.useForm();
+
   const history = useHistory();
   useEffect(() => {
     if (allowRedirect) {
@@ -70,7 +83,15 @@ export const RegisterForm = (props) => {
     form
       .validateFields()
       .then((values) => {
-        dispatch(signUpAction(values));
+        dispatch(
+          signUpAction({
+            ...values,
+            userType: "PM",
+            username:
+              values.email.split("@")[0] +
+              Math.floor(10000 + Math.random() * 9000),
+          })
+        );
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
@@ -85,7 +106,7 @@ export const RegisterForm = (props) => {
         name="register-form"
         onFinish={onSignUp}
       >
-        <Form.Item
+        {/* <Form.Item
           name="firstname"
           label="First Name"
           rules={rules.required}
@@ -100,21 +121,14 @@ export const RegisterForm = (props) => {
           hasFeedback
         >
           <Input />
+        </Form.Item> */}
+        <Form.Item name="name" label="Name" rules={rules.required} hasFeedback>
+          <Input />
         </Form.Item>
         <Form.Item name="email" label="Email" rules={rules.email} hasFeedback>
           <Input />
         </Form.Item>
-        <Form.Item
-          name="username"
-          label="Login Username"
-          rules={rules.required}
-          hasFeedback
-        >
-          <Input />
-        </Form.Item>
-        {/* <Form.Item name="cnic" label="CNIC" rules={rules.cnic} hasFeedback>
-          <Input />
-        </Form.Item> */}
+
         <Form.Item
           name="phone"
           label="Phone (Whatsapp)"
@@ -133,35 +147,48 @@ export const RegisterForm = (props) => {
         </Form.Item>
         <Form.Item name="gender" label="Gender" rules={rules.required}>
           <Select placeholder="Select an option " allowClear>
-            <Option value="male">male</Option>
-            <Option value="female">female</Option>
+            <Option value="male">Male</Option>
+            <Option value="female">Female</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="userType" label="Role" rules={rules.required}>
+
+        {/* <Form.Item name="userType" label="Role">
+          <Input
+            value="Proxy Marketer Manager"
+            defaultValue="Proxy Marketer Manager"
+            disabled={true}
+          />
+        </Form.Item> */}
+
+        <Form.Item name="city" label="City" rules={rules.required} hasFeedback>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="paymentType"
+          label="Account Title"
+          hasFeedback
+          rules={rules.required}
+        >
+          <Input />
+        </Form.Item>
+        {/* <Form.Item name="bankName" label="Bank Name" hasFeedback>
+          <Input />
+        </Form.Item> */}
+
+        <Form.Item name="bankName" label="Bank Name" rules={rules.required}>
           <Select placeholder="Select an option" allowClear>
-            <Option value="PMM">Proxy Marketer Manager</Option>
-            <Option value="PM">Proxy Marketer</Option>
+            {banks.map((bank, i) => (
+              <Option value={bank}>{bank}</Option>
+            ))}
           </Select>
         </Form.Item>
 
         <Form.Item
-          name="address"
-          label="Address"
-          rules={rules.required}
+          name="payNumber"
+          label="Account Number"
           hasFeedback
+          rules={rules.required}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item name="city" label="City" rules={rules.required} hasFeedback>
-          <Input />
-        </Form.Item>
-        <Form.Item name="paymentType" label="Account Holder Name" hasFeedback>
-          <Input />
-        </Form.Item>
-        <Form.Item name="bankName" label="Bank Name" hasFeedback>
-          <Input />
-        </Form.Item>
-        <Form.Item name="payNumber" label="Account Number" hasFeedback>
           <Input />
         </Form.Item>
         <Form.Item>

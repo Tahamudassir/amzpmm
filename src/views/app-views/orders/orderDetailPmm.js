@@ -180,7 +180,7 @@ const OrderDetailPm = (props) => {
                       <Col span={15}>
                         <Form.Item
                           name="customer_email"
-                          label="Customer Email"
+                          label="Buyer PayPal"
                           initialValue={
                             orderDetail ? orderDetail.customer_email : ""
                           }
@@ -238,9 +238,6 @@ const OrderDetailPm = (props) => {
                             <Option value={orderStatus[8]}>
                               {orderStatus[8]}
                             </Option>
-                            <Option value={orderStatus[9]}>
-                              {orderStatus[9]}
-                            </Option>
                           </Select>
                         </Form.Item>
                       </Col>
@@ -282,7 +279,7 @@ const OrderDetailPm = (props) => {
                       <p>{orderDetail.customer_email}</p>
                     </Col>
                     <Col span={12}>
-                      <h4>Product Id :</h4>
+                      <h4>Product ID :</h4>
                       <p>{orderDetail.product_id}</p>
                     </Col>
                     <Col span={12}>

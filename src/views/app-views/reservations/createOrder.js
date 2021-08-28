@@ -6,6 +6,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import { addNewOrderAction } from "../../../redux/actions/Orders";
 import "./styles.css";
 
+import { resizeFile } from "../../../utils/imageCompressor";
+
 const rules = {
   email: [
     {
@@ -57,15 +59,18 @@ const CreateOrder = (props) => {
   const onAddOrder = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(async (values) => {
         if (orderPic === null) {
           message.error("Order Picture is required");
         }
+
+        let compressImage = await resizeFile(orderPic.file);
+
         let bodyFormData = new FormData();
         bodyFormData.append("product_id", id);
         bodyFormData.append("orderNumber", values.orderNumber);
         bodyFormData.append("customer_email", values.customer_email);
-        bodyFormData.append("orderPic", orderPic.file);
+        bodyFormData.append("orderPic", compressImage);
         bodyFormData.append("reservationId", location.state.reservationId);
         dispatch(addNewOrderAction(bodyFormData));
       })

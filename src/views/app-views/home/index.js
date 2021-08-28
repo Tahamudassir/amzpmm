@@ -85,57 +85,13 @@ const Home = () => {
       </div>
       {loading && <Loading />}
       <Row gutter={[0, 16]}>
-        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <DashboardCard
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
             title="Completed"
             percentage={0}
             percentageValue={true}
             number={completed}
-          />
-        </Col>
-        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <DashboardCard
-            title="Cancelled"
-            percentage={0}
-            percentageValue={false}
-            number={cancelled}
-          />
-        </Col>
-        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <DashboardCard
-            title="Refunded"
-            percentage={0}
-            percentageValue={false}
-            number={refunded}
-          />
-        </Col>
-        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <DashboardCard
-            title="Commissioned"
-            percentage={0}
-            percentageValue={true}
-            number={commisioned}
-          />
-        </Col>
-      </Row>
-      <Row gutter={[0, 16]}>
-        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-          <DashboardCard
-            title="Refuned pending review"
-            percentage={0}
-            percentageValue={false}
-            number={refundedPending}
-          />
-        </Col>
-        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-          <DashboardCard
-            title="Reviewed"
-            percentage={0}
-            percentageValue={true}
-            number={reviewed}
-          />
-        </Col>
-        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          /> */}
           <DashboardCard
             title="Ordered"
             percentage={0}
@@ -143,9 +99,27 @@ const Home = () => {
             number={ordered}
           />
         </Col>
-      </Row>
-      <Row gutter={[0, 16]}>
-        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
+            title="Cancelled"
+            percentage={0}
+            percentageValue={false}
+            number={cancelled}
+          /> */}
+          <DashboardCard
+            title="Reviewed"
+            percentage={0}
+            percentageValue={true}
+            number={reviewed}
+          />
+        </Col>
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
+            title="Refunded"
+            percentage={0}
+            percentageValue={false}
+            number={refunded}
+          /> */}
           <DashboardCard
             title="Review Submitted for refund"
             percentage={0}
@@ -153,7 +127,51 @@ const Home = () => {
             number={reviewSubmmitted}
           />
         </Col>
-        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
+            title="Commissioned"
+            percentage={0}
+            percentageValue={true}
+            number={commisioned}
+          /> */}
+          <DashboardCard
+            title="Refunded"
+            percentage={0}
+            percentageValue={false}
+            number={refunded}
+          />
+        </Col>
+        {/* </Row> */}
+        {/* <Row gutter={[0, 16]}> */}
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          <DashboardCard
+            title="Refuned pending review"
+            percentage={0}
+            percentageValue={false}
+            number={refundedPending}
+          />
+        </Col>
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
+            title="Reviewed"
+            percentage={0}
+            percentageValue={true}
+            number={reviewed}
+          /> */}
+          <DashboardCard
+            title="On Hold"
+            percentage={0}
+            percentageValue={false}
+            number={onHold}
+          />
+        </Col>
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
+            title="Ordered"
+            percentage={0}
+            percentageValue={true}
+            number={ordered}
+          /> */}
           <DashboardCard
             title="Review deleted"
             percentage={0}
@@ -161,12 +179,47 @@ const Home = () => {
             number={reviewDeleted}
           />
         </Col>
-        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
+            title="Review Submitted for refund"
+            percentage={0}
+            percentageValue={true}
+            number={reviewSubmmitted}
+          /> */}
           <DashboardCard
+            title="Cancelled"
+            percentage={0}
+            percentageValue={false}
+            number={cancelled}
+          />
+        </Col>
+        {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}> */}
+        {/* <DashboardCard
+            title="Review deleted"
+            percentage={0}
+            percentageValue={false}
+            number={reviewDeleted}
+          /> */}
+        {/* <DashboardCard
+            title="Commissioned"
+            percentage={0}
+            percentageValue={true}
+            number={commisioned}
+          /> */}
+        {/* </Col> */}
+        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+          {/* <DashboardCard
             title="On Hold"
             percentage={0}
             percentageValue={false}
             number={onHold}
+          /> */}
+          <DashboardCard
+            title="Completed"
+            percentage={0}
+            percentageValue={true}
+            number={completed}
           />
         </Col>
       </Row>

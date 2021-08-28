@@ -5,6 +5,7 @@ import Products from "./Products";
 import Reservations from "./Reservation";
 import AppData from "./AppData";
 import AnnouncementSaga from "./Announcement";
+import UserSaga from "./User";
 export default function* rootSaga() {
   yield all([
     Auth(),
@@ -13,5 +14,6 @@ export default function* rootSaga() {
     Reservations(),
     AppData(),
     AnnouncementSaga(),
+    UserSaga(),
   ]);
 }

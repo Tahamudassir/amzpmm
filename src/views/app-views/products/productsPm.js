@@ -18,6 +18,9 @@ import {
   getMarketsAction,
   getCategoryAction,
 } from "../../../redux/actions/AppData";
+
+import { getPmmAction } from "../../../redux/actions/User";
+
 import UserInfo from "../../../components/UserInfo";
 import "./styles.css";
 
@@ -32,9 +35,9 @@ const Products = (props) => {
     categories,
     currentNumber,
     sizePage,
+    pmm,
   } = props;
   const history = useHistory();
-
   const [current, setCurrent] = useState(currentNumber);
   const [pageSize, setPageSize] = useState(sizePage);
   const [keyword, setKeyword] = useState("");
@@ -58,6 +61,7 @@ const Products = (props) => {
     );
     dispatch(getMarketsAction());
     dispatch(getCategoryAction());
+    dispatch(getPmmAction());
   }, []);
 
   // window.addEventListener("popstate", () => {
@@ -83,6 +87,18 @@ const Products = (props) => {
     dispatch(reserveProductAction({ productId: id }));
   };
 
+  // const onCreateOrder = (id, saleLimitDayLeft) => {
+  //   if (saleLimitDayLeft === 0) {
+  //     return message.warning("Daily sale limit reached for this product");
+  //   }
+  //   history.push({
+  //     pathname: `/create-order/${id}`,
+  //     state: {
+  //       reservationId: "",
+  //     },
+  //   });
+  // };
+
   const navigateToDetails = (id) => {
     history.push(`/product-details/${id}`);
   };
@@ -105,20 +121,25 @@ const Products = (props) => {
       key: "id",
     },
     {
-      title: "Remaining Order",
+      title: "Today Remaining",
       dataIndex: "saleLimitDayLeft",
       key: "id",
     },
     {
-      title: "Commision",
-      dataIndex: "commission",
+      title: "Total Remaining",
+      dataIndex: "saleLimitOverall",
       key: "id",
     },
     {
-      title: "Category",
-      dataIndex: "productCategory",
+      title: "Commission",
+      dataIndex: "commission",
       key: "id",
     },
+    // {
+    //   title: "Category",
+    //   dataIndex: "productCategory",
+    //   key: "id",
+    // },
     {
       title: "Keyword",
       dataIndex: "keyword",
@@ -134,7 +155,7 @@ const Products = (props) => {
       title: "Image",
       dataIndex: "",
       key: "id",
-      render: (cell) => <ProductImage image={cell.image} id={cell.productId} />,
+      render: (cell) => <ProductImage image={cell.image} />,
     },
     {
       title: "",
@@ -154,6 +175,27 @@ const Products = (props) => {
         </Button>
       ),
     },
+    // {
+    //   key: "id",
+    //   render: (cell) => (
+    //     <Button
+    //       type="primary"
+    //       className="btnViewOrder"
+    //       size="small"
+    //       onClick={() => {
+    //         onCreateOrder(cell.productId, cell.saleLimitDayLeft);
+    //         // history.push({
+    //         //   pathname: `/create-order/${cell.productId}`,
+    //         //   state: {
+    //         //     reservationId: "",
+    //         //   },
+    //         // });
+    //       }}
+    //     >
+    //       Create Order
+    //     </Button>
+    //   ),
+    // },
     {
       title: "",
       dataIndex: "",
@@ -172,7 +214,7 @@ const Products = (props) => {
       ),
     },
   ];
-
+  // console.log("========>>>>", props.pmm);
   const onSearchById = (e) => {
     setCurrent(1);
     setCategory("");
@@ -278,11 +320,11 @@ const Products = (props) => {
     );
   };
   //! Filter Duplicate Categories
-  let filterDuplicateCategories=products?.map((x)=>x.productCategory);
-  let uniqCategory= [...new Set(filterDuplicateCategories)];
+  let filterDuplicateCategories = products?.map((x) => x.productCategory);
+  let uniqCategory = [...new Set(filterDuplicateCategories)];
   //! Filter Duplicate Markets
-  let filterDuplicatedMarket= products?.map((x)=>x.market);
-  let uniqMarket=[...new Set(filterDuplicatedMarket)];
+  let filterDuplicatedMarket = products?.map((x) => x.market);
+  let uniqMarket = [...new Set(filterDuplicatedMarket)];
   // console.log("Filter Duplicate Market Res", uniqMarket);
   const { Search } = Input;
   const { Option } = Select;
@@ -297,7 +339,7 @@ const Products = (props) => {
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Search
-            placeholder="Search by product code"
+            placeholder="Product Code"
             enterButton
             allowClear
             onSearch={onSearchById}
@@ -306,7 +348,7 @@ const Products = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
-            placeholder="Search by keyword"
+            placeholder="Keyword"
             enterButton
             allowClear
             onSearch={onSearchByKeyword}
@@ -326,7 +368,9 @@ const Products = (props) => {
           >
             {uniqMarket &&
               uniqMarket.map((x, index) => (
-                <Option key={index} value={x}>{x}</Option>
+                <Option key={index} value={x}>
+                  {x}
+                </Option>
               ))}
           </Select>
         </Col>
@@ -343,18 +387,28 @@ const Products = (props) => {
           >
             {uniqCategory &&
               uniqCategory.map((x, index) => (
-                <Option key={index} value={x}>{x}</Option>
+                <Option key={index} value={x}>
+                  {x}
+                </Option>
               ))}
           </Select>
         </Col>
-        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <Search
-            style={{ marginTop: "10px" }}
-            placeholder="Search by seller id"
+        <Col xs={24} sm={24} md={6} lg={6} xl={5}>
+          <Select
+            style={{ marginTop: "10px", width: "100%" }}
+            placeholder="Seller ID"
             enterButton
             allowClear
-            onSearch={onSearchBySellerId}
-          />
+            onSelect={onSearchBySellerId}
+          >
+            {pmm &&
+              pmm?.length !== 0 &&
+              pmm.map((pmm, index) => (
+                <Option key={pmm._id} value={pmm.userId}>
+                  {pmm?.name}
+                </Option>
+              ))}
+          </Select>
         </Col>
       </Row>
       <div className="cardProducts">
@@ -383,6 +437,7 @@ const Products = (props) => {
 const mapStateToProps = (state) => {
   const { loading, total, sizePage, currentNumber, products } = state.products;
   const { categories, markets } = state.appData;
+  const { pmm } = state.pmm;
 
   return {
     products,
@@ -392,6 +447,7 @@ const mapStateToProps = (state) => {
     total,
     sizePage,
     currentNumber,
+    pmm,
   };
 };
 

@@ -17,6 +17,7 @@ export const LoginForm = (props) => {
   const { loading, redirect, allowRedirect, dispatch } = props;
 
   const onLogin = (user) => {
+    console.log(user);
     dispatch(signInAction(user));
   };
 
@@ -62,12 +63,16 @@ export const LoginForm = (props) => {
     <>
       <Form layout="vertical" name="login-form" onFinish={onLogin}>
         <Form.Item
-          name="username"
-          label="Username"
+          name="email"
+          label="Email"
           rules={[
             {
               required: true,
-              message: "Please input your user name",
+              message: "Please input your email address",
+            },
+            {
+              type: "email",
+              message: "Please enter a valid email!",
             },
           ]}
         >

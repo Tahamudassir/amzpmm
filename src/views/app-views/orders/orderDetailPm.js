@@ -323,11 +323,11 @@ const OrderDetailPm = (props) => {
                       <p>{orderDetail.orderNumber}</p>
                     </Col>
                     <Col span={12}>
-                      <h4>Brand Name :</h4>
+                      <h4>Buyer PayPal:</h4>
                       <p>{orderDetail.customer_email}</p>
                     </Col>
                     <Col span={12}>
-                      <h4>Product Id :</h4>
+                      <h4>Product ID :</h4>
                       <p>{orderDetail.product_id}</p>
                     </Col>
                     <Col span={12}>
@@ -371,8 +371,8 @@ const OrderDetailPm = (props) => {
                       </p>
                     </Col>
                     <Col span={12}>
-                      <h4>Seller Id:</h4>
-                      <p>{orderDetail.sellerId}</p>
+                      <h4>Seller Name:</h4>
+                      <p>{orderDetail.userFullName}</p>
                     </Col>
                     <Col span={12}>
                       <h4>Commission :</h4>

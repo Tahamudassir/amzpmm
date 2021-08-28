@@ -114,7 +114,7 @@ const ProductDetails = (props) => {
                   </Col>
                   <Col span={12}>
                     <h4>Seller Name :</h4>
-                    <p>{productDetail.sellerName}</p>
+                    <p>{productDetail.sellerFullName}</p>
                   </Col>
                   <Col span={12}>
                     <h4>Market :</h4>
@@ -124,13 +124,17 @@ const ProductDetails = (props) => {
                     <h4>Commision :</h4>
                     <p>{productDetail.commission}</p>
                   </Col>
-                  <Col span={12}>
+                  {/* <Col span={12}>
                     <h4>Chinese Seller :</h4>
                     <p>{productDetail.chineseSeller}</p>
-                  </Col>
+                  </Col> */}
                   <Col span={12}>
                     <h4>Product Category :</h4>
                     <p>{productDetail.productCategory}</p>
+                  </Col>
+                  <Col span={12}>
+                    <h4>Product ID :</h4>
+                    <p>{productDetail.productId}</p>
                   </Col>
                   <Col span={24}>
                     <h4>Instructions :</h4>
@@ -144,10 +148,7 @@ const ProductDetails = (props) => {
                     <h4>Commision Condition :</h4>
                     <p>{productDetail.commissionCondition}</p>
                   </Col>
-                  <Col span={24}>
-                    <h4>Product ID :</h4>
-                    <p>{productDetail.productId}</p>
-                  </Col>
+
                   <Col span={12}>
                     <h4>Overall Sale Limit :</h4>
                     <p>{productDetail.saleLimitOverall}</p>

@@ -1,23 +1,43 @@
 import React, { useState } from "react";
-import { Menu, Dropdown, Badge, List } from "antd";
+import { Menu, Dropdown, Badge, List, Row, Col } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import { BellOutlined } from "@ant-design/icons";
-
 import Flex from "components/shared-components/Flex";
-import { useSelector } from "react-redux";
-const getNotificationBody = (list) => {
-  return list.length > 0 ? (
+import { useSelector, useDispatch } from "react-redux";
+
+import { markAsReadAnnouncementAction } from "../../redux/actions/Announcement";
+const GetNotificationBody = (list) => {
+  const dispatch = useDispatch();
+  const handleMarkAsRead = (announscement) => {
+    if (!announscement.isRead) {
+      dispatch(markAsReadAnnouncementAction(announscement._id));
+    }
+  };
+
+  return list && list.length > 0 ? (
     <List
       size="small"
       itemLayout="horizontal"
       dataSource={list}
       renderItem={(item) => (
-        <List.Item className="list-clickable">
+        <List.Item
+          className="list-clickable"
+          onClick={() => handleMarkAsRead(item)}
+        >
           <Flex alignItems="center">
             <div className="mr-3">
-              <span className="font-weight-bold text-dark">
-                {item.announcement}{" "}
-              </span>
-              {/* <span className="text-gray-light">{item.desc}</span> */}
+              <Row>
+                <Col span={23}>
+                  <span className="font-weight-bold text-dark">
+                    {item.announcement}{" "}
+                  </span>
+                </Col>
+                <Col span={1}>
+                  {/* <span className="text-gray-light"> */}
+                  <EyeOutlined />
+                  {/* </span> */}
+                </Col>
+              </Row>
             </div>
           </Flex>
         </List.Item>
@@ -38,6 +58,7 @@ export const NavNotification = () => {
   const [visible, setVisible] = useState(false);
   // const [data, setData] = useState(notificationData);
   const state = useSelector((state) => state.announcements);
+  console.log("anouncnce---------->>>", state);
   const handleVisibleChange = (flag) => {
     setVisible(flag);
   };
@@ -51,7 +72,7 @@ export const NavNotification = () => {
         </Button> */}
       </div>
       <div className="nav-notification-body">
-        {getNotificationBody(state.notifications)}
+        {GetNotificationBody(state.notifications)}
       </div>
       {/* {data.length > 0 ? (
         <div className="nav-notification-footer">
@@ -73,7 +94,7 @@ export const NavNotification = () => {
     >
       <Menu mode="horizontal">
         <Menu.Item>
-          <Badge count={state.notifications ? state.notifications.length : 0}>
+          <Badge count={state.notifications ? state.count : 0}>
             <BellOutlined className="nav-icon mx-auto" type="bell" />
           </Badge>
         </Menu.Item>

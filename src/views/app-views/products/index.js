@@ -18,6 +18,8 @@ import {
   getCategoryAction,
 } from "../../../redux/actions/AppData";
 
+import { getPmmAction } from "../../../redux/actions/User";
+
 // import UserInfo from "../../../components/UserInfo";
 import "./styles.css";
 
@@ -46,6 +48,7 @@ const Products = (props) => {
     dispatch(getProductsAction({ status: "Enabled", current, pageSize }));
     dispatch(getMarketsAction());
     dispatch(getCategoryAction());
+    dispatch(getPmmAction());
   }, []);
 
   const changeProductStatus = (e) => {
@@ -68,7 +71,7 @@ const Products = (props) => {
   const columns = [
     {
       title: "Seller Name",
-      dataIndex: "sellerName",
+      dataIndex: "sellerFullName",
       key: "id",
     },
     {
@@ -82,20 +85,25 @@ const Products = (props) => {
       key: "id",
     },
     {
-      title: "Remaining Order",
+      title: "Today Remaining",
       dataIndex: "saleLimitDayLeft",
       key: "id",
     },
     {
-      title: "Commision",
-      dataIndex: "commission",
+      title: "Total Remaining",
+      dataIndex: "saleLimitOverall",
       key: "id",
     },
     {
-      title: "Category",
-      dataIndex: "productCategory",
+      title: "Commission",
+      dataIndex: "commission",
       key: "id",
     },
+    // {
+    //   title: "Category",
+    //   dataIndex: "productCategory",
+    //   key: "id",
+    // },
     {
       title: "Keyword",
       dataIndex: "keyword",
@@ -111,7 +119,7 @@ const Products = (props) => {
       title: "Image",
       dataIndex: "",
       key: "id",
-      render: (cell) => <ProductImage image={cell.image} id={cell.productId} />,
+      render: (cell) => <ProductImage image={cell.image} />,
     },
     {
       title: "",
@@ -131,6 +139,26 @@ const Products = (props) => {
         </Button>
       ),
     },
+    // {
+    //   key: "id",
+    //   render: (cell) => (
+    //     <Button
+    //       type="primary"
+    //       className="btnViewOrder"
+    //       size="small"
+    //       onClick={() => {
+    //         history.push({
+    //           pathname: `/create-order/${cell.productId}`,
+    //           state: {
+    //             reservationId: "",
+    //           },
+    //         });
+    //       }}
+    //     >
+    //       Create Order
+    //     </Button>
+    //   ),
+    // },
     {
       title: "",
       dataIndex: "",
@@ -352,7 +380,7 @@ const Products = (props) => {
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Search
-            placeholder="Search by product code"
+            placeholder="Product Code"
             enterButton
             allowClear
             onSearch={onSearchById}
@@ -361,7 +389,7 @@ const Products = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
-            placeholder="Search by keyword"
+            placeholder="Keyword"
             enterButton
             allowClear
             onSearch={onSearchByKeyword}
@@ -411,15 +439,31 @@ const Products = (props) => {
           </Select>
         </Col>
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
-        <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-          <Search
+        {/* <Col xs={24} sm={24} md={5} lg={5} xl={5}> */}
+        {/* <Search
             style={{ marginTop: "10px" }}
             placeholder="Search by Chinese Seller Id"
             enterButton
             allowClear
             onSearch={onSearchByChineseSellerId}
-          />
-        </Col>
+          /> */}
+
+        {/* <Select
+            style={{ marginTop: "10px" }}
+            placeholder="Search by seller id"
+            enterButton
+            allowClear
+            onSelect={onSearchByChineseSellerId}
+          >
+            {props.pmm &&
+              props.pmm.map((pmm, index) => (
+                <Option key={pmm._id} value={pmm.userId}>
+          
+                  {!pmm?.firstname ? pmm?.name : ""}
+                </Option>
+              ))}
+          </Select> */}
+        {/* </Col> */}
       </Row>
       <div className="cardProducts">
         <Table
@@ -442,6 +486,7 @@ const Products = (props) => {
 const mapStateToProps = (state) => {
   const { loading, total, sizePage, currentNumber, products } = state.products;
   const { categories, markets } = state.appData;
+  const { pmm } = state.pmm;
   return {
     // products: filterProducts(state.products),
     products,
@@ -451,6 +496,7 @@ const mapStateToProps = (state) => {
     total,
     sizePage,
     currentNumber,
+    pmm,
   };
 };
 

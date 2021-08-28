@@ -8,7 +8,7 @@ const UserInfo = (props) => {
   return (
     <>
       <Popover content={() => content(info)} title="User Info">
-        <p style={{ margin: 0 }}>{info && info.username}</p>
+        <p style={{ margin: 0 }}>{info?.name}</p>
       </Popover>
     </>
   );
@@ -19,14 +19,14 @@ const content = (user) => {
       {user && (
         <>
           <p>
-            User : <span>{user.username ? user.username : "n/a"}</span>
+            User Name : <span>{user?.name}</span>
           </p>
           <p>
             Phone : <span>{user.phone ? user.phone : "n/a"}</span>
           </p>
-          <p>
+          {/* <p>
             Email : <span>{user.email ? user.email : "n/a"}</span>
-          </p>
+          </p> */}
         </>
       )}
     </>

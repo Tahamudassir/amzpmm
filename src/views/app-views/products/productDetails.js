@@ -430,7 +430,7 @@ const ProductDetails = (props) => {
                     </Col>
                     <Col span={12}>
                       <h4>Seller Name :</h4>
-                      <p>{productDetail.sellerName}</p>
+                      <p>{productDetail.sellerFullName}</p>
                     </Col>
                     <Col span={12}>
                       <h4>Market :</h4>

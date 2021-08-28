@@ -9,6 +9,7 @@ import Reservations from "./Reservations";
 import Theme from "./Theme";
 import AppData from "./AppData";
 import Announcements from "./Announcements";
+import User from "./User";
 const expireTime = 24 * 60 * 60 * 1000;
 const expirationKey = "expirationKey";
 const LOGOUT = "LOGOUT";
@@ -35,6 +36,7 @@ const appReducer = combineReducers({
   reservations: Reservations,
   appData: AppData,
   announcements: Announcements,
+  pmm: User,
 });
 
 const rootReducer = (state, action) => {

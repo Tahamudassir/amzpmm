@@ -1,10 +1,4 @@
 export default {
-  username: [
-    {
-      required: true,
-      message: "Name can't be empty",
-    },
-  ],
   phone: [
     {
       pattern: /^[0-9]+$/,

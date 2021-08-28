@@ -149,7 +149,7 @@ const Orders = (props) => {
     //   key: "id",
     // },
     {
-      title: "Seller Name",
+      title: "PM Name",
       dataIndex: "User",
       key: "id",
       render: (user) => <UserInfo user={user} />,
@@ -229,7 +229,7 @@ const Orders = (props) => {
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Search
-            placeholder="Search by customer email"
+            placeholder="Customer Email"
             enterButton
             allowClear
             onSearch={onSearchByEmail}
@@ -238,7 +238,7 @@ const Orders = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
-            placeholder="Search by product ID"
+            placeholder="Product ID"
             enterButton
             allowClear
             onSearch={onSearchByProductId}
@@ -247,7 +247,7 @@ const Orders = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
-            placeholder="Search by order No"
+            placeholder="Order No"
             enterButton
             allowClear
             onSearch={onSearchByOrderId}

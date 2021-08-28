@@ -46,7 +46,7 @@ const Profile = (props) => {
     <div>
       <div className="headingProfile">
         <p className="small">Overview</p>
-        <h4 className="large">{user && user.username}</h4>
+        <h4 className="large">{user?.name}</h4>
       </div>
       <Row gutter={[0, 16]}>
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -61,7 +61,7 @@ const Profile = (props) => {
                 style={{ backgroundColor: "#87d068", objectFit: "cover" }}
                 size={100}
               />
-              <h2 className="userName">{user && user.username}</h2>
+              <h2 className="userName">{!user?.firstname ? user?.name : ""}</h2>
               <p className="userType">{user && user.userType}</p>
               <Upload
                 customRequest={dummyRequest}
@@ -90,46 +90,44 @@ const Profile = (props) => {
         </Col>
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={15} lg={15} xl={15}>
-          <Card title="Account Details" className="cardDetails">
-            <Row gutter={[0, 24]}>
-              <Col span={11}>
-                <p className="label">Name</p>
-                <Input
-                  disabled={true}
-                  value={user && user.username ? user.username : ""}
-                />
-              </Col>
-              <Col span={2}></Col>
-              <Col span={11}>
+          <Form
+            form={form}
+            layout="vertical"
+            name="register-form"
+            onFinish={updateProfile}
+          >
+            <Card title="Account Details" className="cardDetails">
+              <Row gutter={[0, 24]}>
+                <Col span={11}>
+                  <p className="label">Name</p>
+                  <Input disabled={true} value={user?.name} />
+                </Col>
+                <Col span={2}></Col>
+                {/* <Col span={11}>
                 <p className="label">User Name</p>
                 <Input
                   disabled={true}
                   value={user && user.username ? user.username : ""}
                 />
-              </Col>
-              <Col span={11}>
-                <p className="label">Email</p>
-                <Input
-                  disabled={true}
-                  value={user && user.email ? user.email : ""}
-                />
-              </Col>
-              <Col span={2}></Col>
-              <Col span={11}>
-                <p className="label">Gender</p>
-                <Input
-                  disabled={true}
-                  value={user && user.gender ? user.gender : ""}
-                />
-              </Col>
-            </Row>
-            <Form
-              form={form}
-              layout="vertical"
-              name="register-form"
-              onFinish={updateProfile}
-            >
-              <Row gutter={[0, 8]} style={{ marginTop: "20px" }}>
+              </Col> */}
+                <Col span={11}>
+                  <p className="label">Email</p>
+                  <Input
+                    disabled={true}
+                    value={user && user.email ? user.email : ""}
+                  />
+                </Col>
+                <Col span={11}>
+                  <p className="label">Gender</p>
+                  <Input
+                    disabled={true}
+                    value={user && user.gender ? user.gender : ""}
+                  />
+                </Col>
+                {/* </Row> */}
+                <Col span={2}></Col>
+
+                {/* <Row gutter={[0, 8]} style={{ marginTop: "20px" }}>
                 <Col span={24}>
                   <Form.Item
                     name="address"
@@ -140,12 +138,12 @@ const Profile = (props) => {
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row
+              </Row> */}
+                {/* <Row
                 gutter={[0, 8]}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
-              >
-                <Col span={7}>
+              > */}
+                <Col span={11}>
                   <Form.Item
                     name="city"
                     label="City"
@@ -155,8 +153,8 @@ const Profile = (props) => {
                     <Input placeholder="City" />
                   </Form.Item>
                 </Col>
-                <Col span={1}></Col>
-                <Col span={7}>
+                {/* <Col span={1}></Col> */}
+                {/* <Col span={7}>
                   <Form.Item
                     name="country"
                     label="Country"
@@ -165,9 +163,8 @@ const Profile = (props) => {
                   >
                     <Input placeholder="Pakistan" />
                   </Form.Item>
-                </Col>
-                <Col span={1}></Col>
-                <Col span={7}>
+                </Col> */}
+                <Col span={11}>
                   <Form.Item
                     name="phone"
                     label="Phone"
@@ -178,8 +175,8 @@ const Profile = (props) => {
                     <Input placeholder="+92303..." />
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row
+                {/* </Row> */}
+                {/* <Row
                 gutter={[0, 8]}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
               >
@@ -194,12 +191,10 @@ const Profile = (props) => {
                     <Input placeholder="FB Link" />
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row
-                gutter={[0, 8]}
-                style={{ marginTop: "10px", marginBottom: "20px" }}
-              >
-                <Col span={8}>
+              </Row> */}
+                <Col span={2}></Col>
+
+                <Col span={11}>
                   <Form.Item
                     name="bankName"
                     label="Bank Name"
@@ -209,8 +204,8 @@ const Profile = (props) => {
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col span={2}></Col>
-                <Col span={14}>
+
+                <Col span={11}>
                   <Form.Item
                     name="payNumber"
                     label="Account Number"
@@ -220,12 +215,10 @@ const Profile = (props) => {
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row
-                gutter={[0, 8]}
-                style={{ marginTop: "10px", marginBottom: "20px" }}
-              >
-                <Col span={8}>
+
+                <Col span={2}></Col>
+
+                <Col span={11}>
                   <Form.Item
                     name="paymentType"
                     label="Account Name"
@@ -243,8 +236,8 @@ const Profile = (props) => {
               <Button type="primary" htmlType="submit" loading={loading}>
                 Update Account
               </Button>
-            </Form>
-          </Card>
+            </Card>
+          </Form>
         </Col>
       </Row>
     </div>

@@ -18,7 +18,7 @@ const Reservations = (props) => {
 
   const columns = [
     {
-      title: "Seller Name",
+      title: "PM Name",
       dataIndex: "User",
       key: "id",
       render: (user) => <UserInfo user={user} />,

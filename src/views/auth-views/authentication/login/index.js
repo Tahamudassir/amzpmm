@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import logo from "../../../../assets/logo.jpeg";
 import "./index.css";
 
-const backgroundURL = "/img/others/img-17.jpg";
+// const backgroundURL = "/img/others/img-17.jpg";
 const backgroundStyle = {
-  backgroundImage: `url(${backgroundURL})`,
+  // backgroundImage: `url(${backgroundURL})`,
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
 };

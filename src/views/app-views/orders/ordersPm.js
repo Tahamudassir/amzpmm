@@ -12,12 +12,11 @@ import moment from "moment-timezone";
 import orderStatus from "../../../constants/orderStatus";
 import "./styles.css";
 
-const getLocalStatus= ()=>{
-  let status= localStorage.getItem('status');
+const getLocalStatus = () => {
+  let status = localStorage.getItem("status");
   return status;
   // console.log("GET local status", status);
-}
-
+};
 
 const Orders = (props) => {
   // const { dispatch, orders, loading } = props;
@@ -31,16 +30,15 @@ const Orders = (props) => {
   const [productId, setProductId] = useState("");
   const [pageSize, setPageSize] = useState(sizePage);
 
-  useEffect(()=>{
+  useEffect(() => {
     // debugger;
-    if(status===null){
-    localStorage.setItem('status', status);
+    if (status === null) {
+      localStorage.setItem("status", status);
       setOrderStatus("All");
+    } else {
+      localStorage.setItem("status", status);
     }
-    else{
-      localStorage.setItem('status', status);
-    }
-   },[status])
+  }, [status]);
 
   useEffect(() => {
     let params = new URLSearchParams(props.location.search);
@@ -83,16 +81,14 @@ const Orders = (props) => {
     setProductId("");
     // setOrderStatus("");
     setCustomerEmail(e);
-      dispatch(
-        searchOrderByCustomerEmail({
-          customer_email: e,
-          current: 1,
-          pageSize,
-          public: true,
-        })
-      );  
-    
-    
+    dispatch(
+      searchOrderByCustomerEmail({
+        customer_email: e,
+        current: 1,
+        pageSize,
+        public: true,
+      })
+    );
   };
 
   const onSearchByProductId = (e) => {
@@ -166,7 +162,7 @@ const Orders = (props) => {
     },
     {
       title: "User",
-      dataIndex: "user",
+      dataIndex: "userFullName",
       key: "id",
     },
     {
@@ -244,7 +240,7 @@ const Orders = (props) => {
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Search
-            placeholder="Search by customer email"
+            placeholder="Customer Email"
             enterButton
             allowClear
             onSearch={onSearchByEmail}
@@ -253,7 +249,7 @@ const Orders = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
-            placeholder="Search by productID"
+            placeholder="Product ID"
             enterButton
             allowClear
             onSearch={onSearchByProductId}
@@ -262,7 +258,7 @@ const Orders = (props) => {
         <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
         <Col xs={24} sm={24} md={5} lg={5} xl={5}>
           <Search
-            placeholder="Search by order No"
+            placeholder="Order No"
             enterButton
             allowClear
             onSearch={onSearchByOrderId}

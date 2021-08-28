@@ -84,7 +84,7 @@ const AddProduct = (props) => {
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
                 <Col xs={24} sm={24} md={11} lg={11} xl={11}>
                   <Form.Item name="soldBy" rules={rules.required} hasFeedback>
-                    <Input placeholder="soldBy" />
+                    <Input placeholder="Sold By" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -105,7 +105,7 @@ const AddProduct = (props) => {
                     rules={rules.required}
                     hasFeedback
                   >
-                    <Select placeholder="Select a category">
+                    <Select placeholder="Category">
                       {categories &&
                         categories.map((category) => (
                           <Option value={category.name}>{category.name}</Option>
@@ -117,7 +117,7 @@ const AddProduct = (props) => {
               <Row gutter={[0, { xs: 8, sm: 16, md: 0, lg: 0 }]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                   <Form.Item name="market" rules={rules.required} hasFeedback>
-                    <Select placeholder="Select a market">
+                    <Select placeholder="Market">
                       {markets &&
                         markets.map((market) => (
                           <Option value={market.name}>{market.name}</Option>
@@ -238,7 +238,7 @@ const AddProduct = (props) => {
                     rules={rules.required}
                     hasFeedback
                   >
-                    <Input placeholder="Sale limit per day" type="number" />
+                    <Input placeholder="Sale Limit Per Day" type="number" />
                   </Form.Item>
                 </Col>
                 <Col xs={0} sm={0} md={1} lg={1} xl={1}></Col>
@@ -248,7 +248,7 @@ const AddProduct = (props) => {
                     rules={rules.required}
                     hasFeedback
                   >
-                    <Input type="number" placeholder="Overall sale limit " />
+                    <Input type="number" placeholder="Overall Sale Limit " />
                   </Form.Item>
                 </Col>
               </Row>

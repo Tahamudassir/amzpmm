@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Layout, Avatar } from "antd";
 import NavNotification from "./NavNotification";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { getAnnouncementAction } from "../../redux/actions/Announcement";
 
 import {
@@ -36,6 +37,7 @@ import "./styles.css";
 const { Header } = Layout;
 
 export const HeaderNav = (props) => {
+  const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -53,8 +55,8 @@ export const HeaderNav = (props) => {
   } = props;
 
   useEffect(() => {
-    dispatch(getAnnouncementAction());
-  }, [dispatch]);
+    dispatch(getAnnouncementAction(authState.user._id));
+  }, [dispatch, authState.user._id]);
 
   const navigateToProfile = () => history.push("/profile");
 
@@ -128,7 +130,7 @@ export const HeaderNav = (props) => {
                     }
                     style={{ backgroundColor: "#87d068", objectFit: "cover" }}
                   />
-                  <h4>{user && user.username}</h4>
+                  <h4>{user?.name}</h4>
                   <CaretDownOutlined />
                 </div>
               }
